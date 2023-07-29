@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>移除元素</title>
+      <link href="/2023/07/29/%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0/"/>
+      <url>/2023/07/29/%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>Problem: <a href="https://leetcode.cn/problems/remove-element/description/">27. 移除元素</a></p></blockquote><p>[TOC]</p><h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><blockquote><p>首先可以用暴力,两层for循环.但O(n^2)<br>快慢双指针:通过两个指针,来对数组进行处理</p></blockquote><h1 id="解题方法"><a href="#解题方法" class="headerlink" title="解题方法"></a>解题方法</h1><blockquote><p>首先定义一个慢指针si,然后再循环中定义一个快指针fi,然后通过判断fi和val1是否相等,如果相等,说明这个值要被覆盖,所以慢指针停止,快指针向后,直到快指针和对应的val2不相等,就可一将这个值覆盖到val1的位置上,然后将<code>si++</code>,直到遍历完整个数组</p></blockquote><h1 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h1><ul><li><p>时间复杂度: </p><blockquote><p>$O(n)$</p></blockquote></li><li><p>空间复杂度: </p><blockquote><p>$O(1)$</p></blockquote></li></ul><h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><figure class="highlight java"><figcaption><span>[]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">removeElement</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> val)</span> &#123;</span><br><span class="line">        <span class="comment">// 定义快指针和慢指针</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">si</span> <span class="operator">=</span> <span class="number">0</span>; <span class="comment">//慢指针,快指针因为要不断更新,所以要在for中</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">fi</span> <span class="operator">=</span> <span class="number">0</span>; fi &lt; nums.length; fi++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[fi] != val)&#123; <span class="comment">//慢指针更新的条件</span></span><br><span class="line">                nums[si++] = nums[fi]; <span class="comment">// 将符合条件的元素往不符合条件的元素覆盖</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> si;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 双指针 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>二分(一)</title>
       <link href="/2023/07/28/%E4%BA%8C%E5%88%86-%E4%B8%80/"/>
       <url>/2023/07/28/%E4%BA%8C%E5%88%86-%E4%B8%80/</url>
