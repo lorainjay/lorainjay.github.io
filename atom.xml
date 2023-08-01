@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-08-01T00:59:58.470Z</updated>
+  <updated>2023-08-01T13:27:45.279Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>maven配置相关问题</title>
+    <link href="http://example.com/2023/08/01/maven%E9%85%8D%E7%BD%AE%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/"/>
+    <id>http://example.com/2023/08/01/maven%E9%85%8D%E7%BD%AE%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/</id>
+    <published>2023-08-01T13:15:36.000Z</published>
+    <updated>2023-08-01T13:27:45.279Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="解决-Unresolved-plugin-‘org-apache-maven-plugins-maven-clean-plugin-2-5’-问题"><a href="#解决-Unresolved-plugin-‘org-apache-maven-plugins-maven-clean-plugin-2-5’-问题" class="headerlink" title="解决 (Unresolved plugin: ‘org.apache.maven.plugins:maven-clean-plugin:2.5’)问题"></a>解决 (Unresolved plugin: ‘org.apache.maven.plugins:maven-clean-plugin:2.5’)问题</h3><p>首先要先下载maven相关包,遇到这种问题一般是在创建maven项目之后,</p><p>这时候先看settings中maven ,其中相关路径以及经典配置</p><p>如果仍出现这种problems,</p><p>可以看maven配置的 Local respository下面的对钩有没有勾上,勾上之后重新加载就可以解决问题啦</p><p><img src="/../imgs/image-20230801212737931.png" alt="image-20230801212737931"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;解决-Unresolved-plugin-‘org-apache-maven-plugins-maven-clean-plugin-2-5’-问题&quot;&gt;&lt;a href=&quot;#解决-Unresolved-plugin-‘org-apache-maven-plugins-</summary>
+      
+    
+    
+    
+    <category term="配置问题" scheme="http://example.com/categories/%E9%85%8D%E7%BD%AE%E9%97%AE%E9%A2%98/"/>
+    
+    
+    <category term="maven" scheme="http://example.com/tags/maven/"/>
+    
+  </entry>
   
   <entry>
     <title>滑动窗口</title>
