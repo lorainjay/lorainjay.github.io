@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-08-09T11:50:11.818Z</updated>
+  <updated>2023-08-14T02:59:34.865Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,43 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JDBC连接数据库ERROR</title>
+    <link href="http://example.com/2023/08/14/JDBC%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93ERROR/"/>
+    <id>http://example.com/2023/08/14/JDBC%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93ERROR/</id>
+    <published>2023-08-14T02:52:05.000Z</published>
+    <updated>2023-08-14T02:59:34.865Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="解决报错“Loading-class-com-mysql-jdbc-Driver’-This-is-deprecated”"><a href="#解决报错“Loading-class-com-mysql-jdbc-Driver’-This-is-deprecated”" class="headerlink" title="解决报错“Loading class &#96;com.mysql.jdbc.Driver’. This is deprecated”"></a>解决报错“Loading class &#96;com.mysql.jdbc.Driver’. This is deprecated”</h1><p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308141056315.png" alt="image-20230814105654242"></p><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">driver-class-name:</span> <span class="string">com.mysql.jdbc.Driver</span></span><br></pre></td></tr></table></figure><p>在这个基础上,改为</p><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">driver-class-name:</span> <span class="string">com.mysql.cj.jdbc.Driver</span></span><br></pre></td></tr></table></figure><p>除此之外</p><p>将url地址:</p><p>原本是<code>url: jdbc:mysql://127.0.0.1:3306/</code></p><p>改为:</p><p><code>jdbc:mysql://127.0.0.1:3306/tlias?useUnicode=true&amp;characterEncoding=UTF-8&amp;userSSL=false&amp;serverTimezone=GMT%2B8</code></p><p><code>tlias</code>是数据库名</p><p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308141059868.png" alt="image-20230814105914802"></p><p>然后就可以尝试测试,问题就可以解决啦</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;解决报错“Loading-class-com-mysql-jdbc-Driver’-This-is-deprecated”&quot;&gt;&lt;a href=&quot;#解决报错“Loading-class-com-mysql-jdbc-Driver’-This-is-deprecate</summary>
+      
+    
+    
+    
+    <category term="报错解决" scheme="http://example.com/categories/%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3/"/>
+    
+    
+    <category term="JDBC" scheme="http://example.com/tags/JDBC/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>反射</title>
+    <link href="http://example.com/2023/08/11/%E5%8F%8D%E5%B0%84/"/>
+    <id>http://example.com/2023/08/11/%E5%8F%8D%E5%B0%84/</id>
+    <published>2023-08-11T10:31:27.000Z</published>
+    <updated>2023-08-11T10:31:27.739Z</updated>
+    
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>动态代理</title>
