@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Cookie和Session区别</title>
+      <link href="/2023/09/17/Cookie%E5%92%8CSession%E5%8C%BA%E5%88%AB/"/>
+      <url>/2023/09/17/Cookie%E5%92%8CSession%E5%8C%BA%E5%88%AB/</url>
+      
+        <content type="html"><![CDATA[<p>Cookie和Session都用于管理用户的状态和身份，但它们在存储位置、数据容量、安全性和传输方式等方面存在一些关键区别，下面通过具体示例来说明这些区别：</p><ol><li><p>存储位置：</p><ul><li><strong>Cookie</strong>：Cookie数据存储在用户的浏览器中。这意味着服务器可以将一些信息存储在用户的计算机上，以便在后续请求中使用。</li><li><strong>Session</strong>：Session数据存储在服务器上，不会在用户浏览器中留下痕迹。</li></ul></li><li><p>数据容量：</p><ul><li><strong>Cookie</strong>：Cookie的存储容量通常较小，一般限制在几KB。这适用于存储少量的文本数据，如用户首选项或购物车中的几个商品。</li><li><strong>Session</strong>：Session的存储容量通常较大，不受明确定义的限制，因为它们可以利用服务器的资源，用于存储更多的数据，如用户登录状态、购物车内容等。</li></ul></li><li><p>安全性：</p><ul><li><strong>Cookie</strong>：由于Cookie存储在用户浏览器中，它们容易受到安全威胁。例如，Cookie可以被用户查看和修改，从而可能引发安全漏洞。</li><li><strong>Session</strong>：Session数据存储在服务器上，不容易被用户直接访问或篡改，因此相对更安全。</li></ul></li><li><p>传输方式：</p><ul><li><strong>Cookie</strong>：每次用户向服务器发送HTTP请求时，浏览器会自动将相关的Cookie信息附加到请求头中，以便服务器可以提取这些信息。</li><li><strong>Session</strong>：通常，Session ID会存储在Cookie中或者通过URL参数传递给服务器。服务器使用Session ID来查找并还原用户的会话数据。</li></ul></li></ol><p>示例：<br>假设有一个在线购物网站，用户在登录后可以将商品添加到购物车。以下是Cookie和Session在这个场景中的应用：</p><ul><li><p><strong>Cookie的应用</strong>：当用户登录后，服务器可以创建一个包含用户ID和购物车内容的Cookie，并在用户的浏览器中存储。每次用户浏览不同商品或查看购物车时，浏览器都会自动将Cookie信息发送到服务器，服务器通过Cookie中的用户ID来识别用户，并获取购物车内容。然而，由于Cookie易于修改，用户可能尝试篡改购物车中的商品数量。</p></li><li><p><strong>Session的应用</strong>：当用户登录后，服务器创建一个与该用户相关联的Session，其中包含用户ID和购物车内容等信息。Session数据存储在服务器上，而不会发送到用户浏览器中。每次用户进行操作时，服务器使用Session ID（通常存储在Cookie中）来查找并还原用户的购物车内容，而用户无法直接修改Session数据，因为它们位于服务器上，更加安全。</p></li></ul><p>综上所述，Cookie和Session在不同情况下用于管理用户状态和身份，具有各自的优势和限制，开发人员应根据应用程序的需求和安全性考虑选择合适的机制。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 八股 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 八股 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>算法60天训练–9-13-day8</title>
       <link href="/2023/09/14/%E7%AE%97%E6%B3%9560%E5%A4%A9%E8%AE%AD%E7%BB%83%E2%80%939-13-day8/"/>
       <url>/2023/09/14/%E7%AE%97%E6%B3%9560%E5%A4%A9%E8%AE%AD%E7%BB%83%E2%80%939-13-day8/</url>
