@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>算法60天训练–9-19-day14</title>
+      <link href="/2023/09/19/%E7%AE%97%E6%B3%9560%E5%A4%A9%E8%AE%AD%E7%BB%83%E2%80%939-19-day14/"/>
+      <url>/2023/09/19/%E7%AE%97%E6%B3%9560%E5%A4%A9%E8%AE%AD%E7%BB%83%E2%80%939-19-day14/</url>
+      
+        <content type="html"><![CDATA[<h1 id="1-二叉树理论基础"><a href="#1-二叉树理论基础" class="headerlink" title="1. 二叉树理论基础"></a>1. 二叉树理论基础</h1><h2 id="1-1-二叉树的种类"><a href="#1-1-二叉树的种类" class="headerlink" title="1.1 二叉树的种类"></a>1.1 二叉树的种类</h2><ul><li>满二叉树: 每一个节点的子节点都为0或2</li><li>完全二叉树: 除了最底层的结点,其他结点每层节点数都达到最大值</li><li>二叉搜索树:所有左结点的值都小于根结点</li><li>平衡二叉树: 左右两个子树高度最大值不能超过1</li></ul><h2 id="1-2-二叉树存储方式"><a href="#1-2-二叉树存储方式" class="headerlink" title="1.2 二叉树存储方式"></a>1.2 二叉树存储方式</h2><h3 id="顺序存储"><a href="#顺序存储" class="headerlink" title="顺序存储"></a>顺序存储</h3><p>顺序存储的元素在内存中是连续分布的，通常用数组来存储。如果父节点的数组下标是 root，那么它的左孩子就是 root * 2 + 1，右孩子就是 root * 2 + 2。</p><h3 id="1-3-二叉树的遍历方式"><a href="#1-3-二叉树的遍历方式" class="headerlink" title="1.3 二叉树的遍历方式"></a>1.3 二叉树的遍历方式</h3><ul><li><p>深度优先遍历 </p></li><li><blockquote><p>前序遍历,中序遍历, 后序遍历</p></blockquote></li><li><p>广度优先遍历</p></li><li><blockquote><p>层序遍历</p></blockquote></li></ul><h1 id="二叉树的定义"><a href="#二叉树的定义" class="headerlink" title="二叉树的定义"></a>二叉树的定义</h1><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Struct twoTreeNode&#123;</span><br><span class="line"><span class="type">int</span> value;</span><br><span class="line">twoTreeNode *left;</span><br><span class="line">twoTreeNode *right;</span><br><span class="line">twoTreeNode(<span class="type">int</span> x): val(x),left(<span class="literal">NULL</span>),right(<span class="literal">NULL</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法60天打卡 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 二叉树 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>算法60天训练–9-18-day13</title>
       <link href="/2023/09/18/%E7%AE%97%E6%B3%9560%E5%A4%A9%E8%AE%AD%E7%BB%83%E2%80%939-18-day13/"/>
       <url>/2023/09/18/%E7%AE%97%E6%B3%9560%E5%A4%A9%E8%AE%AD%E7%BB%83%E2%80%939-18-day13/</url>
