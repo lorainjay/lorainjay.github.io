@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>算法60天训练–10-07-day32</title>
+      <link href="/2023/10/07/%E7%AE%97%E6%B3%9560%E5%A4%A9%E8%AE%AD%E7%BB%83%E2%80%9310-07-day32/"/>
+      <url>/2023/10/07/%E7%AE%97%E6%B3%9560%E5%A4%A9%E8%AE%AD%E7%BB%83%E2%80%9310-07-day32/</url>
+      
+        <content type="html"><![CDATA[<h1 id="回溯算法总结"><a href="#回溯算法总结" class="headerlink" title="回溯算法总结"></a>回溯算法总结</h1><h2 id="理论基础"><a href="#理论基础" class="headerlink" title="理论基础"></a>理论基础</h2><p><strong>回溯是递归的副产品，只要有递归就会有回溯</strong>，所以回溯法也经常和二叉树遍历，深度优先搜索混在一起，因为这两种方式都是用了递归。</p><p>回溯算法能解决如下问题：</p><ul><li>组合问题：N个数里面按一定规则找出k个数的集合</li><li>排列问题：N个数按一定规则全排列，有几种排列方式</li><li>切割问题：一个字符串按一定规则有几种切割方式</li><li>子集问题：一个N个数的集合里有多少符合条件的子集</li><li>棋盘问题：N皇后，解数独等等</li></ul><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">void backtracking(参数) &#123;</span><br><span class="line">    if (终止条件) &#123;</span><br><span class="line">        存放结果;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    for (选择：本层集合中元素（树中节点孩子的数量就是集合的大小）) &#123;</span><br><span class="line">        处理节点;</span><br><span class="line">        backtracking(路径，选择列表); // 递归</span><br><span class="line">        回溯，撤销处理结果</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="组合问题"><a href="#组合问题" class="headerlink" title="组合问题"></a>组合问题</h2><p>题目链接: <a href="https://leetcode.cn/problems/combinations/description/">https://leetcode.cn/problems/combinations/description/</a></p><p>通过列举10086层<code>for循环的例子, 进而得出为什么要用回溯法</code></p><p>搜索的过程：<strong>for循环横向遍历，递归纵向遍历，回溯不断调整结果集</strong>，这个理念贯穿整个回溯法系列</p><p>可以通过思考在哪一步不需要继续往下遍历了. 然后进行剪枝优化</p><p><strong>剪枝精髓是：for循环在寻找起点的时候要有一个范围，如果这个起点到集合终止之间的元素已经不够题目要求的k个元素了，就没有必要搜索了</strong>。</p><p><strong>在for循环上做剪枝操作是回溯法剪枝的常见套路！</strong></p><h2 id="组合总和"><a href="#组合总和" class="headerlink" title="组合总和"></a>组合总和</h2><p>题目链接: <a href="https://leetcode.cn/problems/combination-sum-iii/description/">https://leetcode.cn/problems/combination-sum-iii/description/</a></p><p>整体思路还是一样的，本题的剪枝会好想一些，即：<strong>已选元素总和如果已经大于n（题中要求的和）了，那么往后遍历就没有意义了，直接剪掉</strong></p><p>所以剪枝的代码可以在for循环加上 <code>i &lt;= 9 - (k - path.size()) + 1</code> 的限制！</p><h2 id="组数总和"><a href="#组数总和" class="headerlink" title="组数总和(||)"></a>组数总和(||)</h2><p>需要使用startIndex的情况</p><ul><li>如果是一个集合来求组合的话，就需要startIndex</li><li>如果是多个集合取组合，各个集合之间相互不影响，那么就不用startIndex</li></ul><p><strong>只是说求组合的情况，如果是排列问题，又是另一套分析的套路</strong>。</p><h2 id="组合-三"><a href="#组合-三" class="headerlink" title="组合(三)"></a>组合(三)</h2><p>集合元素会有重复，但要求解集不能包含重复的组合。</p><p>两个维度，一个维度是同一树枝上“使用过”，一个维度是同一树层上“使用过”。</p><p><strong>在candidates[i] &#x3D;&#x3D; candidates[i - 1]相同的情况下：</strong></p><ul><li>used[i - 1] &#x3D;&#x3D; true，说明同一树枝candidates[i - 1]使用过</li><li>used[i - 1] &#x3D;&#x3D; false，说明同一树层candidates[i - 1]使用过</li></ul><h2 id="多个集合求组合"><a href="#多个集合求组合" class="headerlink" title="多个集合求组合"></a>多个集合求组合</h2><p>开始用多个集合来求组合，还是熟悉的模板题目，但是有一些细节。</p><p><strong>因为本题每一个数字代表的是不同集合，也就是求不同集合之间的组合，而<a href="https://programmercarl.com/0077.%E7%BB%84%E5%90%88.html">回溯算法：求组合问题！ (opens new window)</a>和<a href="https://programmercarl.com/0216.%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8CIII.html">回溯算法：求组合总和！ (opens new window)</a>都是是求同一个集合中的组合！</strong></p><h2 id="切割问题"><a href="#切割问题" class="headerlink" title="切割问题"></a>切割问题</h2><ul><li>切割问题其实类似组合问题</li><li>如何模拟那些切割线</li><li>切割问题中递归如何终止</li><li>在递归循环中如何截取子串</li><li>如何判断回文</li></ul><p><strong>用求解组合问题的思路来解决 切割问题本题就成功一大半了</strong>，接下来就可以对着模板照葫芦画瓢。</p><p><strong>但后序如何模拟切割线，如何终止，如何截取子串，其实都不好想，最后判断回文算是最简单的了</strong>。</p><p><strong>本题还有细节，例如：切割过的地方不能重复切割所以递归函数需要传入i + 1</strong>。</p><h2 id="子集问题"><a href="#子集问题" class="headerlink" title="子集问题"></a>子集问题</h2><p><strong>在树形结构中子集问题是要收集所有节点的结果，而组合问题是收集叶子节点的结果</strong>。</p><p><strong>本题其实可以不需要加终止条件</strong>，因为startIndex &gt;&#x3D; nums.size()，本层for循环本来也结束了，本来我们就要遍历整棵树。</p><h2 id="递增子序列"><a href="#递增子序列" class="headerlink" title="递增子序列"></a>递增子序列</h2><p><strong>使用set针对同一父节点本层去重，但子集问题一定要排序，</strong></p><h2 id="排列问题"><a href="#排列问题" class="headerlink" title="排列问题"></a>排列问题</h2><p>排列是有序的，也就是说 [1,2] 和 [2,1] 是两个集合，这和之前分析的子集以及组合所不同的地方。</p><p>可以看出元素1在[1,2]中已经使用过了，但是在[2,1]中还要在使用一次1，所以处理排列问题就不用使用startIndex了。</p><ul><li>每层都是从0开始搜索而不是startIndex</li><li>需要used数组记录path里都放了哪些元素了</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法60天打卡 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 回溯算法 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>算法60天训练–10-04-day25</title>
       <link href="/2023/10/04/%E7%AE%97%E6%B3%9560%E5%A4%A9%E8%AE%AD%E7%BB%83%E2%80%9310-04-day25/"/>
       <url>/2023/10/04/%E7%AE%97%E6%B3%9560%E5%A4%A9%E8%AE%AD%E7%BB%83%E2%80%9310-04-day25/</url>
