@@ -40,16 +40,12 @@
           
           <category> MySQL </category>
           
-          <category> 后端 </category>
-          
       </categories>
       
       
         <tags>
             
             <tag> MySQL </tag>
-            
-            <tag> 后端 </tag>
             
         </tags>
       
@@ -536,7 +532,7 @@
       
       <categories>
           
-          <category> JAVA </category>
+          <category> Java </category>
           
       </categories>
       
@@ -602,19 +598,6 @@
     
     
     <entry>
-      <title>反射</title>
-      <link href="/posts/7af799fd.html"/>
-      <url>/posts/7af799fd.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>动态代理</title>
       <link href="/posts/dc7fb504.html"/>
       <url>/posts/dc7fb504.html</url>
@@ -631,7 +614,7 @@
       
         <tags>
             
-            <tag> 动态代理 </tag>
+            <tag> Java </tag>
             
         </tags>
       
@@ -657,8 +640,6 @@
         <tags>
             
             <tag> 链表 </tag>
-            
-            <tag> 双指针 </tag>
             
         </tags>
       
