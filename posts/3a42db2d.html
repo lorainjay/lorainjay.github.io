@@ -1,0 +1,469 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Vue3 | axdmdyj</title><meta name="author" content="coderLyj"><meta name="copyright" content="coderLyj"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Vue31.vue语法初探1.1 HelloWord1234567891011121314151617181920&lt;body&gt;&lt;div id&#x3D;&quot;root&quot;&gt;&lt;&#x2F;div&gt;&lt;script&gt;&#x2F;&#x2F; 从面向dom编程到面向数据编程Vue.createApp(&amp;#123;data()&amp;#123;return &amp;#123;content:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue3">
+<meta property="og:url" content="https://axdmdyj.github.io/posts/3a42db2d.html">
+<meta property="og:site_name" content="axdmdyj">
+<meta property="og:description" content="Vue31.vue语法初探1.1 HelloWord1234567891011121314151617181920&lt;body&gt;&lt;div id&#x3D;&quot;root&quot;&gt;&lt;&#x2F;div&gt;&lt;script&gt;&#x2F;&#x2F; 从面向dom编程到面向数据编程Vue.createApp(&amp;#123;data()&amp;#123;return &amp;#123;content:">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.3dmgame.com/uploads/images/news/20191101/1572593491_374100.jpg">
+<meta property="article:published_time" content="2023-07-30T15:10:20.000Z">
+<meta property="article:modified_time" content="2023-11-12T08:53:08.565Z">
+<meta property="article:author" content="coderLyj">
+<meta property="article:tag" content="Vue3">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.3dmgame.com/uploads/images/news/20191101/1572593491_374100.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://axdmdyj.github.io/posts/3a42db2d.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Vue3',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-11-12 16:53:08'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="axdmdyj" type="application/atom+xml">
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/head.jpg" onerror="onerror=null;src='https://unpkg.com/plasx@1.0.3/img/bj.webp'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">24</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://img.3dmgame.com/uploads/images/news/20191101/1572593491_374100.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="axdmdyj"><span class="site-name">axdmdyj</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Vue3</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-07-30T15:10:20.000Z" title="发表于 2023-07-30 23:10:20">2023-07-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-11-12T08:53:08.565Z" title="更新于 2023-11-12 16:53:08">2023-11-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>17分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Vue3"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><meta name="referrer" content="no-referrer" />
+
+<h1 id="Vue3"><a href="#Vue3" class="headerlink" title="Vue3"></a>Vue3</h1><h2 id="1-vue语法初探"><a href="#1-vue语法初探" class="headerlink" title="1.vue语法初探"></a>1.vue语法初探</h2><h3 id="1-1-HelloWord"><a href="#1-1-HelloWord" class="headerlink" title="1.1 HelloWord"></a>1.1 HelloWord</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">// 从面向dom编程到面向数据编程</span><br><span class="line">Vue.createApp(&#123;</span><br><span class="line">data()&#123;</span><br><span class="line">return &#123;</span><br><span class="line">content: 1</span><br><span class="line">&#125;</span><br><span class="line">&#125;,</span><br><span class="line">// 当页面加载完成,会自动调用mounted</span><br><span class="line">mounted() &#123;</span><br><span class="line">setInterval( ()=&gt;&#123;</span><br><span class="line">this.content++</span><br><span class="line">&#125;,1000)</span><br><span class="line">&#125;,</span><br><span class="line">template: `&lt;div&gt;&#123;&#123;content&#125;&#125;&lt;/div&gt;`</span><br><span class="line">&#125;).mount(&#x27;#root&#x27;)</span><br><span class="line">&lt;/script&gt; </span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这里要引用<code>&lt;script src=&quot;https://unpkg.com/vue@next&quot;&gt;&lt;/script&gt;</code>		</p>
+<p>&#x3D;&#x3D;要慢慢将思维由面向dom到面向数据&#x3D;&#x3D;</p>
+<h3 id="1-2-反转和隐藏"><a href="#1-2-反转和隐藏" class="headerlink" title="1.2 反转和隐藏"></a>1.2 反转和隐藏</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">   &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">   &lt;script&gt;</span><br><span class="line">   // 从面向dom编程到面向数据编程</span><br><span class="line">   Vue.createApp(&#123;</span><br><span class="line">   data()&#123;</span><br><span class="line">   return &#123;</span><br><span class="line">   content: &#x27;helloworld&#x27;</span><br><span class="line">   &#125;</span><br><span class="line">   &#125;,</span><br><span class="line">   methods:&#123;</span><br><span class="line">   handClick()&#123;</span><br><span class="line">   this.content  = this.content.split(&#x27;&#x27;).reverse().join(&#x27;&#x27;)</span><br><span class="line">   &#125;</span><br><span class="line">   &#125;,</span><br><span class="line">   // 绑定反转函数,实习写在methods里面</span><br><span class="line">   template: `</span><br><span class="line">   &lt;div&gt;&#123;&#123;content&#125;&#125;&lt;/div&gt;</span><br><span class="line">   &lt;button @click = &quot;handClick&quot;&gt;反转&lt;/button&gt;</span><br><span class="line">   ` </span><br><span class="line">   &#125;).mount(&#x27;#root&#x27;)</span><br><span class="line">   &lt;/script&gt; </span><br><span class="line">&lt;/body&gt;	</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">// 从面向dom编程到面向数据编程</span><br><span class="line">Vue.createApp(&#123;</span><br><span class="line">data()&#123;</span><br><span class="line">return &#123;</span><br><span class="line">show: true</span><br><span class="line">&#125;</span><br><span class="line">&#125;,</span><br><span class="line">methods:&#123;</span><br><span class="line">handClick()&#123;</span><br><span class="line">// 面向数据编程,改变数据的值</span><br><span class="line">this.show = !this.show</span><br><span class="line">&#125;</span><br><span class="line">&#125;,</span><br><span class="line">template: `</span><br><span class="line">&lt;span v-if = &quot;show&quot;&gt;hello&lt;/span&gt;</span><br><span class="line">&lt;button @click = &quot;handClick&quot;&gt;隐藏/出现&lt;/button&gt;</span><br><span class="line">` </span><br><span class="line">&#125;).mount(&#x27;#root&#x27;)</span><br><span class="line">&lt;/script&gt; </span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-todolist"><a href="#1-3-todolist" class="headerlink" title="1.3 todolist"></a>1.3 todolist</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">// 从面向dom编程到面向数据编程</span><br><span class="line">Vue.createApp(&#123;</span><br><span class="line">data()&#123;</span><br><span class="line">return &#123;</span><br><span class="line">list: [],</span><br><span class="line">inputValue: &#x27;&#x27;</span><br><span class="line">&#125;</span><br><span class="line">&#125;,</span><br><span class="line">methods:&#123;</span><br><span class="line">handClick()&#123;</span><br><span class="line">this.list.push(this.inputValue)</span><br><span class="line">    inputValue = &#x27;&#x27;</span><br><span class="line">&#125;</span><br><span class="line">&#125;,</span><br><span class="line">template: `</span><br><span class="line">&lt;input v-model = &quot;inputValue&quot;&gt;</span><br><span class="line">&lt;button @click = &quot;handClick&quot;&gt;增加&lt;/button&gt;</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">&lt;li v-for = &quot;(item,index) of list&quot;&gt;&#123;&#123;item&#125;&#125; &#123;&#123;index&#125;&#125;&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line">` </span><br><span class="line">&#125;).mount(&#x27;#root&#x27;)</span><br><span class="line">&lt;/script&gt; </span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<p>index ,是item遍历的索引</p>
+<p><code>&lt;button @click = &quot;handClick&quot; title = &quot;222&quot;&gt;增加&lt;/button&gt;</code></p>
+<p>这样不对,如果title要和数据绑定,需要使用v-bind指令 :title&#x3D;   </p>
+<h3 id="1-4-组件概念初探"><a href="#1-4-组件概念初探" class="headerlink" title="1,4 组件概念初探"></a>1,4 组件概念初探</h3><p>如果<code>.mount(&#39;#root&#39;)</code>挂载了组件之后再去<code>qpp.component()</code>去创建组件就来不及了</p>
+<p>展示组件:定义完组件之后再去挂载<code>app.mount(&#39;#root&#39;)</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">// 从面向dom编程到面向数据编程</span><br><span class="line">const app = Vue.createApp(&#123;</span><br><span class="line">data()&#123;</span><br><span class="line">return &#123;</span><br><span class="line">list: [],</span><br><span class="line">inputValue: &#x27;&#x27;</span><br><span class="line">&#125;</span><br><span class="line">&#125;,</span><br><span class="line">methods:&#123;</span><br><span class="line">handClick()&#123;</span><br><span class="line">this.list.push(this.inputValue)</span><br><span class="line">&#125;</span><br><span class="line">&#125;,</span><br><span class="line">template: `</span><br><span class="line">&lt;input v-model = &quot;inputValue&quot;&gt;</span><br><span class="line">&lt;button @click = &quot;handClick&quot;&gt;增加&lt;/button&gt;</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">&lt;todo-item v-for = &quot;(item, index) of list&quot;</span><br><span class="line">:content = &quot;item&quot;</span><br><span class="line">:index = &quot;index&quot;</span><br><span class="line">&gt;&lt;/todo-item&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line">` </span><br><span class="line">&#125;);</span><br><span class="line">app.component(&#x27;todo-item&#x27;, &#123;</span><br><span class="line">props: [&#x27;content&#x27;, &#x27;index&#x27;],</span><br><span class="line">template: &#x27;&lt;div&gt;&#123;&#123;content&#125;&#125;----&#123;&#123;index&#125;&#125;&lt;/div&gt;&#x27;</span><br><span class="line">&#125;)</span><br><span class="line">app.mount(&#x27;#root&#x27;)</span><br><span class="line">&lt;/script&gt; </span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在这里,将li标签的属性通过组件化展示出来,:index :content分别绑定两个变量, 在组件中,由<code>props:[绑定值1,绑定值2...]</code>去接收</p>
+<h2 id="2-Vue基础语法"><a href="#2-Vue基础语法" class="headerlink" title="2. Vue基础语法"></a>2. Vue基础语法</h2><h3 id="2-1-基础概念"><a href="#2-1-基础概念" class="headerlink" title="2.1 基础概念"></a>2.1 基础概念</h3><p>获取数据要用<code>vm.$data.xxx</code></p>
+<p>createApp 表示创建一个Vue应用, 存储到app变量中, 传入的参数表示,这个应用最外层的组件应该如何展示</p>
+<p>&#x3D;&#x3D;mvvm&#x3D;&#x3D;模式, m-&gt;model 数据 v-&gt;view 视图 vm -&gt; viewModel视图数据连接层</p>
+<p>这也是为什么 const vm &#x3D; app.mount(‘#root’) vm代表的就是Vue的根组件</p>
+<h3 id="2-2-生命周期函数"><a href="#2-2-生命周期函数" class="headerlink" title="2.2 生命周期函数"></a>2.2 生命周期函数</h3><p><strong>在某一时刻会自动执行的函数</strong></p>
+<p>比如之前的 mounted(){}</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031550391.png" alt="image-20230730205903567"></p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031550672.png" alt="image-20230730210033959"></p>
+<p>图里面的判断意思是. 如果没有template 就去root挂载的根节点去找innerHtml结构</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031550645.png" alt="image-20230730210226446"></p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031550175.png" alt="image-20230730210418348"></p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031550137.png" alt="image-20230730210503916"></p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031551822.png" alt="image-20230730210625949"></p>
+<p><code>beforeUpdate</code>是在数据改变(页面还没有渲染时调用)</p>
+<p><code>updated</code>是在页面重新渲染完之后调用,注意二者区别!</p>
+<p><code>beforeUnmount</code>当Vue应用失效时,自动执行的函数</p>
+<p><code>unmounted</code> 当Vue应用失效时,且dom完全销毁之后,自动执行的函数</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031551739.png" alt="image-20230730211407402"></p>
+<h3 id="2-3-常用模版语法"><a href="#2-3-常用模版语法" class="headerlink" title="2.3 常用模版语法"></a>2.3 常用模版语法</h3><p>template: <code>&lt;div v-html = &quot;message&quot;&lt;/div&gt;</code></p>
+<p>避免转义</p>
+<p>v-bind:(属性或变量) &#x3D; …  与data中的数据绑定 , 不知道起什么名可以**:[data中的属性名]**</p>
+<p>template: <code>&lt;div v-html = &quot;message&quot;&gt;&#123;&#123;在这里面可以写类似于Max(,)这样的js表达式&#125;&#125;&lt;/div&gt;</code>	但是如果是if(){}就不行,这是js语句,不是表达式</p>
+<p> <code>&lt;div v-once&gt;&#123;&#123;m&#125;&#125;&lt;/div&gt; </code>只显示一次,当m再变化,页面渲染</p>
+<p><code>v-if = &#39;show&#39;</code>  show是data:{} 中的bool</p>
+<p>v-on  点击绑定</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031551231.png" alt="image-20230731214451194"></p>
+<p>@[event] , 而event可以在data中 event: ‘click’ &#x2F;‘ mouseenter’ 绑定其他事件</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031551123.png" alt="image-20230731215311197"></p>
+<p>阻止默认行为  @click.prevent &#x3D; “函数名”</p>
+<h3 id="2-4-数据-方法-计算属性-侦听器"><a href="#2-4-数据-方法-计算属性-侦听器" class="headerlink" title="2.4 数据,方法,计算属性,侦听器"></a>2.4 数据,方法,计算属性,侦听器</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  methods:&#123;</span><br><span class="line">    formatString(string)&#123;</span><br><span class="line">      return string.toUpperCase();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  template: `&lt;div&gt;&#123;&#123;formatString(message)&#125;&#125;&lt;/div&gt;`</span><br><span class="line">&#125;).mount(&#x27;#root&#x27;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  const vm = Vue.createApp(&#123;</span><br><span class="line">    data()&#123;</span><br><span class="line">      return &#123;</span><br><span class="line">        message: &#x27;hello world&#x27;,</span><br><span class="line">        count: 2,</span><br><span class="line">        price: 5</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    computed:&#123;</span><br><span class="line">      // 当计算属性依赖的内容发生改变,才会重新执行计算</span><br><span class="line">      total()&#123;</span><br><span class="line">        // 注意计算属性别漏了this</span><br><span class="line">        // return this.count * this.price; </span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods:&#123;</span><br><span class="line">      formatString(string)&#123;</span><br><span class="line">        return string.toUpperCase();</span><br><span class="line">      &#125;,</span><br><span class="line">      // 只要页面重新渲染,就会重新计算</span><br><span class="line">      </span><br><span class="line">        Date.now();</span><br><span class="line">        // return this.count * this.price; </span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    template: `&lt;div&gt;&#123;&#123;total&#125;&#125;&lt;/div&gt;`</span><br><span class="line">  &#125;).mount(&#x27;#root&#x27;)</span><br><span class="line">&lt;/script&gt; </span><br></pre></td></tr></table></figure>
+
+
+
+<p> total()(在computed中)</p>
+<p>   &#x2F;当计算属性依赖的内容发生改变,才会重新执行计算<br>getTotal()(在函数方法中)</p>
+<p> 只要页面重新渲染,就会重新计算</p>
+<p><strong>侦听器</strong></p>
+<p>如果想数据改变隔五秒打印一些东西,用computed肯定是不行的,这是后就需要加一个watch侦听器</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  const vm = Vue.createApp(&#123;</span><br><span class="line">    data()&#123;</span><br><span class="line">      return &#123;</span><br><span class="line">        message: &#x27;hello world&#x27;,</span><br><span class="line">        count: 2,</span><br><span class="line">        price: 5</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    computed:&#123;</span><br><span class="line">      // 当计算属性依赖的内容发生改变,才会重新执行计算</span><br><span class="line">      total()&#123;</span><br><span class="line">        // 注意计算属性别漏了this</span><br><span class="line">         return this.count * this.price; </span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    watch: &#123;</span><br><span class="line">      price()&#123;</span><br><span class="line">        setTimeout(() =&gt; &#123;</span><br><span class="line">          console.log(&#x27;price changed&#x27;)</span><br><span class="line">        &#125;,3000)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods:&#123;</span><br><span class="line">      formatString(string)&#123;</span><br><span class="line">        return string.toUpperCase();</span><br><span class="line">      &#125;,</span><br><span class="line">      // 只要页面重新渲染,就会重新计算</span><br><span class="line">      getTotal()&#123;</span><br><span class="line">        Date.now();</span><br><span class="line">        // return this.count * this.price; </span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    template: `&lt;div&gt;&#123;&#123;total&#125;&#125;&lt;/div&gt;`</span><br><span class="line">  &#125;).mount(&#x27;#root&#x27;)</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>computed 和 method 都能实现的一个功能,建议使用computed,因为有缓存, computed 和 watcher 都能实现的功能,建议使用computed,因为更加简洁. watched 也可以监听price改变,然后对页面重新与安然,但是麻烦,不如computed</strong></p>
+<p>异步可以在watch 里面, 但同步不如在computed里面更简洁</p>
+<h3 id="2-5-样式绑定语法"><a href="#2-5-样式绑定语法" class="headerlink" title="2.5.样式绑定语法"></a>2.5.样式绑定语法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  const app = Vue.createApp(&#123;</span><br><span class="line">    data()&#123;</span><br><span class="line">      return&#123;</span><br><span class="line">        classString: &#x27;red&#x27;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    template: `&lt;div :class = &#x27;classString&#x27;&gt; hello&lt;/div&gt;`</span><br><span class="line">  &#125;)</span><br><span class="line">  const vm =  app.mount(&#x27;#root&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>通过字符串绑定来改变style样式</p>
+<p><img src="/../imgs/image-20230802133154875.png" alt="image-20230802133154875"></p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031552596.png" alt="image-20230802135424710"></p>
+<p>添加子组件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  const app = Vue.createApp(&#123;</span><br><span class="line">    data()&#123;</span><br><span class="line">      return&#123;</span><br><span class="line">        classString: &#x27;red&#x27;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    template: `&lt;div :class = &#x27;classString&#x27;&gt; hello</span><br><span class="line">      &lt;demo /&gt;</span><br><span class="line">      &lt;/div&gt;`</span><br><span class="line">  &#125;)</span><br><span class="line">  // 创建组件</span><br><span class="line">  app.component(&#x27;demo&#x27;, &#123;</span><br><span class="line">    template: &#x27; &lt;div class = &quot;green&quot; &gt; single &lt;/div&gt;&#x27;</span><br><span class="line">  &#125;)</span><br><span class="line">  const vm =  app.mount(&#x27;#root&#x27;)</span><br><span class="line">&lt;/script&gt; </span><br></pre></td></tr></table></figure>
+
+<p>如果子组件有两个div. 当把class加到父组件demo中时,可以控制显示哪个div:</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031552559.png" alt="image-20230802140326043"></p>
+<p><strong>通过style的方式写样式:</strong></p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031552543.png" alt="image-20230802140537613"></p>
+<p>这里简写写styleObject 可读性更强</p>
+<h3 id="2-6-条件渲染"><a href="#2-6-条件渲染" class="headerlink" title="2.6 条件渲染"></a>2.6 条件渲染</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  const app = Vue.createApp(&#123;</span><br><span class="line">    data()&#123;</span><br><span class="line">      return&#123;</span><br><span class="line">        show : false</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    template: `</span><br><span class="line">      &lt;div v-if = &#x27;show&#x27;&gt; hello&lt;/div&gt;</span><br><span class="line">      &lt;div v-show = &#x27;show&#x27;&gt; hello&lt;/div&gt;</span><br><span class="line">    `</span><br><span class="line">  &#125;);</span><br><span class="line">  const vm =  app.mount(&#x27;#root&#x27;)</span><br><span class="line">&lt;/script&gt; </span><br></pre></td></tr></table></figure>
+
+
+
+<p>v-if 是直接在DOM上添加或者删除,而v-show值通过冬至<code>display:none属性</code>来控制是否显示</p>
+<p>如果频繁改变的话还是建议使用v-show</p>
+<p>除此之外,在vue中还可以使用if else if else逻辑</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031552914.png" alt="image-20230802141746575"></p>
+<p>表示如果<code>conditionOne</code> 是True的话就展示<code>if</code>,如果不是,就看<code>conditionTwo</code>是true的话就显示<code>else if</code>, 否则就展示<code>else</code></p>
+<h3 id="2-7-列表渲染"><a href="#2-7-列表渲染" class="headerlink" title="2.7 列表渲染"></a>2.7 列表渲染</h3><h4 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h4><p>可以对list 循环,也可以对对象循环:<img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031552486.png" alt="image-20230802144335089"></p>
+<p>这里的value 代表对应的变量值, key代表<code>firstname</code>这些等等</p>
+<p>index是索引, 从0开始往后一次增加 </p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031553397.png" alt="image-20230802144744201"></p>
+<p><strong>循环的时候尽量使用key值,避免重复渲染带来的性能问题</strong></p>
+<h4 id="操作数组"><a href="#操作数组" class="headerlink" title="操作数组"></a>操作数组</h4><p> <img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031553233.png" alt="image-20230802144910942"></p>
+<p>实现页面的添加和删除</p>
+<p>pop索引大的开始删,shift从小的开始删除,unshift会忘头部(索引开头)添加东西</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/202308031540064.png" alt="image-20230802145058175"></p>
+<p><code>reverse</code>可以变更顺序</p>
+<p><strong>2-直接替换数组</strong></p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031553962.png" alt="image-20230802145323072"></p>
+<h4 id="操作对象"><a href="#操作对象" class="headerlink" title="操作对象"></a>操作对象</h4><p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031553459.png" alt="image-20230802145551010"></p>
+<p>在老版本的vue中出直接修改对象里面的内容可能会有一定的问题</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031553828.png" alt="image-20230802145822932"></p>
+<p>这个是实现不展示lastName,但是要注意 <strong>循环和判断不要写在一个标签上,循环的优先级会更高,如果要筛序性展示,则新创建一个div标签,来选择是否展示</strong>  </p>
+<p>为了避免每一层多一个div标签</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031553409.png" alt="image-20230802150211640"></p>
+<p>这列<code>template</code> 知识占位符,并不会影响渲染效果</p>
+<h3 id="2-8-事件绑定"><a href="#2-8-事件绑定" class="headerlink" title="2.8 事件绑定"></a>2.8 事件绑定</h3><h4 id="基础-1"><a href="#基础-1" class="headerlink" title="基础"></a>基础</h4><p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031554966.png" alt="image-20230802161607518"></p>
+<p>如果要传参,且还要原生的event事件,就可以在event前面加一个$传递过去</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031554472.png" alt="image-20230802161831118"></p>
+<p>如果要使用多个函数,就不能只写函数名了,要加上括号</p>
+<h4 id="事件修饰符"><a href="#事件修饰符" class="headerlink" title="事件修饰符"></a>事件修饰符</h4><p>stop:避免冒泡</p>
+<p><code>@click.stop = &quot;方法&quot;</code></p>
+<p>.self 只有点自己才会执行,点子标签里面的其他元素则不会执行</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031554812.png" alt="image-20230802162356544"></p>
+<p>.prevent组织默认行为</p>
+<p>.capture 捕获</p>
+<p>once 只执行一次,再点击就不会执行</p>
+<p>@scroll.passive</p>
+<h4 id="按键修饰符"><a href="#按键修饰符" class="headerlink" title="按键修饰符"></a>按键修饰符</h4><p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031554363.png" alt="image-20230802162853911"></p>
+<p>exact是只按ctrl这个键再点击执行的,精确执行</p>
+<h4 id="双向绑定"><a href="#双向绑定" class="headerlink" title="双向绑定"></a>双向绑定</h4><p><strong>v-model</strong></p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031554224.png" alt="image-20230802163233015"></p>
+<p>输入框的值变,页面渲染的值跟着改变</p>
+<p><strong>textarea</strong></p>
+<p>​	<img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031554954.png" alt="image-20230802163655598"></p>
+<p>checkbox:<img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031554461.png" alt="image-20230802163733528"></p>
+<p> false跟着点击 变成true再变回来</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031554729.png" alt="image-20230802171339552"></p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031555260.png" alt="image-20230802163853755"></p>
+<p>自定义值取代false True</p>
+<p>多个checkbox会往数组里面存Value</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031555383.png" alt="image-20230802164001558"></p>
+<p><strong>radio</strong></p>
+<p>是单选,不能都放到数组中</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031555570.png" alt="image-20230802163946958"></p>
+<p>初始值要变成字符串,选谁变成谁</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031555611.png" alt="image-20230802164057819"></p>
+<p><strong>select</strong></p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031555088.png" alt="image-20230802164357563"></p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031555997.png" alt="image-20230802164204475"></p>
+<p><strong>加上multiple变成多选</strong></p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031555900.png" alt="image-20230802164631503"></p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031555807.png" alt="image-20230802164650502"></p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031555841.png" alt="image-20230802164838310"></p>
+<p>最终存储会将value里面的对象作为存储的值</p>
+<p>帮助我吗做项目临时转化</p>
+<h4 id="表单中双向绑定的使用"><a href="#表单中双向绑定的使用" class="headerlink" title="表单中双向绑定的使用"></a>表单中双向绑定的使用</h4><p>lazy</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031556984.png" alt="image-20230802171443748"></p>
+<p>当失去焦点的时候渲染页面展示的值,跟v-model不一样的地方在于不实时渲染</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031556604.png" alt="image-20230802171603688"></p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031556448.png" alt="image-20230802171623240"></p>
+<p>输入内容的时候由String变成number</p>
+<p><strong>trim</strong></p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031549888.png" alt="image-20230802171807151"></p>
+<p>只去除字符串前后字符,中间的不会去除</p>
+<h2 id="3-探索组件的概念"><a href="#3-探索组件的概念" class="headerlink" title="3.探索组件的概念"></a>3.探索组件的概念</h2><h3 id="3-1-组件的定义及复用性"><a href="#3-1-组件的定义及复用性" class="headerlink" title="3.1 组件的定义及复用性"></a>3.1 组件的定义及复用性</h3><p> <img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031556849.png" alt="image-20230803152607203"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">  &lt;script&gt;</span><br><span class="line">    const app = Vue.createApp(&#123;</span><br><span class="line">      template: `&lt;div&gt;&lt;hello /&gt;&lt;world /&gt;&lt;/div&gt;`,</span><br><span class="line">    &#125;)</span><br><span class="line">    app.component(&#x27;hello&#x27;, &#123;</span><br><span class="line">      template: `&lt;div&gt;hello&lt;/div&gt;`</span><br><span class="line">    &#125;)</span><br><span class="line">    app.component(&#x27;world&#x27;, &#123;</span><br><span class="line">    template: `&lt;div&gt;world&lt;/div&gt;`</span><br><span class="line">    &#125;)    </span><br><span class="line"></span><br><span class="line">    const vm =  app.mount(&#x27;#root&#x27;)</span><br><span class="line">  &lt;/script&gt; </span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>组件可以被复用,但不会和其他组件共享</p>
+<p>独享</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031616842.png" alt="image-20230803161654775"></p>
+<p>app.component定义的组件是全局的,不仅在父组件可以用,在其他的组件里也可以用,</p>
+<p>就算不用组件,但仍会挂载到app上,影响性能,使用简单</p>
+<h3 id="3-2-局部组件"><a href="#3-2-局部组件" class="headerlink" title="3.2 局部组件"></a>3.2 局部组件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">  &lt;script&gt;</span><br><span class="line"></span><br><span class="line">  const hello = &#123;</span><br><span class="line">    template: `&lt;div&gt;hello&lt;/div&gt;`</span><br><span class="line">  &#125;</span><br><span class="line">  const counter = &#123;</span><br><span class="line">   data()&#123;</span><br><span class="line">     return&#123;</span><br><span class="line">       count: 1</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;,</span><br><span class="line">   template:   `&lt;div @click = &quot;count += 1&quot;&gt;&#123;&#123;count&#125;&#125;&lt;/div&gt;`</span><br><span class="line"> &#125;</span><br><span class="line">    const app = Vue.createApp(&#123;</span><br><span class="line">      components: &#123;&#x27;counter&#x27;: counter,</span><br><span class="line">                  &#x27;hello&#x27;:hello</span><br><span class="line">                   &#125;,  // counter ES6</span><br><span class="line">      template: `&lt;div&gt;&lt;counter /&gt;&lt;hello /&gt;&lt;/div&gt;`,</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    const vm = app.mount(&#x27;#root&#x27;)</span><br><span class="line"></span><br><span class="line">  &lt;/script&gt; </span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<p>全局组件建议小写字母单词,中间横线连接</p>
+<p>一般将局部组件首字母大写,驼峰命名法: HelloWorld;</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031632348.png" alt="image-20230803163246287"></p>
+<p>可以略写X部分,系统会自动映射,只把组件名写上去也可以</p>
+<p>局部组件:定义了.要注册之后才能使用,性能比较高,使用起来有些麻烦</p>
+<p>局部组件使用时,要做一个名字和组件间的映射印象</p>
+<h3 id="3-3-组件间传值及传值校验"><a href="#3-3-组件间传值及传值校验" class="headerlink" title="3.3 组件间传值及传值校验"></a>3.3 组件间传值及传值校验</h3><p><code>props:[]</code></p>
+<p><strong>动态传参</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">  &lt;script&gt;</span><br><span class="line">    const app = Vue.createApp(&#123;</span><br><span class="line">      data()&#123;</span><br><span class="line">        return &#123;num:132&#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      template: `&lt;div&gt;&lt;test :content = &quot;num&quot;/&gt;&lt;/div&gt;`</span><br><span class="line">    &#125;)    </span><br><span class="line">    app.component(&#x27;test&#x27;,&#123;</span><br><span class="line">      props: [&#x27;content&#x27;],</span><br><span class="line">      template:`</span><br><span class="line">        &lt;div&gt;&#123;&#123;content&#125;&#125;&lt;/div&gt;</span><br><span class="line">      `</span><br><span class="line">    &#125;)</span><br><span class="line">    const vm =  app.mount(&#x27;#root&#x27;)</span><br><span class="line">  &lt;/script&gt; </span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>通过父组件中的content与data中的num绑定,来实现动态的传参</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">app.component(&#x27;test&#x27;,&#123;</span><br><span class="line">  props: &#123;</span><br><span class="line">    content: String</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+
+<p>意思是需要传递字符串进来,其他类型会警告</p>
+<p><strong>函数传递</strong></p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031731183.png" alt="image-20230803173120103"></p>
+<p>​	<strong>其他的参数:</strong></p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031732207.png" alt="image-20230803173247168"></p>
+<p>required:需要传值但是没传</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031734583.png" alt="image-20230803173412544"></p>
+<p>default可以是数,也可以是函数,代表不传参的时候显示什么</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031735607.png" alt="image-20230803173525564"></p>
+<p>需要&lt;1000, &gt;1000会警告</p>
+<h3 id="3-4-单项数据流的理解"><a href="#3-4-单项数据流的理解" class="headerlink" title="3.4 单项数据流的理解"></a>3.4 单项数据流的理解</h3><p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308032131494.png" alt="image-20230803213149393"></p>
+<p>这样写太麻烦,可以通过对象来简化</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308032135225.png" alt="image-20230803213528186"></p>
+<p><code>v-bind = “params”</code>等价于 :content &#x3D; “params.content”依次往后</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308032138022.png" alt="image-20230803213821963"></p>
+<p>父组件里面用“-” ,子组件要用驼峰来接收</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308032140887.png" alt="image-20230803214049744"></p>
+<p>这样写会报错</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308032143297.png" alt="image-20230803214321237"></p>
+<p>可以这样写,复制一份数组再修改</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308032144072.png" alt="image-20230803214434014"></p>
+<p>如果子组件改父组件里面的数据,那么其他接收data中的数据也会改变,应该避免数据间的耦合.避免以后潜在的bug</p>
+<h3 id="3-5-Non-Props属性"><a href="#3-5-Non-Props属性" class="headerlink" title="3.5 Non-Props属性"></a>3.5 Non-Props属性</h3><p>​	父组件像子组件传值的时候,这些不用的属性该怎么用<img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308042035421.png" alt="image-20230804203533322">如果接收参数,那么就会如图所示等价</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308042038978.png" alt="image-20230804203806926"></p>
+<p>加上这个,就不会添加msg属性值了</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308042040385.png" alt="image-20230804204033308"></p>
+<p><code>$attrs</code>的意思是父组件传的所有值都可以放到这个标签上来</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308042041031.png" alt="image-20230804204148993"></p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308042042054.png" alt="image-20230804204230991"></p>
+<h3 id="3-6-父子组件通过事件通信"><a href="#3-6-父子组件通过事件通信" class="headerlink" title="3.6 父子组件通过事件通信"></a>3.6 父子组件通过事件通信</h3><p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308042050874.png" alt="image-20230804205040790"></p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308042051498.png" alt="image-20230804205117437"></p>
+<p><strong>v-model简化操作</strong></p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308042101724.png" alt="image-20230804210143645"></p>
+<p>这里的modelValue都是固定的,怒等改编成其他的值</p>
+<p>但如果叫其他值,可以按下面的来写</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308042102990.png" alt="image-20230804210239629"></p>
+<h3 id="3-7-插槽"><a href="#3-7-插槽" class="headerlink" title="3.7 插槽"></a>3.7 插槽</h3><p>如果传递dom或者标签元素时,用props是非常麻烦,这时候就可以采用插槽</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308051245440.png" alt="image-20230805124502379"></p>
+<p>如果父组件想给子组件传递dom元素或者节点时,可以通过插槽来完成</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">  &lt;script&gt;</span><br><span class="line">    const app = Vue.createApp(&#123;</span><br><span class="line">      </span><br><span class="line">      template: `&lt;myform&gt;</span><br><span class="line">         &lt;div&gt;提交&lt;/div&gt;</span><br><span class="line">        &lt;/myform&gt;</span><br><span class="line">        &lt;myform&gt;</span><br><span class="line">          &lt;button&gt;提交&lt;/button&gt;</span><br><span class="line">        &lt;/myform&gt;</span><br><span class="line">        `,</span><br><span class="line"></span><br><span class="line">    &#125;)</span><br><span class="line">    app.component(&#x27;myform&#x27;,&#123;</span><br><span class="line">      methods:&#123;</span><br><span class="line">        handleClick()&#123;</span><br><span class="line">          alert(123)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      template:`</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;input /&gt;</span><br><span class="line">        &lt;span @click = &quot;handleClick&quot;&gt;</span><br><span class="line">          &lt;slot&gt;&lt;/slot&gt; </span><br><span class="line">        &lt;/span&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">      `</span><br><span class="line">    &#125;)</span><br><span class="line">    const vm = app.mount(&#x27;#root&#x27;)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>但slot不能绑定事件,如果要绑定事件,可以写在被绑定事件的span标签里面</p>
+<ul>
+<li>slot插槽</li>
+<li>slot 中使用的数据,作用域的问题</li>
+<li>父模版里调用的数据属性, 使用的都是父模版里面的数据</li>
+<li>子模版里调用的数据属性,使用的都是子模版里面的数据</li>
+</ul>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308051251218.png" alt="image-20230805125142156"></p>
+<p>如果slot没有接收到元素,会使用中间的默认元素</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308051255773.png" alt="image-20230805125547696"></p>
+<p>template是占位符</p>
+<p><strong>给slot命名</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  const app = Vue.createApp(&#123;</span><br><span class="line">    </span><br><span class="line">    template: `</span><br><span class="line">    &lt;myform&gt;</span><br><span class="line">      &lt;template v-slot:header&gt;</span><br><span class="line">       &lt;div&gt;提交1&lt;/div&gt;</span><br><span class="line">      &lt;/template&gt;</span><br><span class="line">      &lt;template v-slot:footer&gt;</span><br><span class="line">        &lt;button&gt;提交2&lt;/button&gt;</span><br><span class="line">      &lt;/template&gt;</span><br><span class="line">    &lt;/myform&gt;</span><br><span class="line">      `,</span><br><span class="line">  &#125;)</span><br><span class="line">  app.component(&#x27;myform&#x27;,&#123;</span><br><span class="line">    methods:&#123;</span><br><span class="line">      handleClick()&#123;</span><br><span class="line">        alert(123)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    template:`</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;span @click = &quot;handleClick&quot;&gt;</span><br><span class="line">        &lt;slot name = &quot;footer&quot;&gt;&lt;/slot&gt; </span><br><span class="line">        &lt;slot name = &quot;header&quot;&gt;&lt;/slot&gt; </span><br><span class="line">      &lt;/span&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    `</span><br><span class="line">  &#125;)</span><br><span class="line">  const vm = app.mount(&#x27;#root&#x27;)</span><br><span class="line">&lt;/script&gt; </span><br></pre></td></tr></table></figure>
+
+<p><strong>作用域插槽</strong></p>
+<p>父组件使用子组件里面的数据</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308051339916.png" alt="image-20230805133945833"></p>
+<h3 id="3-8-动态组件和异步组件"><a href="#3-8-动态组件和异步组件" class="headerlink" title="3.8 动态组件和异步组件"></a>3.8 动态组件和异步组件</h3><h4 id="动态组件"><a href="#动态组件" class="headerlink" title="动态组件"></a>动态组件</h4><p>两个组件,实现:点一个组件,另一个组件小时.反之亦然</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308061312887.png" alt="image-20230806130836900"></p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308061312268.png" alt="image-20230806131217319"></p>
+<h4 id="异步组件-用得少"><a href="#异步组件-用得少" class="headerlink" title="异步组件(用得少)"></a>异步组件(用得少)</h4><p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308061316337.png" alt="image-20230806131626259"></p>
+<ul>
+<li>根据数据的变化,结合component这个标签, 来随时动态切换组件的现实</li>
+<li>异步组件:是异步执行某些组件的逻辑,这叫做异步组件</li>
+</ul>
+<h3 id="3-9-基础语法知识点查缺补漏"><a href="#3-9-基础语法知识点查缺补漏" class="headerlink" title="3.9 基础语法知识点查缺补漏"></a>3.9 基础语法知识点查缺补漏</h3><p><strong>v-once</strong></p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308061501613.png" alt="image-20230806150110546"></p>
+<p><strong>ref</strong></p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308061505195.png" alt="image-20230806150502129"></p>
+<p><strong>provide &#x2F; inject</strong></p>
+<p>解决多层值的传递</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308061509364.png" alt="image-20230806150918260"></p>
+<h2 id="4-动画"><a href="#4-动画" class="headerlink" title="4. 动画"></a>4. 动画</h2><h4 id="基础-2"><a href="#基础-2" class="headerlink" title="基础"></a>基础</h4><p> 一个简单的动画形式</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308071647566.png" alt="image-20230807164657444"></p>
+<p>用Vue来控制</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308071648045.png" alt="image-20230807164817981">	</p>
+<p><strong>过渡效果</strong></p>
+<p>背景切换的一个操作</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308071651110.png" alt="image-20230807165144060"></p>
+<p>transition表示背景切换,3s缓慢变动</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308071653304.png" alt="image-20230807165347203"></p>
+<p><strong>带点Vue特色来实现</strong></p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308071659956.png" alt="image-20230807165929874"></p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308071701963.png" alt="image-20230807170129879"></p>
+<p>其实和原生js并没有太大区别,只是从面向dom到面向数据</p>
+<h4 id="使用单元素组件实现过渡"><a href="#使用单元素组件实现过渡" class="headerlink" title="使用单元素组件实现过渡"></a>使用单元素组件实现过渡</h4><p>使用transition标签来实现入场和出场动画</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308071709596.png" alt="image-20230807170928536"></p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308071713080.png" alt="image-20230807171307031"></p>
+<p>对v-重命名</p>
+<p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308071715562.png" alt="image-20230807171531515"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://axdmdyj.github.io">coderLyj</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://axdmdyj.github.io/posts/3a42db2d.html">https://axdmdyj.github.io/posts/3a42db2d.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://axdmdyj.github.io" target="_blank">axdmdyj</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Vue3/">Vue3</a></div><div class="post_share"><div class="social-share" data-image="https://img.3dmgame.com/uploads/images/news/20191101/1572593491_374100.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/dashang.jpg" target="_blank"><img class="post-qr-code-img" src="/img/dashang.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/zhifubao.jpg" target="_blank"><img class="post-qr-code-img" src="/img/zhifubao.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/50cab45.html" title="滑动窗口"><img class="cover" src="https://img.3dmgame.com/uploads/images/news/20191101/1572593491_374100.jpg" onerror="onerror=null;src='https://unpkg.com/plasx@1.0.3/img/404.webp'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">滑动窗口</div></div></a></div><div class="next-post pull-right"><a href="/posts/838a73b0.html" title="有序数组的平方"><img class="cover" src="https://img.3dmgame.com/uploads/images/news/20191101/1572593491_374100.jpg" onerror="onerror=null;src='https://unpkg.com/plasx@1.0.3/img/404.webp'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">有序数组的平方</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/head.jpg" onerror="this.onerror=null;this.src='https://unpkg.com/plasx@1.0.3/img/bj.webp'" alt="avatar"/></div><div class="author-info__name">coderLyj</div><div class="author-info__description">总之岁月漫长,然而值得等待</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">24</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Vue3"><span class="toc-number">1.</span> <span class="toc-text">Vue3</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-vue%E8%AF%AD%E6%B3%95%E5%88%9D%E6%8E%A2"><span class="toc-number">1.1.</span> <span class="toc-text">1.vue语法初探</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-HelloWord"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 HelloWord</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%8F%8D%E8%BD%AC%E5%92%8C%E9%9A%90%E8%97%8F"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 反转和隐藏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-todolist"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 todolist</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E7%BB%84%E4%BB%B6%E6%A6%82%E5%BF%B5%E5%88%9D%E6%8E%A2"><span class="toc-number">1.1.4.</span> <span class="toc-text">1,4 组件概念初探</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Vue%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95"><span class="toc-number">1.2.</span> <span class="toc-text">2. Vue基础语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 基础概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 生命周期函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%B8%B8%E7%94%A8%E6%A8%A1%E7%89%88%E8%AF%AD%E6%B3%95"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 常用模版语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E6%95%B0%E6%8D%AE-%E6%96%B9%E6%B3%95-%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7-%E4%BE%A6%E5%90%AC%E5%99%A8"><span class="toc-number">1.2.4.</span> <span class="toc-text">2.4 数据,方法,计算属性,侦听器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E6%A0%B7%E5%BC%8F%E7%BB%91%E5%AE%9A%E8%AF%AD%E6%B3%95"><span class="toc-number">1.2.5.</span> <span class="toc-text">2.5.样式绑定语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-%E6%9D%A1%E4%BB%B6%E6%B8%B2%E6%9F%93"><span class="toc-number">1.2.6.</span> <span class="toc-text">2.6 条件渲染</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93"><span class="toc-number">1.2.7.</span> <span class="toc-text">2.7 列表渲染</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80"><span class="toc-number">1.2.7.1.</span> <span class="toc-text">基础</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E6%95%B0%E7%BB%84"><span class="toc-number">1.2.7.2.</span> <span class="toc-text">操作数组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.2.7.3.</span> <span class="toc-text">操作对象</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-8-%E4%BA%8B%E4%BB%B6%E7%BB%91%E5%AE%9A"><span class="toc-number">1.2.8.</span> <span class="toc-text">2.8 事件绑定</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80-1"><span class="toc-number">1.2.8.1.</span> <span class="toc-text">基础</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="toc-number">1.2.8.2.</span> <span class="toc-text">事件修饰符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%89%E9%94%AE%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="toc-number">1.2.8.3.</span> <span class="toc-text">按键修饰符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A"><span class="toc-number">1.2.8.4.</span> <span class="toc-text">双向绑定</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A8%E5%8D%95%E4%B8%AD%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.2.8.5.</span> <span class="toc-text">表单中双向绑定的使用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%8E%A2%E7%B4%A2%E7%BB%84%E4%BB%B6%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-number">1.3.</span> <span class="toc-text">3.探索组件的概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E7%BB%84%E4%BB%B6%E7%9A%84%E5%AE%9A%E4%B9%89%E5%8F%8A%E5%A4%8D%E7%94%A8%E6%80%A7"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 组件的定义及复用性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%B1%80%E9%83%A8%E7%BB%84%E4%BB%B6"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 局部组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E7%BB%84%E4%BB%B6%E9%97%B4%E4%BC%A0%E5%80%BC%E5%8F%8A%E4%BC%A0%E5%80%BC%E6%A0%A1%E9%AA%8C"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.3 组件间传值及传值校验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E5%8D%95%E9%A1%B9%E6%95%B0%E6%8D%AE%E6%B5%81%E7%9A%84%E7%90%86%E8%A7%A3"><span class="toc-number">1.3.4.</span> <span class="toc-text">3.4 单项数据流的理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-Non-Props%E5%B1%9E%E6%80%A7"><span class="toc-number">1.3.5.</span> <span class="toc-text">3.5 Non-Props属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E9%80%9A%E8%BF%87%E4%BA%8B%E4%BB%B6%E9%80%9A%E4%BF%A1"><span class="toc-number">1.3.6.</span> <span class="toc-text">3.6 父子组件通过事件通信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-7-%E6%8F%92%E6%A7%BD"><span class="toc-number">1.3.7.</span> <span class="toc-text">3.7 插槽</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-8-%E5%8A%A8%E6%80%81%E7%BB%84%E4%BB%B6%E5%92%8C%E5%BC%82%E6%AD%A5%E7%BB%84%E4%BB%B6"><span class="toc-number">1.3.8.</span> <span class="toc-text">3.8 动态组件和异步组件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E7%BB%84%E4%BB%B6"><span class="toc-number">1.3.8.1.</span> <span class="toc-text">动态组件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%82%E6%AD%A5%E7%BB%84%E4%BB%B6-%E7%94%A8%E5%BE%97%E5%B0%91"><span class="toc-number">1.3.8.2.</span> <span class="toc-text">异步组件(用得少)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-9-%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%9F%A5%E8%AF%86%E7%82%B9%E6%9F%A5%E7%BC%BA%E8%A1%A5%E6%BC%8F"><span class="toc-number">1.3.9.</span> <span class="toc-text">3.9 基础语法知识点查缺补漏</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%8A%A8%E7%94%BB"><span class="toc-number">1.4.</span> <span class="toc-text">4. 动画</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80-2"><span class="toc-number">1.4.0.1.</span> <span class="toc-text">基础</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%8D%95%E5%85%83%E7%B4%A0%E7%BB%84%E4%BB%B6%E5%AE%9E%E7%8E%B0%E8%BF%87%E6%B8%A1"><span class="toc-number">1.4.0.2.</span> <span class="toc-text">使用单元素组件实现过渡</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/e7c3359a.html" title="数据结构常见面试题（1）"><img src="https://img.51miz.com/Element/00/79/35/64/136a9f18_E793564_3d30f33d.png" onerror="this.onerror=null;this.src='https://unpkg.com/plasx@1.0.3/img/404.webp'" alt="数据结构常见面试题（1）"/></a><div class="content"><a class="title" href="/posts/e7c3359a.html" title="数据结构常见面试题（1）">数据结构常见面试题（1）</a><time datetime="2023-11-11T14:47:19.000Z" title="发表于 2023-11-11 22:47:19">2023-11-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/43a71ae4.html" title="MySQL索引"><img src="https://img.3dmgame.com/uploads/images/news/20191101/1572593491_374100.jpg" onerror="this.onerror=null;this.src='https://unpkg.com/plasx@1.0.3/img/404.webp'" alt="MySQL索引"/></a><div class="content"><a class="title" href="/posts/43a71ae4.html" title="MySQL索引">MySQL索引</a><time datetime="2023-10-22T08:08:27.000Z" title="发表于 2023-10-22 16:08:27">2023-10-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/ae0f95e0.html" title="SpringMVC"><img src="https://img.3dmgame.com/uploads/images/news/20191101/1572593491_374100.jpg" onerror="this.onerror=null;this.src='https://unpkg.com/plasx@1.0.3/img/404.webp'" alt="SpringMVC"/></a><div class="content"><a class="title" href="/posts/ae0f95e0.html" title="SpringMVC">SpringMVC</a><time datetime="2023-10-14T17:09:13.000Z" title="发表于 2023-10-15 01:09:13">2023-10-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/d044eab7.html" title="TypeScript"><img src="https://img.3dmgame.com/uploads/images/news/20191101/1572593491_374100.jpg" onerror="this.onerror=null;this.src='https://unpkg.com/plasx@1.0.3/img/404.webp'" alt="TypeScript"/></a><div class="content"><a class="title" href="/posts/d044eab7.html" title="TypeScript">TypeScript</a><time datetime="2023-10-14T15:13:01.000Z" title="发表于 2023-10-14 23:13:01">2023-10-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/9b8ac020.html" title="算法60天训练–10-10-day35"><img src="https://img.3dmgame.com/uploads/images/news/20191101/1572593491_374100.jpg" onerror="this.onerror=null;this.src='https://unpkg.com/plasx@1.0.3/img/404.webp'" alt="算法60天训练–10-10-day35"/></a><div class="content"><a class="title" href="/posts/9b8ac020.html" title="算法60天训练–10-10-day35">算法60天训练–10-10-day35</a><time datetime="2023-10-09T16:49:59.000Z" title="发表于 2023-10-10 00:49:59">2023-10-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By coderLyj</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
