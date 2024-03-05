@@ -1001,13 +1001,11 @@
         <meta name="referrer" content="no-referrer" />
 
 <h1 id="解决报错“Loading-class-com-mysql-jdbc-Driver’-This-is-deprecated”"><a href="#解决报错“Loading-class-com-mysql-jdbc-Driver’-This-is-deprecated”" class="headerlink" title="解决报错“Loading class &#96;com.mysql.jdbc.Driver’. This is deprecated”"></a>解决报错“Loading class &#96;com.mysql.jdbc.Driver’. This is deprecated”</h1><p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308141056315.png" alt="image-20230814105654242"></p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">driver-class-name:</span> <span class="string">com.mysql.jdbc.Driver</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="yml">driver-class-name: com.mysql.jdbc.Driver
+</code></pre>
 <p>在这个基础上,改为</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">driver-class-name:</span> <span class="string">com.mysql.cj.jdbc.Driver</span></span><br></pre></td></tr></table></figure>
-
-
-
+<pre><code class="yml">driver-class-name: com.mysql.cj.jdbc.Driver
+</code></pre>
 <p>除此之外</p>
 <p>将url地址:</p>
 <p>原本是<code>url: jdbc:mysql://127.0.0.1:3306/</code></p>
@@ -1032,9 +1030,9 @@
 <script type="text/javascript">
     $.getScript('/js/gitalk.js', function () {
         var gitalk = new Gitalk({
-            clientID: '035ef548c9e9378701b6',
-            clientSecret: '83814063a9a58aa2ecd9d9ba1d8bbfe9d4205b6b',
-            repo: 'https://axdmdyj.github.io',
+            clientID: 'aeb83b87dc9753d290d4',
+            clientSecret: '179a325f86496596d1df38a53b7be77143374811',
+            repo: 'axdmdyj.github.io',
             owner: 'axdmdyj',
             admin: ['axdmdyj'],
             id: decodeURI(location.pathname),
@@ -1086,20 +1084,6 @@
 
         /*高亮代码块行号*/
         
-        $('pre code').each(function(){
-            var lines = $(this).text().trim().split('\n').length, widther='';
-            if (lines>99) {
-                widther = 'widther'
-            }
-            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
-            $(this).addClass('has-numbering ' + widther)
-                    .parent()
-                    .append($numbering);
-            for(var i=1;i<=lines;i++){
-                $numbering.append($('<li/>').text(i));
-            }
-        });
-        
 
         /*访问数量*/
         
@@ -1119,38 +1103,6 @@
 </script>
 
 <!--加入行号的高亮代码块样式-->
-
-<style>
-    pre{
-        position: relative;
-        margin-bottom: 24px;
-        border-radius: 10px;
-        border: 1px solid #e2dede;
-        background: #FFF;
-        overflow: hidden;
-    }
-    code.has-numbering{
-        margin-left: 30px;
-    }
-    code.has-numbering.widther{
-        margin-left: 35px;
-    }
-    .pre-numbering{
-        margin: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px;
-        padding: 18px 3px 15px 5px;
-        border-right: 1px solid #C3CCD0;
-        text-align: right;
-        color: #AAA;
-        background-color: ;
-    }
-    .pre-numbering.widther {
-        width: 35px;
-    }
-</style>
 
 <!--自定义样式设置-->
 <style>

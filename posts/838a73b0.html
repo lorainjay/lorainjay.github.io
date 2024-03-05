@@ -1014,8 +1014,41 @@
 </blockquote>
 </li>
 </ul>
-<h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><h2 id="暴力"><a href="#暴力" class="headerlink" title="暴力"></a>暴力</h2><figure class="highlight java"><figcaption><span>[]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] sortedSquares(<span class="type">int</span>[] nums) &#123;</span><br><span class="line">        <span class="type">int</span>[] res = nums;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span> ; i &lt; nums.length; i++)&#123;</span><br><span class="line">            res[i] *= nums[i];</span><br><span class="line">        &#125;                   </span><br><span class="line">        Arrays.sort(res) ;<span class="comment">//如果递减就  Arrays.sort(a, Collections.reverseOrder());</span></span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h2><figure class="highlight java"><figcaption><span>[]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] sortedSquares(<span class="type">int</span>[] nums) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> []res = <span class="keyword">new</span> <span class="title class_">int</span>[nums.length]; <span class="comment">//递增存到新数组中</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">k</span> <span class="operator">=</span> nums.length-<span class="number">1</span>; <span class="comment">//新数组的索引</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">l</span> <span class="operator">=</span> <span class="number">0</span>, r = nums.length-<span class="number">1</span>; l &lt;= r; )&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[l]*nums[l] &lt;= nums[r]*nums[r]) &#123;</span><br><span class="line">                 res[k--] = nums[r]*nums[r];</span><br><span class="line">                 r --;</span><br><span class="line">            &#125;</span><br><span class="line">               </span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                res[k--] = nums[l]*nums[l];</span><br><span class="line">                l++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><h2 id="暴力"><a href="#暴力" class="headerlink" title="暴力"></a>暴力</h2><pre><code class="Java">
+class Solution &#123;
+    public int[] sortedSquares(int[] nums) &#123;
+        int[] res = nums;
+        for(int i = 0 ; i &lt; nums.length; i++)&#123;
+            res[i] *= nums[i];
+        &#125;                   
+        Arrays.sort(res) ;//如果递减就  Arrays.sort(a, Collections.reverseOrder());
+        return res;
+    &#125;
+  
+&#125;
+</code></pre>
+<h2 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h2><pre><code class="Java">
+class Solution &#123;
+    public int[] sortedSquares(int[] nums) &#123;
+
+        int []res = new int[nums.length]; //递增存到新数组中
+        int k = nums.length-1; //新数组的索引
+        
+        for(int l = 0, r = nums.length-1; l &lt;= r; )&#123;
+            if(nums[l]*nums[l] &lt;= nums[r]*nums[r]) &#123;
+                 res[k--] = nums[r]*nums[r];
+                 r --;
+            &#125;
+               
+            else&#123;
+                res[k--] = nums[l]*nums[l];
+                l++;
+            &#125;
+        &#125;
+        return res;
+    &#125;
+&#125;
+</code></pre>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 waigo168@163.com </span>
@@ -1032,9 +1065,9 @@
 <script type="text/javascript">
     $.getScript('/js/gitalk.js', function () {
         var gitalk = new Gitalk({
-            clientID: '035ef548c9e9378701b6',
-            clientSecret: '83814063a9a58aa2ecd9d9ba1d8bbfe9d4205b6b',
-            repo: 'https://axdmdyj.github.io',
+            clientID: 'aeb83b87dc9753d290d4',
+            clientSecret: '179a325f86496596d1df38a53b7be77143374811',
+            repo: 'axdmdyj.github.io',
             owner: 'axdmdyj',
             admin: ['axdmdyj'],
             id: decodeURI(location.pathname),
@@ -1086,20 +1119,6 @@
 
         /*高亮代码块行号*/
         
-        $('pre code').each(function(){
-            var lines = $(this).text().trim().split('\n').length, widther='';
-            if (lines>99) {
-                widther = 'widther'
-            }
-            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
-            $(this).addClass('has-numbering ' + widther)
-                    .parent()
-                    .append($numbering);
-            for(var i=1;i<=lines;i++){
-                $numbering.append($('<li/>').text(i));
-            }
-        });
-        
 
         /*访问数量*/
         
@@ -1119,38 +1138,6 @@
 </script>
 
 <!--加入行号的高亮代码块样式-->
-
-<style>
-    pre{
-        position: relative;
-        margin-bottom: 24px;
-        border-radius: 10px;
-        border: 1px solid #e2dede;
-        background: #FFF;
-        overflow: hidden;
-    }
-    code.has-numbering{
-        margin-left: 30px;
-    }
-    code.has-numbering.widther{
-        margin-left: 35px;
-    }
-    .pre-numbering{
-        margin: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px;
-        padding: 18px 3px 15px 5px;
-        border-right: 1px solid #C3CCD0;
-        text-align: right;
-        color: #AAA;
-        background-color: ;
-    }
-    .pre-numbering.widther {
-        width: 35px;
-    }
-</style>
 
 <!--自定义样式设置-->
 <style>

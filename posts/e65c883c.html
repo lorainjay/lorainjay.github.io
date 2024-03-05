@@ -1004,11 +1004,105 @@
 <p>所以比较容易实现的便是,自己定义一个结构,能够让队列头始终是滑动窗口中最大的:</p>
 <p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/imags/202309190106567.png" alt="image-20230919010607211"></p>
 <p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/imags/202309190106585.png" alt="image-20230919010613196"></p>
-<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyQue</span>&#123;</span><br><span class="line">    Deque&lt;Integer&gt; deque = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">poll</span><span class="params">(<span class="type">int</span> value)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!deque.isEmpty() &amp;&amp; value == deque.peek())&#123;</span><br><span class="line">            deque.poll();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">        <span class="keyword">void</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> val)</span>&#123;</span><br><span class="line">            <span class="keyword">while</span>(!deque.isEmpty()  &amp;&amp; val &gt; deque.getLast())&#123;</span><br><span class="line">                deque.removeLast();</span><br><span class="line">            &#125;</span><br><span class="line">            deque.add(val);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> <span class="title function_">peek</span><span class="params">()</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> deque.peek();</span><br><span class="line">        &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] maxSlidingWindow(<span class="type">int</span>[] nums, <span class="type">int</span> k) &#123;</span><br><span class="line">    <span class="keyword">if</span>(nums.length == <span class="number">1</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> nums;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> nums.length - k  + <span class="number">1</span>;</span><br><span class="line">    <span class="comment">// 存放结果元素的数组</span></span><br><span class="line">    <span class="type">int</span>[] res = <span class="keyword">new</span> <span class="title class_">int</span>[len];</span><br><span class="line">    <span class="type">int</span> <span class="variable">num</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">MyQue</span> <span class="variable">myque</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MyQue</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; k; i++)&#123;</span><br><span class="line">        myque.add(nums[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    res[num++] = myque.peek();</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> k; i &lt; nums.length; i++)&#123;</span><br><span class="line">        myque.poll(nums[i-k]);</span><br><span class="line"></span><br><span class="line">        myque.add(nums[i]);</span><br><span class="line">        res[num++] = myque.peek();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><pre><code class="java">class MyQue&#123;
+    Deque&lt;Integer&gt; deque = new LinkedList&lt;&gt;();
+    void poll(int value)&#123;
+        if(!deque.isEmpty() &amp;&amp; value == deque.peek())&#123;
+            deque.poll();
+        &#125;
+    &#125;
+        void add(int val)&#123;
+            while(!deque.isEmpty()  &amp;&amp; val &gt; deque.getLast())&#123;
+                deque.removeLast();
+            &#125;
+            deque.add(val);
+        &#125;
 
+        int peek()&#123;
+            return deque.peek();
+        &#125;
+    
+&#125;
+class Solution &#123;
+
+    
+    public int[] maxSlidingWindow(int[] nums, int k) &#123;
+    if(nums.length == 1)&#123;
+        return nums;
+    &#125;
+    int len = nums.length - k  + 1;
+    // 存放结果元素的数组
+    int[] res = new int[len];
+    int num = 0;
+
+    MyQue myque = new MyQue();
+
+    for(int i = 0; i &lt; k; i++)&#123;
+        myque.add(nums[i]);
+    &#125;
+    res[num++] = myque.peek();
+    for(int i = k; i &lt; nums.length; i++)&#123;
+        myque.poll(nums[i-k]);
+
+        myque.add(nums[i]);
+        res[num++] = myque.peek();
+    &#125;
+
+    return res;
+    &#125;
+
+&#125;
+</code></pre>
 <p>C++:</p>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyQue</span>&#123;</span></span><br><span class="line">    Deque&lt;Integer&gt; <span class="built_in">deque</span> = new LinkedList&lt;&gt;();</span><br><span class="line">    <span class="type">void</span> <span class="title function_">poll</span><span class="params">(<span class="type">int</span> value)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!<span class="built_in">deque</span>.isEmpty() &amp;&amp; value == <span class="built_in">deque</span>.peek())&#123;</span><br><span class="line">            <span class="built_in">deque</span>.poll();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">        <span class="type">void</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> val)</span>&#123;</span><br><span class="line">            <span class="keyword">while</span>(!<span class="built_in">deque</span>.isEmpty()  &amp;&amp; val &gt; <span class="built_in">deque</span>.getLast())&#123;</span><br><span class="line">                <span class="built_in">deque</span>.removeLast();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">deque</span>.add(val);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> <span class="title function_">peek</span><span class="params">()</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">deque</span>.peek();</span><br><span class="line">        &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    public <span class="type">int</span>[] maxSlidingWindow(<span class="type">int</span>[] nums, <span class="type">int</span> k) &#123;</span><br><span class="line">    <span class="keyword">if</span>(nums.length == <span class="number">1</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> nums;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> len = nums.length - k  + <span class="number">1</span>;</span><br><span class="line">    <span class="comment">// 存放结果元素的数组</span></span><br><span class="line">    <span class="type">int</span>[] res = new <span class="type">int</span>[len];</span><br><span class="line">    <span class="type">int</span> num = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    MyQue myque = new MyQue();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; k; i++)&#123;</span><br><span class="line">        myque.add(nums[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    res[num++] = myque.peek();</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = k; i &lt; nums.length; i++)&#123;</span><br><span class="line">        myque.poll(nums[i-k]);</span><br><span class="line"></span><br><span class="line">        myque.add(nums[i]);</span><br><span class="line">        res[num++] = myque.peek();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="c">class MyQue&#123;
+    Deque&lt;Integer&gt; deque = new LinkedList&lt;&gt;();
+    void poll(int value)&#123;
+        if(!deque.isEmpty() &amp;&amp; value == deque.peek())&#123;
+            deque.poll();
+        &#125;
+    &#125;
+        void add(int val)&#123;
+            while(!deque.isEmpty()  &amp;&amp; val &gt; deque.getLast())&#123;
+                deque.removeLast();
+            &#125;
+            deque.add(val);
+        &#125;
 
+        int peek()&#123;
+            return deque.peek();
+        &#125;
+    
+&#125;
+class Solution &#123;
+
+    
+    public int[] maxSlidingWindow(int[] nums, int k) &#123;
+    if(nums.length == 1)&#123;
+        return nums;
+    &#125;
+    int len = nums.length - k  + 1;
+    // 存放结果元素的数组
+    int[] res = new int[len];
+    int num = 0;
+
+    MyQue myque = new MyQue();
+
+    for(int i = 0; i &lt; k; i++)&#123;
+        myque.add(nums[i]);
+    &#125;
+    res[num++] = myque.peek();
+    for(int i = k; i &lt; nums.length; i++)&#123;
+        myque.poll(nums[i-k]);
+
+        myque.add(nums[i]);
+        res[num++] = myque.peek();
+    &#125;
+
+    return res;
+    &#125;
+
+&#125;
+</code></pre>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 waigo168@163.com </span>
@@ -1025,9 +1119,9 @@
 <script type="text/javascript">
     $.getScript('/js/gitalk.js', function () {
         var gitalk = new Gitalk({
-            clientID: '035ef548c9e9378701b6',
-            clientSecret: '83814063a9a58aa2ecd9d9ba1d8bbfe9d4205b6b',
-            repo: 'https://axdmdyj.github.io',
+            clientID: 'aeb83b87dc9753d290d4',
+            clientSecret: '179a325f86496596d1df38a53b7be77143374811',
+            repo: 'axdmdyj.github.io',
             owner: 'axdmdyj',
             admin: ['axdmdyj'],
             id: decodeURI(location.pathname),
@@ -1079,20 +1173,6 @@
 
         /*高亮代码块行号*/
         
-        $('pre code').each(function(){
-            var lines = $(this).text().trim().split('\n').length, widther='';
-            if (lines>99) {
-                widther = 'widther'
-            }
-            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
-            $(this).addClass('has-numbering ' + widther)
-                    .parent()
-                    .append($numbering);
-            for(var i=1;i<=lines;i++){
-                $numbering.append($('<li/>').text(i));
-            }
-        });
-        
 
         /*访问数量*/
         
@@ -1112,38 +1192,6 @@
 </script>
 
 <!--加入行号的高亮代码块样式-->
-
-<style>
-    pre{
-        position: relative;
-        margin-bottom: 24px;
-        border-radius: 10px;
-        border: 1px solid #e2dede;
-        background: #FFF;
-        overflow: hidden;
-    }
-    code.has-numbering{
-        margin-left: 30px;
-    }
-    code.has-numbering.widther{
-        margin-left: 35px;
-    }
-    .pre-numbering{
-        margin: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px;
-        padding: 18px 3px 15px 5px;
-        border-right: 1px solid #C3CCD0;
-        text-align: right;
-        color: #AAA;
-        background-color: ;
-    }
-    .pre-numbering.widther {
-        width: 35px;
-    }
-</style>
 
 <!--自定义样式设置-->
 <style>

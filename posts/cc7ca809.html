@@ -1034,8 +1034,23 @@
 <li>举例推导dp数组</li>
 </ol>
 <p>按照这个递推公式dp[i] &#x3D; dp[i - 1] + dp[i - 2]，推导一下，当N为10的时候，dp数组应该是如下的数列：<br>0 1 1 2 3 5 8 13 21 34 55</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> :</span><br><span class="line">        <span class="function"><span class="type">int</span> <span class="title">fib</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">dp</span><span class="params">(n+<span class="number">1</span>)</span></span>;</span><br><span class="line">        <span class="keyword">if</span>( n &lt;= <span class="number">1</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> n;</span><br><span class="line">        &#125;</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        dp[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">2</span>; i &lt;= n; i++)&#123;</span><br><span class="line">            dp[i] = dp[i<span class="number">-1</span>] + dp[i<span class="number">-2</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<pre><code class="cpp">class Solution &#123;
+    public :
+        int fib(int n) &#123;
 
+        vector&lt;int&gt; dp(n+1);
+        if( n &lt;= 1)&#123;
+            return n;
+        &#125;
+        dp[0] = 0;
+        dp[1] = 1;
+        for(int i = 2; i &lt;= n; i++)&#123;
+            dp[i] = dp[i-1] + dp[i-2];
+        &#125;
+        return dp[n];
+    &#125;
+&#125;;
+</code></pre>
 <h1 id="爬楼梯"><a href="#爬楼梯" class="headerlink" title="爬楼梯"></a>爬楼梯</h1><p>题目链接:<br><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/climbing-stairs/description/">力扣（LeetCode）官网 - 全球极客挚爱的技术成长平台</a></p>
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>第三层楼梯的状态可以由第二层楼梯 和 到第一层楼梯状态推导出来，那么就可以想到动态规划了。</p>
 <h2 id="DP五部曲"><a href="#DP五部曲" class="headerlink" title="DP五部曲"></a>DP五部曲</h2><ul>
@@ -1073,8 +1088,22 @@
 </li>
 </ul>
 <p><img src="https://cdn.nlark.com/yuque/0/2023/png/38717174/1697472840603-278be474-e26a-42bf-9b0e-e7f7df782d25.png#averageHue=%23f2f2f2&clientId=u35be678d-fe85-4&from=paste&height=384&id=u4b3a3af1&originHeight=384&originWidth=814&originalType=binary&ratio=1&rotation=0&showTitle=false&size=26258&status=done&style=none&taskId=u507c4ece-7908-43fb-b8b9-d0cffdc4b53&title=&width=814" alt="image.png"><br>这不就是斐波那契嘛</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">climbStairs</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(n &lt;= <span class="number">1</span>) <span class="keyword">return</span> n;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span>[] dp = <span class="keyword">new</span> <span class="title class_">int</span>[n+<span class="number">1</span>];</span><br><span class="line">        dp[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">        dp[<span class="number">2</span>] = <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">3</span>; i &lt;= n; i++)&#123;</span><br><span class="line">            dp[i] = dp[i-<span class="number">2</span>] + dp[i-<span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> dp[n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="java">class Solution &#123;
+    public int climbStairs(int n) &#123;
+        
+        if(n &lt;= 1) return n;
 
+        int[] dp = new int[n+1];
+        dp[1] = 1;
+        dp[2] = 2;
+        for(int i = 3; i &lt;= n; i++)&#123;
+            dp[i] = dp[i-2] + dp[i-1];
+        &#125;
+
+        return dp[n];
+    &#125;
+&#125;
+</code></pre>
 <h1 id="最长公共子序列"><a href="#最长公共子序列" class="headerlink" title="最长公共子序列"></a>最长公共子序列</h1><p>看不懂就先看动态视频的演示，注意max的含义。<br>【【算法演示】动态规划求解最长公共子序列】<br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1PA411w7CW?vd_source=fcae3ca58a4c2446a58b5aaacbaa4bbe">【算法演示】动态规划求解最长公共子序列_哔哩哔哩_bilibili</a></p>
 
       
@@ -1092,9 +1121,9 @@
 <script type="text/javascript">
     $.getScript('/js/gitalk.js', function () {
         var gitalk = new Gitalk({
-            clientID: '035ef548c9e9378701b6',
-            clientSecret: '83814063a9a58aa2ecd9d9ba1d8bbfe9d4205b6b',
-            repo: 'https://axdmdyj.github.io',
+            clientID: 'aeb83b87dc9753d290d4',
+            clientSecret: '179a325f86496596d1df38a53b7be77143374811',
+            repo: 'axdmdyj.github.io',
             owner: 'axdmdyj',
             admin: ['axdmdyj'],
             id: decodeURI(location.pathname),
@@ -1146,20 +1175,6 @@
 
         /*高亮代码块行号*/
         
-        $('pre code').each(function(){
-            var lines = $(this).text().trim().split('\n').length, widther='';
-            if (lines>99) {
-                widther = 'widther'
-            }
-            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
-            $(this).addClass('has-numbering ' + widther)
-                    .parent()
-                    .append($numbering);
-            for(var i=1;i<=lines;i++){
-                $numbering.append($('<li/>').text(i));
-            }
-        });
-        
 
         /*访问数量*/
         
@@ -1179,38 +1194,6 @@
 </script>
 
 <!--加入行号的高亮代码块样式-->
-
-<style>
-    pre{
-        position: relative;
-        margin-bottom: 24px;
-        border-radius: 10px;
-        border: 1px solid #e2dede;
-        background: #FFF;
-        overflow: hidden;
-    }
-    code.has-numbering{
-        margin-left: 30px;
-    }
-    code.has-numbering.widther{
-        margin-left: 35px;
-    }
-    .pre-numbering{
-        margin: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px;
-        padding: 18px 3px 15px 5px;
-        border-right: 1px solid #C3CCD0;
-        text-align: right;
-        color: #AAA;
-        background-color: ;
-    }
-    .pre-numbering.widther {
-        width: 35px;
-    }
-</style>
 
 <!--自定义样式设置-->
 <style>

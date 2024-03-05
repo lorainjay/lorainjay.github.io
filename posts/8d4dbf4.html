@@ -1007,8 +1007,9 @@
 <li>第一曲:确定递归函数参数</li>
 </ul>
 <p>依然定义path 和 result为全局变量</p>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;&gt; result; <span class="comment">// 存放结果集</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; path; <span class="comment">// 符合条件的结果</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="c">vector&lt;vector&lt;int&gt;&gt; result; // 存放结果集
+vector&lt;int&gt; path; // 符合条件的结果
+</code></pre>
 <blockquote>
 <ul>
 <li>targetSum（int）目标和，也就是题目中的n。</li>
@@ -1017,30 +1018,101 @@
 <li>startIndex（int）为下一层for循环搜索的起始位置。</li>
 </ul>
 </blockquote>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;&gt; result;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; path;</span><br><span class="line"><span class="type">void</span> <span class="title function_">backtracking</span><span class="params">(<span class="type">int</span> targetSum, <span class="type">int</span> k, <span class="type">int</span> sum, <span class="type">int</span> startIndex)</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="c">vector&lt;vector&lt;int&gt;&gt; result;
+vector&lt;int&gt; path;
+void backtracking(int targetSum, int k, int sum, int startIndex)
+</code></pre>
 <p>补充一下: 回溯算法递归的参数很难一次确定,需要用到什么参数,填什么参数</p>
 <ul>
 <li>第二曲:确定终止条件</li>
 </ul>
 <p>跟组合一样,遍历到第k层其实就已经将树的深度遍历完了</p>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (path.size() == k) &#123;</span><br><span class="line">    <span class="keyword">if</span> (sum == targetSum) result.push_back(path);</span><br><span class="line">    <span class="keyword">return</span>; <span class="comment">// 如果path.size() == k 但sum != targetSum 直接返回</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="c">if (path.size() == k) &#123;
+    if (sum == targetSum) result.push_back(path);
+    return; // 如果path.size() == k 但sum != targetSum 直接返回
+&#125;
+</code></pre>
 <ul>
 <li>第三曲: 单层搜索</li>
 </ul>
 <p>每一层都是遍历的数都是上一层的数<code>-1</code>,因为集合中不能出现重复的数</p>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = startIndex; i &lt;= <span class="number">9</span>; i++) &#123;</span><br><span class="line">    sum += i;</span><br><span class="line">    path.push_back(i);</span><br><span class="line">    backtracking(targetSum, k, sum, i + <span class="number">1</span>); <span class="comment">// 注意i+1调整startIndex</span></span><br><span class="line">    sum -= i; <span class="comment">// 回溯</span></span><br><span class="line">    path.pop_back(); <span class="comment">// 回溯</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="c">for (int i = startIndex; i &lt;= 9; i++) &#123;
+    sum += i;
+    path.push_back(i);
+    backtracking(targetSum, k, sum, i + 1); // 注意i+1调整startIndex
+    sum -= i; // 回溯
+    path.pop_back(); // 回溯
+&#125;
+</code></pre>
 <p>思考这段代码的时候,暂时不要去考虑backtracking里面的过程,直接到<code>sum  -= i</code>和<code>pop.pop_back</code>,然后进行下一层for循环,这两个相当于是清理战场了,然后换一个<code>i</code>再打一遍</p>
-<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><h3 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h3><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line">public:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; path;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;&gt;res;</span><br><span class="line">    <span class="type">void</span> <span class="title function_">backtracking</span><span class="params">(<span class="type">int</span> targetSum, <span class="type">int</span> k, <span class="type">int</span> sum, <span class="type">int</span> startIndex)</span>&#123;</span><br><span class="line">        <span class="comment">// 终止条件</span></span><br><span class="line">        <span class="keyword">if</span>(path.size() == k)&#123;</span><br><span class="line">            <span class="keyword">if</span>(targetSum == sum) &#123;</span><br><span class="line">                res.push_back(path);</span><br><span class="line">                <span class="keyword">return</span> ;</span><br><span class="line">        &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      </span><br><span class="line">        </span><br><span class="line">        <span class="comment">//单层搜索</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = startIndex; i &lt;= <span class="number">9</span> ; i++)&#123;</span><br><span class="line">            path.push_back(i);</span><br><span class="line">            sum += i;</span><br><span class="line">            backtracking(targetSum,k,sum,i+<span class="number">1</span>);</span><br><span class="line">            sum -= i;</span><br><span class="line">            path.pop_back();</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;&gt; combinationSum3(<span class="type">int</span> k, <span class="type">int</span> n) &#123;</span><br><span class="line">        backtracking(n, k, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><h3 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h3><pre><code class="c">class Solution &#123;
+public:
+    vector&lt;int&gt; path;
+    vector&lt;vector&lt;int&gt;&gt;res;
+    void backtracking(int targetSum, int k, int sum, int startIndex)&#123;
+        // 终止条件
+        if(path.size() == k)&#123;
+            if(targetSum == sum) &#123;
+                res.push_back(path);
+                return ;
+        &#125;
+        &#125;
+      
+        
+        //单层搜索
+        for(int i = startIndex; i &lt;= 9 ; i++)&#123;
+            path.push_back(i);
+            sum += i;
+            backtracking(targetSum,k,sum,i+1);
+            sum -= i;
+            path.pop_back();
+        &#125;
+        
+    &#125;
+    vector&lt;vector&lt;int&gt;&gt; combinationSum3(int k, int n) &#123;
+        backtracking(n, k, 0, 1);
+        return res;
+    &#125;
+&#125;;
+</code></pre>
 <h2 id="剪枝优化"><a href="#剪枝优化" class="headerlink" title="剪枝优化"></a>剪枝优化</h2><p>如果已经选的元素 已经大于<code>targetSum</code>了,那么也没有必要继续往下遍历了</p>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 剪枝操作</span></span><br><span class="line"><span class="keyword">if</span>(sum) &gt; targetSum&#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="c">// 剪枝操作
+if(sum) &gt; targetSum&#123;
+    return;
+&#125;
+</code></pre>
 <p>最终代码</p>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line">public:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; path;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;&gt;res;</span><br><span class="line">    <span class="type">void</span> <span class="title function_">backtracking</span><span class="params">(<span class="type">int</span> targetSum, <span class="type">int</span> k, <span class="type">int</span> sum, <span class="type">int</span> startIndex)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(sum &gt; targetSum) <span class="keyword">return</span>;</span><br><span class="line">        <span class="comment">// 终止条件</span></span><br><span class="line">        <span class="keyword">if</span>(path.size() == k)&#123;</span><br><span class="line">            <span class="keyword">if</span>(targetSum == sum) &#123;</span><br><span class="line">                res.push_back(path);</span><br><span class="line">                <span class="keyword">return</span> ;</span><br><span class="line">        &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      </span><br><span class="line">        </span><br><span class="line">        <span class="comment">//单层搜索</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = startIndex; i &lt;= <span class="number">9</span> ; i++)&#123;</span><br><span class="line">            path.push_back(i);</span><br><span class="line">            sum += i;</span><br><span class="line">            backtracking(targetSum,k,sum,i+<span class="number">1</span>);</span><br><span class="line">            sum -= i;</span><br><span class="line">            path.pop_back();</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;&gt; combinationSum3(<span class="type">int</span> k, <span class="type">int</span> n) &#123;</span><br><span class="line">        backtracking(n, k, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="c">class Solution &#123;
+public:
+    vector&lt;int&gt; path;
+    vector&lt;vector&lt;int&gt;&gt;res;
+    void backtracking(int targetSum, int k, int sum, int startIndex)&#123;
+        if(sum &gt; targetSum) return;
+        // 终止条件
+        if(path.size() == k)&#123;
+            if(targetSum == sum) &#123;
+                res.push_back(path);
+                return ;
+        &#125;
+        &#125;
+      
+        
+        //单层搜索
+        for(int i = startIndex; i &lt;= 9 ; i++)&#123;
+            path.push_back(i);
+            sum += i;
+            backtracking(targetSum,k,sum,i+1);
+            sum -= i;
+            path.pop_back();
+        &#125;
+        
+    &#125;
+    vector&lt;vector&lt;int&gt;&gt; combinationSum3(int k, int n) &#123;
+        backtracking(n, k, 0, 1);
+        return res;
+    &#125;
+&#125;;
+</code></pre>
 <h1 id="17-电话号码的字母组合"><a href="#17-电话号码的字母组合" class="headerlink" title="17. 电话号码的字母组合"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/letter-combinations-of-a-phone-number/">17. 电话号码的字母组合</a></h1><h2 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h2><p>本题一眼看可以暴力,因为如果<code>digit = 2</code>, 那么两层for魂环酒后了. 但如果<code>digit=10086</code> 层呢,for循环是并不可能的. 这是和<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/combinations/">77. 组合</a>在刚开始分析时一样的问题</p>
 <p>理解本题后，要解决如下三个问题：</p>
 <ul>
@@ -1049,30 +1121,90 @@
 <li>输入1 * #按键等等异常情况</li>
 </ul>
 <h2 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h2><h3 id="数字和字母如何映射"><a href="#数字和字母如何映射" class="headerlink" title="数字和字母如何映射"></a>数字和字母如何映射</h3><p>可以用<code>map</code>, 或者定义一个二维数组,</p>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="built_in">string</span> letterMap[<span class="number">10</span>] = &#123;</span><br><span class="line">    <span class="string">&quot;&quot;</span>, <span class="comment">// 0</span></span><br><span class="line">    <span class="string">&quot;&quot;</span>, <span class="comment">// 1</span></span><br><span class="line">    <span class="string">&quot;abc&quot;</span>, <span class="comment">// 2</span></span><br><span class="line">    <span class="string">&quot;def&quot;</span>, <span class="comment">// 3</span></span><br><span class="line">    <span class="string">&quot;ghi&quot;</span>, <span class="comment">// 4</span></span><br><span class="line">    <span class="string">&quot;jkl&quot;</span>, <span class="comment">// 5</span></span><br><span class="line">    <span class="string">&quot;mno&quot;</span>, <span class="comment">// 6</span></span><br><span class="line">    <span class="string">&quot;pqrs&quot;</span>, <span class="comment">// 7</span></span><br><span class="line">    <span class="string">&quot;tuv&quot;</span>, <span class="comment">// 8</span></span><br><span class="line">    <span class="string">&quot;wxyz&quot;</span>, <span class="comment">// 9</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="c">const string letterMap[10] = &#123;
+    &quot;&quot;, // 0
+    &quot;&quot;, // 1
+    &quot;abc&quot;, // 2
+    &quot;def&quot;, // 3
+    &quot;ghi&quot;, // 4
+    &quot;jkl&quot;, // 5
+    &quot;mno&quot;, // 6
+    &quot;pqrs&quot;, // 7
+    &quot;tuv&quot;, // 8
+    &quot;wxyz&quot;, // 9
+&#125;;
+</code></pre>
 <h3 id="回溯法来解决n个for循环的问题"><a href="#回溯法来解决n个for循环的问题" class="headerlink" title="回溯法来解决n个for循环的问题"></a>回溯法来解决n个for循环的问题</h3><p>依然是: 深度就是字母集合的长度</p>
 <h3 id="回溯三部曲"><a href="#回溯三部曲" class="headerlink" title="回溯三部曲"></a>回溯三部曲</h3><ul>
 <li>第一曲: 确定回溯函数参数</li>
 </ul>
 <p>这个在实际做题中不可能一下子想出来,用到什么写什么</p>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; result;<span class="comment">//字符串数组result保存起来</span></span><br><span class="line"><span class="built_in">string</span> s;<span class="comment">//收集叶子节点的结果</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">backtracking</span><span class="params">(<span class="type">const</span> <span class="built_in">string</span>&amp; digits, <span class="type">int</span> index)</span><span class="comment">//记录遍历第几个数字</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="c">vector&lt;string&gt; result;//字符串数组result保存起来
+string s;//收集叶子节点的结果
+void backtracking(const string&amp; digits, int index)//记录遍历第几个数字
+</code></pre>
 <p>const string&amp; digit相当于取了一个别名,引用digit但不改变其字符串内容</p>
 <ul>
 <li>确定终止条件</li>
 </ul>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(intdex == digits.size())&#123;<span class="comment">//遍历到树底了</span></span><br><span class="line">    result.push_back(s);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="c">if(intdex == digits.size())&#123;//遍历到树底了
+    result.push_back(s);
+    return;
+&#125;
+</code></pre>
 <ul>
 <li>确定单层遍历逻辑</li>
 </ul>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> digit = digits[index] - <span class="string">&#x27;0&#x27;</span>;        <span class="comment">// 将index指向的数字转为int</span></span><br><span class="line"><span class="built_in">string</span> letters = letterMap[digit];      <span class="comment">// 取数字对应的字符集</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; letters.size(); i++) &#123;</span><br><span class="line">    s.push_back(letters[i]);            <span class="comment">// 处理</span></span><br><span class="line">    backtracking(digits, index + <span class="number">1</span>);    <span class="comment">// 递归，注意index+1，一下层要处理下一个数字了</span></span><br><span class="line">    s.pop_back();                       <span class="comment">// 回溯</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="c">int digit = digits[index] - &#39;0&#39;;        // 将index指向的数字转为int
+string letters = letterMap[digit];      // 取数字对应的字符集
+for (int i = 0; i &lt; letters.size(); i++) &#123;
+    s.push_back(letters[i]);            // 处理
+    backtracking(digits, index + 1);    // 递归，注意index+1，一下层要处理下一个数字了
+    s.pop_back();                       // 回溯
+&#125;
+</code></pre>
 <p><strong>这里的for循环并不是从startIndex开始遍历的</strong> <strong>因为本题每一个数字代表的是不同集合，也就是求不同集合之间的组合</strong>，<strong>而<a target="_blank" rel="noopener" href="https://programmercarl.com/0077.%E7%BB%84%E5%90%88.html">77. 组合 (opens new window)</a>和<a target="_blank" rel="noopener" href="https://programmercarl.com/0216.%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8CIII.html">216.组合总和III (opens new window)</a>都是求同一个集合中的组合！</strong></p>
 <p>注意：输入1 * #按键等等异常情况</p>
-<h2 id="Code-1"><a href="#Code-1" class="headerlink" title="Code"></a>Code</h2><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line">public:</span><br><span class="line">    <span class="type">const</span> <span class="built_in">string</span> letterMap[<span class="number">10</span>] = &#123;</span><br><span class="line">        <span class="string">&quot;&quot;</span>, <span class="comment">// 0</span></span><br><span class="line">        <span class="string">&quot;&quot;</span>, <span class="comment">// 1</span></span><br><span class="line">        <span class="string">&quot;abc&quot;</span>, <span class="comment">// 2</span></span><br><span class="line">        <span class="string">&quot;def&quot;</span>, <span class="comment">// 3</span></span><br><span class="line">        <span class="string">&quot;ghi&quot;</span>, <span class="comment">// 4</span></span><br><span class="line">        <span class="string">&quot;jkl&quot;</span>, <span class="comment">// 5</span></span><br><span class="line">        <span class="string">&quot;mno&quot;</span>, <span class="comment">// 6</span></span><br><span class="line">        <span class="string">&quot;pqrs&quot;</span>, <span class="comment">// 7</span></span><br><span class="line">        <span class="string">&quot;tuv&quot;</span>, <span class="comment">// 8</span></span><br><span class="line">        <span class="string">&quot;wxyz&quot;</span>, <span class="comment">// 9</span></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">string</span> s;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;res;</span><br><span class="line"></span><br><span class="line">    <span class="type">void</span> <span class="title function_">backtracking</span><span class="params">(<span class="type">const</span> <span class="built_in">string</span>&amp; digits, <span class="type">int</span> index)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(index == digits.size())&#123;</span><br><span class="line">            res.push_back(s);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> digit = digits[index] - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">        <span class="built_in">string</span> letters = letterMap[digit];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; letters.size(); i++)&#123;</span><br><span class="line">            s.push_back(letters[i]);</span><br><span class="line">            backtracking(digits, index + <span class="number">1</span>);</span><br><span class="line">            s.pop_back();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; <span class="title function_">letterCombinations</span><span class="params">(<span class="built_in">string</span> digits)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(digits.size() == <span class="number">0</span>) <span class="keyword">return</span> res;</span><br><span class="line"></span><br><span class="line">        backtracking(digits,<span class="number">0</span>) ;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="Code-1"><a href="#Code-1" class="headerlink" title="Code"></a>Code</h2><pre><code class="c">class Solution &#123;
+public:
+    const string letterMap[10] = &#123;
+        &quot;&quot;, // 0
+        &quot;&quot;, // 1
+        &quot;abc&quot;, // 2
+        &quot;def&quot;, // 3
+        &quot;ghi&quot;, // 4
+        &quot;jkl&quot;, // 5
+        &quot;mno&quot;, // 6
+        &quot;pqrs&quot;, // 7
+        &quot;tuv&quot;, // 8
+        &quot;wxyz&quot;, // 9
+    &#125;;
 
+    string s;
+    vector&lt;string&gt;res;
+
+    void backtracking(const string&amp; digits, int index)&#123;
+        if(index == digits.size())&#123;
+            res.push_back(s);
+            return;
+        &#125;
+        int digit = digits[index] - &#39;0&#39;;
+        string letters = letterMap[digit];
+
+        for(int i = 0; i &lt; letters.size(); i++)&#123;
+            s.push_back(letters[i]);
+            backtracking(digits, index + 1);
+            s.pop_back();
+        &#125;
+    &#125;
+    vector&lt;string&gt; letterCombinations(string digits) &#123;
+        if(digits.size() == 0) return res;
+
+        backtracking(digits,0) ;
+        return res;
+    &#125;
+&#125;;
+</code></pre>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 waigo168@163.com </span>
@@ -1089,9 +1221,9 @@
 <script type="text/javascript">
     $.getScript('/js/gitalk.js', function () {
         var gitalk = new Gitalk({
-            clientID: '035ef548c9e9378701b6',
-            clientSecret: '83814063a9a58aa2ecd9d9ba1d8bbfe9d4205b6b',
-            repo: 'https://axdmdyj.github.io',
+            clientID: 'aeb83b87dc9753d290d4',
+            clientSecret: '179a325f86496596d1df38a53b7be77143374811',
+            repo: 'axdmdyj.github.io',
             owner: 'axdmdyj',
             admin: ['axdmdyj'],
             id: decodeURI(location.pathname),
@@ -1143,20 +1275,6 @@
 
         /*高亮代码块行号*/
         
-        $('pre code').each(function(){
-            var lines = $(this).text().trim().split('\n').length, widther='';
-            if (lines>99) {
-                widther = 'widther'
-            }
-            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
-            $(this).addClass('has-numbering ' + widther)
-                    .parent()
-                    .append($numbering);
-            for(var i=1;i<=lines;i++){
-                $numbering.append($('<li/>').text(i));
-            }
-        });
-        
 
         /*访问数量*/
         
@@ -1176,38 +1294,6 @@
 </script>
 
 <!--加入行号的高亮代码块样式-->
-
-<style>
-    pre{
-        position: relative;
-        margin-bottom: 24px;
-        border-radius: 10px;
-        border: 1px solid #e2dede;
-        background: #FFF;
-        overflow: hidden;
-    }
-    code.has-numbering{
-        margin-left: 30px;
-    }
-    code.has-numbering.widther{
-        margin-left: 35px;
-    }
-    .pre-numbering{
-        margin: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px;
-        padding: 18px 3px 15px 5px;
-        border-right: 1px solid #C3CCD0;
-        text-align: right;
-        color: #AAA;
-        background-color: ;
-    }
-    .pre-numbering.widther {
-        width: 35px;
-    }
-</style>
 
 <!--自定义样式设置-->
 <style>

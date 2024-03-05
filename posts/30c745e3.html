@@ -1000,8 +1000,13 @@
       
         <h1 id="77-组合"><a href="#77-组合" class="headerlink" title="77. 组合"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/combinations/">77. 组合</a></h1><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>如果 <code>k = 2</code></p>
 <p>就直接可以用两层for循环可以解决</p>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> n = <span class="number">4</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = i + <span class="number">1</span>; j &lt;= n; j++) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; j &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="c">int n = 4;
+for (int i = 1; i &lt;= n; i++) &#123;
+    for (int j = i + 1; j &lt;= n; j++) &#123;
+        cout &lt;&lt; i &lt;&lt; &quot; &quot; &lt;&lt; j &lt;&lt; endl;
+    &#125;
+&#125;
+</code></pre>
 <p>但如果 <code> k = 10086呢</code> 不可能去用10086层for循环</p>
 <p>这时候可以考虑取用回溯算法来解决暴力都解决不了的问题</p>
 <p>递归来做层叠嵌套（可以理解是开k层for循环），<strong>每一次的递归中嵌套一个for循环，那么递归就可以用于解决多层嵌套循环的问题了</strong>。</p>
@@ -1014,45 +1019,111 @@
 <li>递归的返回值以及参数</li>
 </ul>
 <p>先定义两个全局变量:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; result; <span class="comment">// 存放符合条件结果的集合</span></span><br><span class="line">vector&lt;<span class="type">int</span>&gt; path; <span class="comment">// 用来存放符合条件结果</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">vector&lt;vector&lt;int&gt;&gt; result; // 存放符合条件结果的集合
+vector&lt;int&gt; path; // 用来存放符合条件结果
+</code></pre>
 <ul>
 <li>回溯函数的三个参数</li>
 </ul>
 <p>n, 集合大小.   k 组合集合的大小(树的深度)</p>
 <p><strong>startIndex</strong> 记录下一层递归从哪开始,避免重复</p>
 <p>比如1,2,3,4下一层就要从2开始</p>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;&gt; result; <span class="comment">// 存放符合条件结果的集合</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; path; <span class="comment">// 用来存放符合条件单一结果</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">backtracking</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span> k, <span class="type">int</span> startIndex)</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="c">vector&lt;vector&lt;int&gt;&gt; result; // 存放符合条件结果的集合
+vector&lt;int&gt; path; // 用来存放符合条件单一结果
+void backtracking(int n, int k, int startIndex)
+</code></pre>
 <ul>
 <li>回溯终止条件</li>
 </ul>
 <p>path数组的大小等于k时,找到了一个子集大小为k的组合,在path存的就是根节点到叶子结点的路径</p>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (path.size() == k) &#123;</span><br><span class="line">    result.push_back(path);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="c">if (path.size() == k) &#123;
+    result.push_back(path);
+    return;
+&#125;
+</code></pre>
 <ul>
 <li>单层搜索的过程</li>
 </ul>
 <p>for循环, &#x3D;&gt;  横向遍历集合</p>
 <p>递归 &#x3D;&gt; 纵向遍历</p>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = startIndex; i &lt;= n; i++) &#123; <span class="comment">// 控制树的横向遍历</span></span><br><span class="line">    path.push_back(i); <span class="comment">// 处理节点</span></span><br><span class="line">    backtracking(n, k, i + <span class="number">1</span>); <span class="comment">// 递归：控制树的纵向遍历，注意下一层搜索要从i+1开始</span></span><br><span class="line">    path.pop_back(); <span class="comment">// 回溯，撤销处理的节点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="c">for (int i = startIndex; i &lt;= n; i++) &#123; // 控制树的横向遍历
+    path.push_back(i); // 处理节点
+    backtracking(n, k, i + 1); // 递归：控制树的纵向遍历，注意下一层搜索要从i+1开始
+    path.pop_back(); // 回溯，撤销处理的节点
+&#125;
+</code></pre>
+<h2 id="回溯模版"><a href="#回溯模版" class="headerlink" title="回溯模版"></a>回溯模版</h2><pre><code class="c">void backtracking(参数) &#123;
+    if (终止条件) &#123;
+        存放结果;
+        return;
+    &#125;
 
-<h2 id="回溯模版"><a href="#回溯模版" class="headerlink" title="回溯模版"></a>回溯模版</h2><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">backtracking</span><span class="params">(参数)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (终止条件) &#123;</span><br><span class="line">        存放结果;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (选择：本层集合中元素（树中节点孩子的数量就是集合的大小）) &#123;</span><br><span class="line">        处理节点;</span><br><span class="line">        backtracking(路径，选择列表); <span class="comment">// 递归</span></span><br><span class="line">        回溯，撤销处理结果</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
+    for (选择：本层集合中元素（树中节点孩子的数量就是集合的大小）) &#123;
+        处理节点;
+        backtracking(路径，选择列表); // 递归
+        回溯，撤销处理结果
+    &#125;
+&#125;
+</code></pre>
 <h2 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h2><ul>
 <li>时间复杂度: O(n * 2^n)</li>
 <li>空间复杂度: O(n)</li>
 </ul>
-<h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><h2 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h2><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; path;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;&gt; res;</span><br><span class="line">    <span class="type">void</span> <span class="title function_">backtracking</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span> k, <span class="type">int</span> startIndex)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(path.size() == k) &#123;</span><br><span class="line">            res.push_back(path);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = startIndex; i &lt;= n; i++)&#123;</span><br><span class="line">            path.push_back(i); <span class="comment">// 处理结点</span></span><br><span class="line">            backtracking(n , k , i+<span class="number">1</span>); <span class="comment">//递归,不能使用++i改变原来的值</span></span><br><span class="line">            path.pop_back();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line">public:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;&gt; combine(<span class="type">int</span> n, <span class="type">int</span> k) &#123;</span><br><span class="line">        backtracking(n, k, <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><h2 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h2><pre><code class="c">class Solution &#123;
 
-<h2 id="java"><a href="#java" class="headerlink" title="java"></a>java</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">private</span> LinkedList&lt;Integer&gt; path = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">backtracking</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span> k , <span class="type">int</span> startIndex)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(path.size() == k) &#123;</span><br><span class="line">            res.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(path));</span><br><span class="line">            <span class="keyword">return</span> ;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> startIndex; i &lt;= n ; i++)&#123;</span><br><span class="line">            path.add(i);</span><br><span class="line">            backtracking(n, k , i + <span class="number">1</span>);</span><br><span class="line">            path.removeLast();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title function_">combine</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span> k)</span> &#123;</span><br><span class="line">            backtracking(n , k , <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+private:
+    vector&lt;int&gt; path;
+    vector&lt;vector&lt;int&gt;&gt; res;
+    void backtracking(int n, int k, int startIndex)&#123;
+        if(path.size() == k) &#123;
+            res.push_back(path);
+            return;
+        &#125;
 
+        for(int i = startIndex; i &lt;= n; i++)&#123;
+            path.push_back(i); // 处理结点
+            backtracking(n , k , i+1); //递归,不能使用++i改变原来的值
+            path.pop_back();
+        &#125;
+
+     &#125;
+public:
+    vector&lt;vector&lt;int&gt;&gt; combine(int n, int k) &#123;
+        backtracking(n, k, 1);
+        return res;
+    &#125;
+
+&#125;;
+</code></pre>
+<h2 id="java"><a href="#java" class="headerlink" title="java"></a>java</h2><pre><code class="java">class Solution &#123;
+    private List&lt;List&lt;Integer&gt;&gt; res = new ArrayList&lt;&gt;();
+    private LinkedList&lt;Integer&gt; path = new LinkedList&lt;&gt;();
+
+    private void backtracking(int n, int k , int startIndex)&#123;
+        if(path.size() == k) &#123;
+            res.add(new ArrayList&lt;&gt;(path));
+            return ;
+        &#125;
+        for(int i = startIndex; i &lt;= n ; i++)&#123;
+            path.add(i);
+            backtracking(n, k , i + 1);
+            path.removeLast();
+        &#125;
+    &#125;
+    public List&lt;List&lt;Integer&gt;&gt; combine(int n, int k) &#123;
+            backtracking(n , k , 1);
+            return res;
+    &#125;
+&#125;
+</code></pre>
 <h1 id="剪枝优化"><a href="#剪枝优化" class="headerlink" title="剪枝优化"></a>剪枝优化</h1><p>回溯法虽然是暴力搜索,但有时候也是可以剪枝优化的</p>
 <p>在遍历中</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = startIndex; i &lt;= n; i++) &#123;</span><br><span class="line">    path.<span class="built_in">push_back</span>(i);</span><br><span class="line">    <span class="built_in">backtracking</span>(n, k, i + <span class="number">1</span>);</span><br><span class="line">    path.<span class="built_in">pop_back</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="C++">for (int i = startIndex; i &lt;= n; i++) &#123;
+    path.push_back(i);
+    backtracking(n, k, i + 1);
+    path.pop_back();
+&#125;
+</code></pre>
 <p>​	当n &#x3D; 9, k &#x3D; 9, 那么 起始从2开始到9也不到9个数,</p>
 <p>这个地方就可以剪枝了</p>
 <ul>
@@ -1062,10 +1133,31 @@
 </ul>
 <p>举一个<code>n = 9</code>  <code>k  - 4</code> 就知道上面三步操作是为什么了</p>
 <p>for循环优化后</p>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = startIndex; i &lt;= n - (k - path.size()) + <span class="number">1</span>; i++) <span class="comment">// i为本次搜索的起始位置</span></span><br></pre></td></tr></table></figure>
+<pre><code class="c">for (int i = startIndex; i &lt;= n - (k - path.size()) + 1; i++) // i为本次搜索的起始位置
+</code></pre>
+<h1 id="Code-剪枝优化"><a href="#Code-剪枝优化" class="headerlink" title="Code(剪枝优化)"></a>Code(剪枝优化)</h1><pre><code class="c">class Solution &#123;
+private:
+    vector&lt;vector&lt;int&gt;&gt; result;
+    vector&lt;int&gt; path;
+    void backtracking(int n, int k, int startIndex) &#123;
+        if (path.size() == k) &#123;
+            result.push_back(path);
+            return;
+        &#125;
+        for (int i = startIndex; i &lt;= n - (k - path.size()) + 1; i++) &#123; // 优化的地方
+            path.push_back(i); // 处理节点
+            backtracking(n, k, i + 1);
+            path.pop_back(); // 回溯，撤销处理的节点
+        &#125;
+    &#125;
+public:
 
-<h1 id="Code-剪枝优化"><a href="#Code-剪枝优化" class="headerlink" title="Code(剪枝优化)"></a>Code(剪枝优化)</h1><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line">private:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;&gt; result;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; path;</span><br><span class="line">    <span class="type">void</span> <span class="title function_">backtracking</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span> k, <span class="type">int</span> startIndex)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (path.size() == k) &#123;</span><br><span class="line">            result.push_back(path);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = startIndex; i &lt;= n - (k - path.size()) + <span class="number">1</span>; i++) &#123; <span class="comment">// 优化的地方</span></span><br><span class="line">            path.push_back(i); <span class="comment">// 处理节点</span></span><br><span class="line">            backtracking(n, k, i + <span class="number">1</span>);</span><br><span class="line">            path.pop_back(); <span class="comment">// 回溯，撤销处理的节点</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">public:</span><br><span class="line"></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;&gt; combine(<span class="type">int</span> n, <span class="type">int</span> k) &#123;</span><br><span class="line">        backtracking(n, k, <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+    vector&lt;vector&lt;int&gt;&gt; combine(int n, int k) &#123;
+        backtracking(n, k, 1);
+        return result;
+    &#125;
+&#125;;
+</code></pre>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 waigo168@163.com </span>
@@ -1082,9 +1174,9 @@
 <script type="text/javascript">
     $.getScript('/js/gitalk.js', function () {
         var gitalk = new Gitalk({
-            clientID: '035ef548c9e9378701b6',
-            clientSecret: '83814063a9a58aa2ecd9d9ba1d8bbfe9d4205b6b',
-            repo: 'https://axdmdyj.github.io',
+            clientID: 'aeb83b87dc9753d290d4',
+            clientSecret: '179a325f86496596d1df38a53b7be77143374811',
+            repo: 'axdmdyj.github.io',
             owner: 'axdmdyj',
             admin: ['axdmdyj'],
             id: decodeURI(location.pathname),
@@ -1136,20 +1228,6 @@
 
         /*高亮代码块行号*/
         
-        $('pre code').each(function(){
-            var lines = $(this).text().trim().split('\n').length, widther='';
-            if (lines>99) {
-                widther = 'widther'
-            }
-            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
-            $(this).addClass('has-numbering ' + widther)
-                    .parent()
-                    .append($numbering);
-            for(var i=1;i<=lines;i++){
-                $numbering.append($('<li/>').text(i));
-            }
-        });
-        
 
         /*访问数量*/
         
@@ -1169,38 +1247,6 @@
 </script>
 
 <!--加入行号的高亮代码块样式-->
-
-<style>
-    pre{
-        position: relative;
-        margin-bottom: 24px;
-        border-radius: 10px;
-        border: 1px solid #e2dede;
-        background: #FFF;
-        overflow: hidden;
-    }
-    code.has-numbering{
-        margin-left: 30px;
-    }
-    code.has-numbering.widther{
-        margin-left: 35px;
-    }
-    .pre-numbering{
-        margin: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px;
-        padding: 18px 3px 15px 5px;
-        border-right: 1px solid #C3CCD0;
-        text-align: right;
-        color: #AAA;
-        background-color: ;
-    }
-    .pre-numbering.widther {
-        width: 35px;
-    }
-</style>
 
 <!--自定义样式设置-->
 <style>

@@ -1027,24 +1027,50 @@
 <li>每一次请求当中，要接收令牌并对令牌进行校验。</li>
 </ol>
 <h2 id="生成和校验"><a href="#生成和校验" class="headerlink" title="生成和校验"></a>生成和校验</h2><p>首先需要映入JWT的依赖</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- JWT依赖--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.jsonwebtoken<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jjwt<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>0.9.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="xml">&lt;!-- JWT依赖--&gt;
+&lt;dependency&gt;
+&lt;groupId&gt;io.jsonwebtoken&lt;/groupId&gt;
+&lt;artifactId&gt;jjwt&lt;/artifactId&gt;
+&lt;version&gt;0.9.1&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
 <p>生成JWT代码实现</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">genJwt</span><span class="params">()</span>&#123;</span><br><span class="line">Map&lt;String,Object&gt; claims = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">claims.put(<span class="string">&quot;id&quot;</span>,<span class="number">1</span>);</span><br><span class="line">claims.put(<span class="string">&quot;username&quot;</span>,<span class="string">&quot;Tom&quot;</span>);</span><br><span class="line"><span class="type">String</span> <span class="variable">jwt</span> <span class="operator">=</span> Jwts.builder()</span><br><span class="line"> .setClaims(claims) <span class="comment">//自定义内容(载荷)</span></span><br><span class="line"> .signWith(SignatureAlgorithm.HS256, <span class="string">&quot;itheima&quot;</span>) <span class="comment">//签名算法</span></span><br><span class="line"> .setExpiration(<span class="keyword">new</span> <span class="title class_">Date</span>(System.currentTimeMillis() +</span><br><span class="line"><span class="number">24</span>*<span class="number">3600</span>*<span class="number">1000</span>)) <span class="comment">//有效期</span></span><br><span class="line"> .compact();<span class="comment">//使其返回一个对象</span></span><br><span class="line">System.out.println(jwt);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">@Test
+public void genJwt()&#123;
+Map&lt;String,Object&gt; claims = new HashMap&lt;&gt;();
+claims.put(&quot;id&quot;,1);
+claims.put(&quot;username&quot;,&quot;Tom&quot;);
+String jwt = Jwts.builder()
+ .setClaims(claims) //自定义内容(载荷)
+ .signWith(SignatureAlgorithm.HS256, &quot;itheima&quot;) //签名算法
+ .setExpiration(new Date(System.currentTimeMillis() +
+24*3600*1000)) //有效期
+ .compact();//使其返回一个对象
+System.out.println(jwt);
+&#125;
+</code></pre>
 <p>运行测试方法：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNjcyNzI5NzMwfQ.fHi0Ub8npbyt71</span><br><span class="line">UqLXDdLyipptLgxBUg_mSuGJtXtBk</span><br></pre></td></tr></table></figure>
-
+<pre><code>eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNjcyNzI5NzMwfQ.fHi0Ub8npbyt71
+UqLXDdLyipptLgxBUg_mSuGJtXtBk
+</code></pre>
 <p>输出的结果就是生成的JWT令牌,，通过英文的点分割对三个部分进行分割，我们可以将生成的令牌复制 一下，然后打开JWT的官网，将生成的令牌直接放在Encoded位置，此时就会自动的将令牌解析出来。</p>
 <p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308261534117.png" alt="image-20230826153437066"></p>
 <blockquote>
 <p>第一部分解析出来，看到JSON格式的原始数据，所使用的签名算法为HS256。 第二个部分是我们自定义的数据，之前我们自定义的数据就是id，还有一个exp代表的是我们所设 置的过期时间。 由于前两个部分是base64编码，所以是可以直接解码出来。但最后一个部分并不是base64编 码，是经过签名算法计算出来的，所以最后一个部分是不会解析的。</p>
 </blockquote>
 <p><strong>校验JWT令牌(解析生成的令牌)：</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">parseJwt</span><span class="params">()</span>&#123;</span><br><span class="line"><span class="type">Claims</span> <span class="variable">claims</span> <span class="operator">=</span> Jwts.parser()</span><br><span class="line"> .setSigningKey(<span class="string">&quot;itheima&quot;</span>)<span class="comment">//指定签名密钥（必须保证和生成令牌时使用</span></span><br><span class="line">相同的签名密钥）</span><br><span class="line"></span><br><span class="line">.parseClaimsJws(<span class="string">&quot;eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNjcyNzI5NzMw</span></span><br><span class="line"><span class="string">fQ.fHi0Ub8npbyt71UqLXDdLyipptLgxBUg_mSuGJtXtBk&quot;</span>)</span><br><span class="line"> .getBody();</span><br><span class="line">System.out.println(claims);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre><code class="java">@Test
+public void parseJwt()&#123;
+Claims claims = Jwts.parser()
+ .setSigningKey(&quot;itheima&quot;)//指定签名密钥（必须保证和生成令牌时使用
+相同的签名密钥）
 
-
-
+.parseClaimsJws(&quot;eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNjcyNzI5NzMw
+fQ.fHi0Ub8npbyt71UqLXDdLyipptLgxBUg_mSuGJtXtBk&quot;)
+ .getBody();
+System.out.println(claims);
+&#125;
+</code></pre>
 <p>(以上参考了黑马程序员B站教程)</p>
 
       
@@ -1062,9 +1088,9 @@
 <script type="text/javascript">
     $.getScript('/js/gitalk.js', function () {
         var gitalk = new Gitalk({
-            clientID: '035ef548c9e9378701b6',
-            clientSecret: '83814063a9a58aa2ecd9d9ba1d8bbfe9d4205b6b',
-            repo: 'https://axdmdyj.github.io',
+            clientID: 'aeb83b87dc9753d290d4',
+            clientSecret: '179a325f86496596d1df38a53b7be77143374811',
+            repo: 'axdmdyj.github.io',
             owner: 'axdmdyj',
             admin: ['axdmdyj'],
             id: decodeURI(location.pathname),
@@ -1116,20 +1142,6 @@
 
         /*高亮代码块行号*/
         
-        $('pre code').each(function(){
-            var lines = $(this).text().trim().split('\n').length, widther='';
-            if (lines>99) {
-                widther = 'widther'
-            }
-            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
-            $(this).addClass('has-numbering ' + widther)
-                    .parent()
-                    .append($numbering);
-            for(var i=1;i<=lines;i++){
-                $numbering.append($('<li/>').text(i));
-            }
-        });
-        
 
         /*访问数量*/
         
@@ -1149,38 +1161,6 @@
 </script>
 
 <!--加入行号的高亮代码块样式-->
-
-<style>
-    pre{
-        position: relative;
-        margin-bottom: 24px;
-        border-radius: 10px;
-        border: 1px solid #e2dede;
-        background: #FFF;
-        overflow: hidden;
-    }
-    code.has-numbering{
-        margin-left: 30px;
-    }
-    code.has-numbering.widther{
-        margin-left: 35px;
-    }
-    .pre-numbering{
-        margin: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px;
-        padding: 18px 3px 15px 5px;
-        border-right: 1px solid #C3CCD0;
-        text-align: right;
-        color: #AAA;
-        background-color: ;
-    }
-    .pre-numbering.widther {
-        width: 35px;
-    }
-</style>
 
 <!--自定义样式设置-->
 <style>

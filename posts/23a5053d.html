@@ -1008,8 +1008,21 @@
 <li>时间复杂度: O(n)</li>
 <li>空间复杂度: O(1)</li>
 </ul>
-<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">reverseString</span><span class="params">(<span class="type">char</span>[] s)</span> &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">l</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">                <span class="type">int</span> <span class="variable">r</span> <span class="operator">=</span> s.length - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">			   <span class="keyword">while</span>(l&lt;r)&#123;</span><br><span class="line">                <span class="type">char</span> <span class="variable">temp</span> <span class="operator">=</span> s[l];</span><br><span class="line">                s[l] = s[r];</span><br><span class="line">                s[r] = temp;</span><br><span class="line">                l++;</span><br><span class="line">                r--;</span><br><span class="line">                &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><pre><code class="java">class Solution &#123;
+    public void reverseString(char[] s) &#123;
+                int l = 0;
+                int r = s.length - 1;
 
+               while(l&lt;r)&#123;
+                char temp = s[l];
+                s[l] = s[r];
+                s[r] = temp;
+                l++;
+                r--;
+                &#125;
+    &#125;
+&#125;
+</code></pre>
 <h1 id="Problem-541-反转字符串-II"><a href="#Problem-541-反转字符串-II" class="headerlink" title="Problem: 541. 反转字符串 II"></a>Problem: <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reverse-string-ii/description/">541. 反转字符串 II</a></h1><h2 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h2><p>因为每计数至 <code>2k</code> 个字符，就反转这 <code>2k</code> 字符中的前 <code>k</code> 个字符,所以可以定义一个指针 i ,来从起点,以2k的长度来遍历,</p>
 <p>在遍历的同时,需要判断此时的位置是否超出字符串的长度</p>
 <p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/imags/202309140114051.png" alt="image-20230914003144804"></p>
@@ -1024,8 +1037,29 @@
 <li>时间复杂度: O(n)</li>
 <li>空间复杂度: O(1)</li>
 </ul>
-<h2 id="Code-1"><a href="#Code-1" class="headerlink" title="Code"></a>Code</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">reverseStr</span><span class="params">(String s, <span class="type">int</span> k)</span> &#123;</span><br><span class="line">        <span class="type">char</span>[] ch = s.toCharArray();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; ch.length; i += <span class="number">2</span>*k)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i + k &lt;= ch.length)&#123;</span><br><span class="line">                reverse(ch , i, i+k-<span class="number">1</span>);</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            reverse(ch, i, ch.length-<span class="number">1</span>); <span class="comment">//这里自己实现的reverse是左闭右闭原则,所以ch.length-1</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">String</span>(ch);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">reverse</span><span class="params">(<span class="type">char</span>[] ch, <span class="type">int</span> i, <span class="type">int</span> j)</span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(; i &lt;= j; i++,j--)&#123;</span><br><span class="line">            <span class="type">char</span> <span class="variable">temp</span> <span class="operator">=</span> ch[i];</span><br><span class="line">            ch[i] = ch[j];</span><br><span class="line">            ch[j] = temp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Code-1"><a href="#Code-1" class="headerlink" title="Code"></a>Code</h2><pre><code class="java">class Solution &#123;
+    public String reverseStr(String s, int k) &#123;
+        char[] ch = s.toCharArray();
 
+        for(int i = 0; i &lt; ch.length; i += 2*k)&#123;
+            if(i + k &lt;= ch.length)&#123;
+                reverse(ch , i, i+k-1);
+                continue;
+            &#125;
+            reverse(ch, i, ch.length-1); //这里自己实现的reverse是左闭右闭原则,所以ch.length-1
+        &#125;
+        return new String(ch);
+    &#125;
+
+    public void reverse(char[] ch, int i, int j)&#123;
+        for(; i &lt;= j; i++,j--)&#123;
+            char temp = ch[i];
+            ch[i] = ch[j];
+            ch[j] = temp;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
 <h1 id="Problem-题目：剑指Offer-05-替换空格"><a href="#Problem-题目：剑指Offer-05-替换空格" class="headerlink" title="Problem: 题目：剑指Offer 05.替换空格"></a>Problem: <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/ti-huan-kong-ge-lcof/description/">题目：剑指Offer 05.替换空格</a></h1><h2 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h2><p>因为要把空格替换为“%20”, 所以容易知道:</p>
 <p>数组的长度是需要扩大的,可以在原数组增大,或者创建一个新的数组</p>
 <p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/imags/202309140049824.png" alt="image-20230914004917681"></p>
@@ -1036,12 +1070,55 @@
 <li>时间复杂度：O(n)</li>
 <li>空间复杂度：O(1)</li>
 </ul>
-<h2 id="Code-2"><a href="#Code-2" class="headerlink" title="Code"></a>Code</h2><h3 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">string <span class="title">replaceSpace</span><span class="params">(string s)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> count = <span class="number">0</span>; <span class="comment">// 统计空格的个数</span></span><br><span class="line">        <span class="type">int</span> sOldSize = s.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; s.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (s[i] == <span class="string">&#x27; &#x27;</span>) &#123;</span><br><span class="line">                count++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 扩充字符串s的大小，也就是每个空格替换成&quot;%20&quot;之后的大小</span></span><br><span class="line">        s.<span class="built_in">resize</span>(s.<span class="built_in">size</span>() + count * <span class="number">2</span>);</span><br><span class="line">        <span class="type">int</span> sNewSize = s.<span class="built_in">size</span>();</span><br><span class="line">        <span class="comment">// 从后先前将空格替换为&quot;%20&quot;</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = sNewSize - <span class="number">1</span>, j = sOldSize - <span class="number">1</span>; j &lt; i; i--, j--) &#123;</span><br><span class="line">            <span class="keyword">if</span> (s[j] != <span class="string">&#x27; &#x27;</span>) &#123;</span><br><span class="line">                s[i] = s[j];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                s[i] = <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">                s[i - <span class="number">1</span>] = <span class="string">&#x27;2&#x27;</span>;</span><br><span class="line">                s[i - <span class="number">2</span>] = <span class="string">&#x27;%&#x27;</span>;</span><br><span class="line">                i -= <span class="number">2</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+<h2 id="Code-2"><a href="#Code-2" class="headerlink" title="Code"></a>Code</h2><h3 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h3><pre><code class="c++">class Solution &#123;
+public:
+    string replaceSpace(string s) &#123;
+        int count = 0; // 统计空格的个数
+        int sOldSize = s.size();
+        for (int i = 0; i &lt; s.size(); i++) &#123;
+            if (s[i] == &#39; &#39;) &#123;
+                count++;
+            &#125;
+        &#125;
+        // 扩充字符串s的大小，也就是每个空格替换成&quot;%20&quot;之后的大小
+        s.resize(s.size() + count * 2);
+        int sNewSize = s.size();
+        // 从后先前将空格替换为&quot;%20&quot;
+        for (int i = sNewSize - 1, j = sOldSize - 1; j &lt; i; i--, j--) &#123;
+            if (s[j] != &#39; &#39;) &#123;
+                s[i] = s[j];
+            &#125; else &#123;
+                s[i] = &#39;0&#39;;
+                s[i - 1] = &#39;2&#39;;
+                s[i - 2] = &#39;%&#39;;
+                i -= 2;
+            &#125;
+        &#125;
+        return s;
+    &#125;
+&#125;;
+</code></pre>
 <h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><p>可以利用StringBuilder来从前往后遍历,如果遇到空格,就<code>append(&quot;%20&quot;)</code></p>
 <p>其余就<code>qppend(&quot;字符&quot;)</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">replaceSpace</span><span class="params">(String s)</span> &#123;</span><br><span class="line">            <span class="keyword">if</span>(s == <span class="literal">null</span>)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; s.length(); i++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(s.charAt(i) == <span class="string">&#x27; &#x27;</span>)&#123;</span><br><span class="line">                    sb.append(<span class="string">&quot;%20&quot;</span>);</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    sb.append(s.charAt(i));</span><br><span class="line">                &#125;          </span><br><span class="line">            &#125;</span><br><span class="line">               <span class="keyword">return</span> sb.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="java">class Solution &#123;
+    public String replaceSpace(String s) &#123;
+            if(s == null)&#123;
+                return null;
+            &#125;
 
+            StringBuilder sb = new StringBuilder();
+
+            for(int i = 0; i &lt; s.length(); i++)&#123;
+                if(s.charAt(i) == &#39; &#39;)&#123;
+                    sb.append(&quot;%20&quot;);
+                &#125;else&#123;
+                    sb.append(s.charAt(i));
+                &#125;          
+            &#125;
+               return sb.toString();
+    &#125;
+&#125;
+</code></pre>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 waigo168@163.com </span>
@@ -1058,9 +1135,9 @@
 <script type="text/javascript">
     $.getScript('/js/gitalk.js', function () {
         var gitalk = new Gitalk({
-            clientID: '035ef548c9e9378701b6',
-            clientSecret: '83814063a9a58aa2ecd9d9ba1d8bbfe9d4205b6b',
-            repo: 'https://axdmdyj.github.io',
+            clientID: 'aeb83b87dc9753d290d4',
+            clientSecret: '179a325f86496596d1df38a53b7be77143374811',
+            repo: 'axdmdyj.github.io',
             owner: 'axdmdyj',
             admin: ['axdmdyj'],
             id: decodeURI(location.pathname),
@@ -1112,20 +1189,6 @@
 
         /*高亮代码块行号*/
         
-        $('pre code').each(function(){
-            var lines = $(this).text().trim().split('\n').length, widther='';
-            if (lines>99) {
-                widther = 'widther'
-            }
-            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
-            $(this).addClass('has-numbering ' + widther)
-                    .parent()
-                    .append($numbering);
-            for(var i=1;i<=lines;i++){
-                $numbering.append($('<li/>').text(i));
-            }
-        });
-        
 
         /*访问数量*/
         
@@ -1145,38 +1208,6 @@
 </script>
 
 <!--加入行号的高亮代码块样式-->
-
-<style>
-    pre{
-        position: relative;
-        margin-bottom: 24px;
-        border-radius: 10px;
-        border: 1px solid #e2dede;
-        background: #FFF;
-        overflow: hidden;
-    }
-    code.has-numbering{
-        margin-left: 30px;
-    }
-    code.has-numbering.widther{
-        margin-left: 35px;
-    }
-    .pre-numbering{
-        margin: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px;
-        padding: 18px 3px 15px 5px;
-        border-right: 1px solid #C3CCD0;
-        text-align: right;
-        color: #AAA;
-        background-color: ;
-    }
-    .pre-numbering.widther {
-        width: 35px;
-    }
-</style>
 
 <!--自定义样式设置-->
 <style>

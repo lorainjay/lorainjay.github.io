@@ -1031,8 +1031,9 @@
 <h3 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h3><p>通过jstack 进程号<br><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1706168213873-47fdd144-3cc8-47f9-b8cb-2271bcbed257.png#averageHue=%235d554c&clientId=u1de935df-8cd2-4&from=paste&height=529&id=u91f6d248&originHeight=1164&originWidth=2396&originalType=binary&ratio=2.200000047683716&rotation=0&showTitle=false&size=1164260&status=done&style=none&taskId=u8817d1b5-6b16-41f8-9df3-9b30214f32a&title=&width=1089.0908854855" alt="image.png"><br>排查死锁问题。</p>
 <h1 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h1><p>native方法，由C语言实现。<br><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1706080927259-a02dbe3b-0a81-41cd-855c-54ff8b12f893.png#averageHue=%23e3e5bb&clientId=u31b1620a-440f-4&from=paste&height=619&id=u16c6b193&originHeight=1238&originWidth=2122&originalType=binary&ratio=2&rotation=0&showTitle=false&size=608129&status=done&style=none&taskId=u85466131-ecbf-4a0c-9c31-79aa2abbbe8&title=&width=1061" alt="image.png"></p>
 <h1 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h1><h2 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h2><p><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1706081006420-8ef6d956-28c9-4246-9250-aa8d6fb83700.png#averageHue=%23fafaf9&clientId=u31b1620a-440f-4&from=paste&height=262&id=u209252e8&originHeight=524&originWidth=1162&originalType=binary&ratio=2&rotation=0&showTitle=false&size=205511&status=done&style=none&taskId=u2f1cbeca-1dff-4c9e-8a46-c29e2e235d0&title=&width=581" alt="image.png"><br> <img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1706168543664-9e9d9da2-7137-4830-8bcc-3f99fff5a094.png#averageHue=%23f6f4e7&clientId=u1de935df-8cd2-4&from=paste&height=218&id=udc6d6332&originHeight=480&originWidth=1648&originalType=binary&ratio=2.200000047683716&rotation=0&showTitle=false&size=241833&status=done&style=none&taskId=u55731055-3e36-413a-a254-6bb3e396372&title=&width=749.0908928548013" alt="image.png"><br>自定义内存大小：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//限制</span><br><span class="line"> 限制：-Xms  规定的空间大小</span><br></pre></td></tr></table></figure>
-
+<pre><code>//限制
+ 限制：-Xms  规定的空间大小
+</code></pre>
 <h2 id="堆内存诊断"><a href="#堆内存诊断" class="headerlink" title="堆内存诊断"></a>堆内存诊断</h2><ol>
 <li><strong>jps 工具</strong>查看当前系统中有哪些 java 进程</li>
 <li><strong>jmap 工具</strong>查看堆内存占用情况 jmap - heap 进程id</li>
@@ -1040,10 +1041,30 @@
 </ol>
 <p><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1706169692583-4db72f45-c9d2-4e5d-8ab1-4005d723bdb5.png#averageHue=%23fafaf9&clientId=u1de935df-8cd2-4&from=paste&height=299&id=u0d0a30f7&originHeight=658&originWidth=1184&originalType=binary&ratio=2.200000047683716&rotation=0&showTitle=false&size=356227&status=done&style=none&taskId=uc3a5f5e8-731b-4eeb-ac1e-a1334cf88ce&title=&width=538.1818065170417" alt="image.png"></p>
 <h1 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h1><h2 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h2><p>方法区是各个<strong>线程共享</strong>的内存区域，它用于存储已被虚拟机加载的类信息(比如class文件)、常量、静态变量、即时编译器编译后的代码等数据。（什么是类信息：<strong>类版本号、方法、接口</strong>。）<br><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1706171339614-3e0df9b8-47ad-4cb6-9924-cafece6a3295.png#averageHue=%23e8f1c1&clientId=u1de935df-8cd2-4&from=paste&height=366&id=u5bfb1624&originHeight=806&originWidth=1232&originalType=binary&ratio=2.200000047683716&rotation=0&showTitle=false&size=246267&status=done&style=none&taskId=u7a7a9d8c-9ca2-4fdb-bef2-b2a6bb9758e&title=&width=559.9999878623271" alt="image.png"></p>
-<h2 id="方法区内存溢出"><a href="#方法区内存溢出" class="headerlink" title="方法区内存溢出"></a>方法区内存溢出</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:MaxMetaspaceSize=1m</span><br></pre></td></tr></table></figure>
+<h2 id="方法区内存溢出"><a href="#方法区内存溢出" class="headerlink" title="方法区内存溢出"></a>方法区内存溢出</h2><pre><code class="java">-XX:MaxMetaspaceSize=1m
+</code></pre>
+<pre><code class="java">public class MethodOverFlow extends ClassLoader &#123;//可以用来加载类的二进制字节码
 
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MethodOverFlow</span> <span class="keyword">extends</span> <span class="title class_">ClassLoader</span> &#123;<span class="comment">//可以用来加载类的二进制字节码</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="type">MethodOverFlow</span> <span class="variable">test</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MethodOverFlow</span>();</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++,j++) &#123;</span><br><span class="line">                    <span class="comment">//ClassWriter 作用是生产类的二进制字节码</span></span><br><span class="line">                    <span class="type">ClassWriter</span> <span class="variable">cw</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassWriter</span>(<span class="number">0</span>);</span><br><span class="line">                    <span class="comment">//版本号，public，类名</span></span><br><span class="line">                    cw.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, <span class="string">&quot;Class&quot;</span> + i, <span class="literal">null</span>, <span class="string">&quot;java/lang/Object&quot;</span>, <span class="literal">null</span>);</span><br><span class="line">                    <span class="comment">//返回 byte[]</span></span><br><span class="line">                    <span class="type">byte</span>[] code = cw.toByteArray();</span><br><span class="line">                    <span class="comment">//执行类的加载</span></span><br><span class="line">                    test.defineClass(<span class="string">&quot;Class&quot;</span> + i, code, <span class="number">0</span>, code.length);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                System.out.println(j);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
+        public static void main(String[] args) &#123;
+            int j = 0;
+            try &#123;
+                MethodOverFlow test = new MethodOverFlow();
+                for (int i = 0; i &lt; 10000; i++,j++) &#123;
+                    //ClassWriter 作用是生产类的二进制字节码
+                    ClassWriter cw = new ClassWriter(0);
+                    //版本号，public，类名
+                    cw.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, &quot;Class&quot; + i, null, &quot;java/lang/Object&quot;, null);
+                    //返回 byte[]
+                    byte[] code = cw.toByteArray();
+                    //执行类的加载
+                    test.defineClass(&quot;Class&quot; + i, code, 0, code.length);
+                &#125;
+            &#125; finally &#123;
+                System.out.println(j);
+            &#125;
+        &#125;
+    &#125;
+</code></pre>
 <p>场景：<br>Spring<br>Mabatis</p>
 <h2 id="常量池"><a href="#常量池" class="headerlink" title="常量池"></a>常量池</h2><p>学会阅读反编译的字字节码与在常量池的对应关系。</p>
 <h2 id="StringTable"><a href="#StringTable" class="headerlink" title="StringTable"></a>StringTable</h2><h3 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h3><p>常量池中的字符串仅是符号，只有在被用到时才会转化为对象<br>利用串池的机制，来避免重复创建字符串对象<br><strong>字符串变量拼接的原理是StringBuilder</strong><br><strong>字符串常量拼接的原理是编译器优化</strong><br><strong>可以使用intern方法，主动将串池中还没有的字符串对象放入串池中</strong><br>1.8 将这个字符串对象尝试放入串池，如果有则并不会放入，如果没有则放入串池，会把串池中的对象返回<br>1.6 将这个字符串对象尝试放入串池，如果有则并不会放入，如果没有会把此对象复制一份，放入串池，会把串池中的对象返回<br><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1706179848133-12b0a2f5-5396-42bc-abc4-de92d9c118f2.png#averageHue=%23faf9f8&clientId=ubf022d95-0954-4&from=paste&height=576&id=u8cacca97&originHeight=1268&originWidth=1828&originalType=binary&ratio=2.200000047683716&rotation=0&showTitle=false&size=583009&status=done&style=none&taskId=ue49c3e37-4fe6-45b5-8551-37c0797a8f1&title=&width=830.9090728996217" alt="image.png"><br>先到串池找，找到了就不创建了。<br><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1706180110018-ca780935-9ac1-42cd-bde3-5a2bd5366c4f.png#averageHue=%23fbfbfa&clientId=ubf022d95-0954-4&from=paste&height=560&id=u0f191c65&originHeight=1232&originWidth=2602&originalType=binary&ratio=2.200000047683716&rotation=0&showTitle=false&size=730159&status=done&style=none&taskId=ub3ea0cf1-0c1e-4c50-8e15-b1072eb4cc2&title=&width=1182.7272470923501" alt="image.png"><br><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1706180368897-e61b89f2-211b-4b04-8280-ff356905d069.png#averageHue=%23fcfbf9&clientId=ubf022d95-0954-4&from=paste&height=230&id=u691d4ea0&originHeight=506&originWidth=2588&originalType=binary&ratio=2.200000047683716&rotation=0&showTitle=false&size=286843&status=done&style=none&taskId=u57683fea-a763-42af-baa2-6bce12d8509&title=&width=1176.3636108666417" alt="image.png"><br><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1706180510319-6b0ce27f-ee0b-4c8c-8dea-8a40c536318d.png#averageHue=%23f3f1e9&clientId=ubf022d95-0954-4&from=paste&height=491&id=u51e85250&originHeight=1080&originWidth=2756&originalType=binary&ratio=2.200000047683716&rotation=0&showTitle=false&size=670056&status=done&style=none&taskId=uefde02df-f82d-4e52-b565-5ee9f18b99d&title=&width=1252.7272455751408" alt="image.png"><br><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1706195341809-a1ad57f3-9089-476b-910d-edbfe77aec97.png#averageHue=%23f8f7ec&clientId=u515cb933-7cc6-4&from=paste&height=223&id=uf0022656&originHeight=446&originWidth=2190&originalType=binary&ratio=2&rotation=0&showTitle=false&size=343977&status=done&style=none&taskId=u68116973-0802-4c04-bcbc-04dc3870c16&title=&width=1095" alt="image.png"><br>面试问类似的话就比较实在堆区还是在串池中。<br>可以通过以下检验自己：<br><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1706195621110-c6928310-f606-4f20-b1d0-f4334e89bb82.png#averageHue=%23fcfbfb&clientId=u515cb933-7cc6-4&from=paste&height=405&id=u5989f7a4&originHeight=810&originWidth=2140&originalType=binary&ratio=2&rotation=0&showTitle=false&size=440100&status=done&style=none&taskId=u29bee30c-7bb5-4f72-bce1-1788ec8f1ea&title=&width=1070" alt="image.png"></p>
@@ -1093,9 +1114,9 @@
 <script type="text/javascript">
     $.getScript('/js/gitalk.js', function () {
         var gitalk = new Gitalk({
-            clientID: '035ef548c9e9378701b6',
-            clientSecret: '83814063a9a58aa2ecd9d9ba1d8bbfe9d4205b6b',
-            repo: 'https://axdmdyj.github.io',
+            clientID: 'aeb83b87dc9753d290d4',
+            clientSecret: '179a325f86496596d1df38a53b7be77143374811',
+            repo: 'axdmdyj.github.io',
             owner: 'axdmdyj',
             admin: ['axdmdyj'],
             id: decodeURI(location.pathname),
@@ -1147,20 +1168,6 @@
 
         /*高亮代码块行号*/
         
-        $('pre code').each(function(){
-            var lines = $(this).text().trim().split('\n').length, widther='';
-            if (lines>99) {
-                widther = 'widther'
-            }
-            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
-            $(this).addClass('has-numbering ' + widther)
-                    .parent()
-                    .append($numbering);
-            for(var i=1;i<=lines;i++){
-                $numbering.append($('<li/>').text(i));
-            }
-        });
-        
 
         /*访问数量*/
         
@@ -1180,38 +1187,6 @@
 </script>
 
 <!--加入行号的高亮代码块样式-->
-
-<style>
-    pre{
-        position: relative;
-        margin-bottom: 24px;
-        border-radius: 10px;
-        border: 1px solid #e2dede;
-        background: #FFF;
-        overflow: hidden;
-    }
-    code.has-numbering{
-        margin-left: 30px;
-    }
-    code.has-numbering.widther{
-        margin-left: 35px;
-    }
-    .pre-numbering{
-        margin: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px;
-        padding: 18px 3px 15px 5px;
-        border-right: 1px solid #C3CCD0;
-        text-align: right;
-        color: #AAA;
-        background-color: ;
-    }
-    .pre-numbering.widther {
-        width: 35px;
-    }
-</style>
 
 <!--自定义样式设置-->
 <style>

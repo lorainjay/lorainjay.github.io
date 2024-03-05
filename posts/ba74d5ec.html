@@ -1017,27 +1017,99 @@
 <p>如果是一个集合来求组合的话，就需要startInde</p>
 <p>如果是多个集合取组合，各个集合之间相互不影响，那么就不用startIndex</p>
 </blockquote>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ector&lt;<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;&gt; result;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; path;</span><br><span class="line"><span class="type">void</span> <span class="title function_">backtracking</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;&amp; candidates, <span class="type">int</span> target, <span class="type">int</span> sum, <span class="type">int</span> startIndex)</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="c">ector&lt;vector&lt;int&gt;&gt; result;
+vector&lt;int&gt; path;
+void backtracking(vector&lt;int&gt;&amp; candidates, int target, int sum, int startIndex)
+</code></pre>
 <ul>
 <li>递归终止条件</li>
 </ul>
 <p>根据题目, 终止条件只有两种: sum大于target和sum等于target。</p>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (sum &gt; target) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (sum == target) &#123;</span><br><span class="line">    result.push_back(path);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="c">if (sum &gt; target) &#123;
+    return;
+&#125;
+if (sum == target) &#123;
+    result.push_back(path);
+    return;
+&#125;
+</code></pre>
 <ul>
 <li>单层搜索的逻辑</li>
 </ul>
 <p>单层for循环依然是从startIndex开始，搜索candidates集合。</p>
 <p>如何重复选取?</p>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = startIndex; i &lt; candidates.size(); i++) &#123;</span><br><span class="line">    sum += candidates[i];</span><br><span class="line">    path.push_back(candidates[i]);</span><br><span class="line">    backtracking(candidates, target, sum, i); <span class="comment">// 关键点:不用i+1了，表示可以重复读取当前的数</span></span><br><span class="line">    sum -= candidates[i];   <span class="comment">// 回溯</span></span><br><span class="line">    path.pop_back();        <span class="comment">// 回溯</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="c">for (int i = startIndex; i &lt; candidates.size(); i++) &#123;
+    sum += candidates[i];
+    path.push_back(candidates[i]);
+    backtracking(candidates, target, sum, i); // 关键点:不用i+1了，表示可以重复读取当前的数
+    sum -= candidates[i];   // 回溯
+    path.pop_back();        // 回溯
+&#125;
+</code></pre>
 <p><strong>不用i+1了，表示可以重复读取当前的数</strong></p>
 <p>相当于下一层递归循环 ,  i 还是从这一层的startIndex开始, 这样就实现可重复读取啦</p>
-<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><h3 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h3><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line">public:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; path;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;&gt; res;</span><br><span class="line">    <span class="type">int</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="type">void</span> <span class="title function_">backtracking</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;&amp; candidates,<span class="type">int</span> startIndex, <span class="type">int</span> target, <span class="type">int</span> sum)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(sum == target)&#123;</span><br><span class="line">            res.push_back(path);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(sum &gt; target)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 每层遍历</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = startIndex; i &lt;  candidates.size(); i++)&#123;</span><br><span class="line">            sum += candidates[i];</span><br><span class="line">            path.push_back(candidates[i]);</span><br><span class="line">            backtracking(candidates, i, target, sum);</span><br><span class="line">            <span class="comment">//回溯</span></span><br><span class="line">            sum -= candidates[i];</span><br><span class="line">            path.pop_back();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;&gt; combinationSum(<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;&amp; candidates, <span class="type">int</span> target) &#123;</span><br><span class="line">         backtracking(candidates, <span class="number">0</span>, target, <span class="number">0</span>);</span><br><span class="line">         <span class="keyword">return</span> res;</span><br><span class="line">         </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><h3 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h3><pre><code class="c">class Solution &#123;
+public:
+    vector&lt;int&gt; path;
+    vector&lt;vector&lt;int&gt;&gt; res;
+    int sum = 0;
+    void backtracking(vector&lt;int&gt;&amp; candidates,int startIndex, int target, int sum)&#123;
+        if(sum == target)&#123;
+            res.push_back(path);
+            return;
+        &#125;
+        if(sum &gt; target)&#123;
+            return;
+        &#125;
+        
+        // 每层遍历
+        for(int i = startIndex; i &lt;  candidates.size(); i++)&#123;
+            sum += candidates[i];
+            path.push_back(candidates[i]);
+            backtracking(candidates, i, target, sum);
+            //回溯
+            sum -= candidates[i];
+            path.pop_back();
+        &#125;
+    &#125;
+    vector&lt;vector&lt;int&gt;&gt; combinationSum(vector&lt;int&gt;&amp; candidates, int target) &#123;
+         backtracking(candidates, 0, target, 0);
+         return res;
+         
+    &#125;
+&#125;;
+</code></pre>
+<h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><pre><code class="java">class Solution &#123;
+    List&lt;List&lt;Integer&gt;&gt; res = new ArrayList&lt;&gt;();
+    List&lt;Integer&gt; path = new ArrayList&lt;&gt;();
+    int sum = 0;
 
-<h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    List&lt;Integer&gt; path = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    <span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">backtracking</span><span class="params">(<span class="type">int</span>[] candidates, <span class="type">int</span> target, <span class="type">int</span> startIndex, <span class="type">int</span> sum)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(sum == target)&#123;</span><br><span class="line">            res.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(path));</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(sum &gt; target)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 单层遍历</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> startIndex; i &lt; candidates.length; i++)&#123;</span><br><span class="line">            path.add(candidates[i]);</span><br><span class="line">            sum += candidates[i];</span><br><span class="line"></span><br><span class="line">            backtracking(candidates, target, i, sum);</span><br><span class="line">            sum -= candidates[i];</span><br><span class="line">            path.remove(path.size()-<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title function_">combinationSum</span><span class="params">(<span class="type">int</span>[] candidates, <span class="type">int</span> target)</span> &#123;</span><br><span class="line">        backtracking(candidates, target, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    public void backtracking(int[] candidates, int target, int startIndex, int sum)&#123;
+        if(sum == target)&#123;
+            res.add(new ArrayList&lt;&gt;(path));
+            return;
+        &#125;
+        if(sum &gt; target)&#123;
+            return;
+        &#125;
 
+        // 单层遍历
+        for(int i = startIndex; i &lt; candidates.length; i++)&#123;
+            path.add(candidates[i]);
+            sum += candidates[i];
+
+            backtracking(candidates, target, i, sum);
+            sum -= candidates[i];
+            path.remove(path.size()-1);
+        &#125;
+    &#125;
+
+    public List&lt;List&lt;Integer&gt;&gt; combinationSum(int[] candidates, int target) &#123;
+        backtracking(candidates, target, 0, 0);
+        return res;
+    &#125;
+&#125;
+</code></pre>
 <h2 id="剪枝优化"><a href="#剪枝优化" class="headerlink" title="剪枝优化"></a>剪枝优化</h2><p>对于sum已经大于target的情况，其实是依然进入了下一层递归，只是下一层递归结束判断的时候，会判断sum &gt; target的话就返回。</p>
 <p>可以在for循环判断的终止条件中增加限制: </p>
 <blockquote>
@@ -1045,8 +1117,8 @@
 <p><strong>对总集合排序之后，如果下一层的sum（就是本层的 sum + candidates[i]）已经大于target，就可以结束本轮for循环的遍历</strong>。</p>
 </blockquote>
 <p>所以单层<code>for</code> 搜索可以改为 sum+&#x3D; candidates原本是在for循环里面 .在这里判断, 就会少走下面的递归函数, 完成剪枝的目的</p>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = startIndex; i &lt; candidates.size() &amp;&amp; sum + candidates[i] &lt;= target; i++)</span><br></pre></td></tr></table></figure>
-
+<pre><code class="c">for (int i = startIndex; i &lt; candidates.size() &amp;&amp; sum + candidates[i] &lt;= target; i++)
+</code></pre>
 <h1 id="40-组合总和-II"><a href="#40-组合总和-II" class="headerlink" title="40. 组合总和 II"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/combination-sum-ii/">40. 组合总和 II</a></h1><h2 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h2><p>跟上一题不同的是, 本题candidates 中的每个数字在每个组合中只能使用一次。</p>
 <p>本题数组candidates的元素<strong>是有重复</strong>的，而<a target="_blank" rel="noopener" href="https://programmercarl.com/0039.%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8C.html">39.组合总和 (opens new window)</a>是无重复元素的数组candidates</p>
 <p><strong>所谓去重，其实就是使用过的元素不能重复选取</strong></p>
@@ -1059,16 +1131,22 @@
 </ul>
 <p>加一个<code>used[]</code> 数组, 用来记录同一树枝上的元素是否使用过</p>
 <p>用来记录同一数层上的元素是否使用过</p>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;&gt; result; <span class="comment">// 存放组合集合</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; path;           <span class="comment">// 符合条件的组合</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">backtracking</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;&amp; candidates, <span class="type">int</span> target, <span class="type">int</span> sum, <span class="type">int</span> startIndex, <span class="built_in">vector</span>&lt;<span class="type">bool</span>&gt;&amp; used)</span> &#123;</span><br></pre></td></tr></table></figure>
-
-
-
+<pre><code class="c">vector&lt;vector&lt;int&gt;&gt; result; // 存放组合集合
+vector&lt;int&gt; path;           // 符合条件的组合
+void backtracking(vector&lt;int&gt;&amp; candidates, int target, int sum, int startIndex, vector&lt;bool&gt;&amp; used) &#123;
+</code></pre>
 <ul>
 <li>递归终止条件</li>
 </ul>
 <p>跟上一题一样的</p>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (sum &gt; target) &#123; <span class="comment">// 这个条件其实可以省略</span></span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (sum == target) &#123;</span><br><span class="line">    result.push_back(path);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="c">if (sum &gt; target) &#123; // 这个条件其实可以省略
+    return;
+&#125;
+if (sum == target) &#123;
+    result.push_back(path);
+    return;
+&#125;
+</code></pre>
 <ul>
 <li>单层搜索逻辑</li>
 </ul>
@@ -1081,15 +1159,70 @@
 </ul>
 <p>为什么 used[i - 1] &#x3D;&#x3D; false 就是同一树层呢?</p>
 <p>因为同一树层，used[i - 1] &#x3D;&#x3D; false 才能表示，当前取的 candidates[i] 是从 candidates[i - 1] 回溯而来的。</p>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = startIndex; i &lt; candidates.size() &amp;&amp; sum + candidates[i] &lt;= target; i++) &#123;</span><br><span class="line">    <span class="comment">// used[i - 1] == true，说明同一树枝candidates[i - 1]使用过</span></span><br><span class="line">    <span class="comment">// used[i - 1] == false，说明同一树层candidates[i - 1]使用过</span></span><br><span class="line">    <span class="comment">// 要对同一树层使用过的元素进行跳过</span></span><br><span class="line">    <span class="keyword">if</span> (i &gt; <span class="number">0</span> &amp;&amp; candidates[i] == candidates[i - <span class="number">1</span>] &amp;&amp; used[i - <span class="number">1</span>] == <span class="literal">false</span>) &#123;</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    sum += candidates[i];</span><br><span class="line">    path.push_back(candidates[i]);</span><br><span class="line">    used[i] = <span class="literal">true</span>;</span><br><span class="line">    backtracking(candidates, target, sum, i + <span class="number">1</span>, used); <span class="comment">// 和39.组合总和的区别1：这里是i+1，每个数字在每个组合中只能使用一次</span></span><br><span class="line">    used[i] = <span class="literal">false</span>;</span><br><span class="line">    sum -= candidates[i];</span><br><span class="line">    path.pop_back();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="c">for (int i = startIndex; i &lt; candidates.size() &amp;&amp; sum + candidates[i] &lt;= target; i++) &#123;
+    // used[i - 1] == true，说明同一树枝candidates[i - 1]使用过
+    // used[i - 1] == false，说明同一树层candidates[i - 1]使用过
+    // 要对同一树层使用过的元素进行跳过
+    if (i &gt; 0 &amp;&amp; candidates[i] == candidates[i - 1] &amp;&amp; used[i - 1] == false) &#123;
+        continue;
+    &#125;
+    sum += candidates[i];
+    path.push_back(candidates[i]);
+    used[i] = true;
+    backtracking(candidates, target, sum, i + 1, used); // 和39.组合总和的区别1：这里是i+1，每个数字在每个组合中只能使用一次
+    used[i] = false;
+    sum -= candidates[i];
+    path.pop_back();
+&#125;
+</code></pre>
+<h2 id="Code-1"><a href="#Code-1" class="headerlink" title="Code"></a>Code</h2><pre><code class="java">class Solution &#123;
+    List&lt;List&lt;Integer&gt;&gt; res = new ArrayList&lt;&gt;();
+    List&lt;Integer&gt; path = new ArrayList&lt;&gt;();
+    boolean[] used;
+    int sum = 0;
 
-<h2 id="Code-1"><a href="#Code-1" class="headerlink" title="Code"></a>Code</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    List&lt;Integer&gt; path = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    <span class="type">boolean</span>[] used;</span><br><span class="line">    <span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">backtracking</span><span class="params">(<span class="type">int</span>[] candidates, <span class="type">int</span> target, <span class="type">int</span> startIndex, <span class="type">int</span> sum, <span class="type">boolean</span>[] used)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(sum == target)&#123;</span><br><span class="line">            res.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(path));</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(sum &gt; target)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      </span><br><span class="line">        <span class="comment">// 单层遍历</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> startIndex; i &lt; candidates.length ; i++)&#123;</span><br><span class="line">            <span class="comment">// used[i - 1] == true，说明同一树枝candidates[i - 1]使用过</span></span><br><span class="line">            <span class="comment">// used[i - 1] == false，说明同一树层candidates[i - 1]使用过</span></span><br><span class="line">            <span class="comment">// 要对同一树层使用过的元素进行跳过</span></span><br><span class="line">            <span class="keyword">if</span>(i &gt; <span class="number">0</span>&amp;&amp; candidates[i] == candidates[i-<span class="number">1</span>] &amp;&amp; used[i - <span class="number">1</span>] == <span class="literal">false</span>) <span class="keyword">continue</span>;</span><br><span class="line">            used[i] = <span class="literal">true</span>;</span><br><span class="line">            path.add(candidates[i]);</span><br><span class="line">            sum += candidates[i];</span><br><span class="line"></span><br><span class="line">            backtracking(candidates, target, i+<span class="number">1</span>, sum, used);</span><br><span class="line">            sum -= candidates[i];</span><br><span class="line">            path.remove(path.size()-<span class="number">1</span>);</span><br><span class="line">            used[i] = <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title function_">combinationSum2</span><span class="params">(<span class="type">int</span>[] candidates, <span class="type">int</span> target)</span> &#123;</span><br><span class="line">        used = <span class="keyword">new</span> <span class="title class_">boolean</span>[candidates.length];</span><br><span class="line">        <span class="comment">// 加标志数组，用来辅助判断同层节点是否已经遍历</span></span><br><span class="line">        Arrays.fill(used, <span class="literal">false</span>);</span><br><span class="line">        <span class="comment">// 为了将重复的数字都放到一起，所以先进行排序</span></span><br><span class="line">        Arrays.sort(candidates);</span><br><span class="line">        backtracking(candidates, target, <span class="number">0</span>, <span class="number">0</span>, used);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    public void backtracking(int[] candidates, int target, int startIndex, int sum, boolean[] used)&#123;
+        if(sum == target)&#123;
+            res.add(new ArrayList&lt;&gt;(path));
+            return;
+        &#125;
+        if(sum &gt; target)&#123;
+            return;
+        &#125;
+      
+        // 单层遍历
+        for(int i = startIndex; i &lt; candidates.length ; i++)&#123;
+            // used[i - 1] == true，说明同一树枝candidates[i - 1]使用过
+            // used[i - 1] == false，说明同一树层candidates[i - 1]使用过
+            // 要对同一树层使用过的元素进行跳过
+            if(i &gt; 0&amp;&amp; candidates[i] == candidates[i-1] &amp;&amp; used[i - 1] == false) continue;
+            used[i] = true;
+            path.add(candidates[i]);
+            sum += candidates[i];
 
-<h2 id="语法小补充"><a href="#语法小补充" class="headerlink" title="语法小补充"></a>语法小补充</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="type">bool</span>&gt; <span class="title">used</span><span class="params">(candidates.size(), <span class="literal">false</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+            backtracking(candidates, target, i+1, sum, used);
+            sum -= candidates[i];
+            path.remove(path.size()-1);
+            used[i] = false;
+        &#125;
+    &#125;
 
+    public List&lt;List&lt;Integer&gt;&gt; combinationSum2(int[] candidates, int target) &#123;
+        used = new boolean[candidates.length];
+        // 加标志数组，用来辅助判断同层节点是否已经遍历
+        Arrays.fill(used, false);
+        // 为了将重复的数字都放到一起，所以先进行排序
+        Arrays.sort(candidates);
+        backtracking(candidates, target, 0, 0, used);
+        return res;
+    &#125;
+&#125;
+</code></pre>
+<h2 id="语法小补充"><a href="#语法小补充" class="headerlink" title="语法小补充"></a>语法小补充</h2><pre><code class="cpp">  vector&lt;bool&gt; used(candidates.size(), false);
+</code></pre>
 <p>在java中,可以这么实现</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Arrays.fill(used, <span class="literal">false</span>);</span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">   Arrays.fill(used, false);
+</code></pre>
 <h1 id="131-分割回文串"><a href="#131-分割回文串" class="headerlink" title="131. 分割回文串"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/palindrome-partitioning/">131. 分割回文串</a></h1><h2 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h2><p>两个关键问题:</p>
 <ol>
 <li>切割问题，有不同的切割方式</li>
@@ -1109,31 +1242,93 @@
 <p>path存放切割后的回文子串</p>
 <p>二维数组res存放结果集</p>
 <p>startIndex , 这里就一个集合,所以也要使用</p>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; result;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; path; <span class="comment">// 放已经回文的子串</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">backtracking</span> <span class="params">(<span class="type">const</span> <span class="built_in">string</span>&amp; s, <span class="type">int</span> startIndex)</span> &#123;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="c">vector&lt;vector&lt;string&gt;&gt; result;
+vector&lt;string&gt; path; // 放已经回文的子串
+void backtracking (const string&amp; s, int startIndex) &#123;
+</code></pre>
 <ul>
 <li>递归函数终止条件</li>
 </ul>
 <p>这个startIndex就可以看做是一个切割线</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">backtracking</span> <span class="params">(<span class="type">const</span> string&amp; s, <span class="type">int</span> startIndex)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 如果起始位置已经大于s的大小，说明已经找到了一组分割方案了</span></span><br><span class="line">    <span class="keyword">if</span> (startIndex &gt;= s.<span class="built_in">size</span>()) &#123;</span><br><span class="line">        result.<span class="built_in">push_back</span>(path);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="cpp">void backtracking (const string&amp; s, int startIndex) &#123;
+    // 如果起始位置已经大于s的大小，说明已经找到了一组分割方案了
+    if (startIndex &gt;= s.size()) &#123;
+        result.push_back(path);
+        return;
+    &#125;
+&#125;
+</code></pre>
 <ul>
 <li>单层搜索逻辑</li>
 </ul>
 <p><strong>主要是在递归循环中如何取子串</strong></p>
 <p><code>startIndex =&gt; i</code> 就是子串</p>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = startIndex; i &lt; s.size(); i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (isPalindrome(s, startIndex, i)) &#123; <span class="comment">// 是回文子串</span></span><br><span class="line">        <span class="comment">// 获取[startIndex,i]在s中的子串</span></span><br><span class="line">        <span class="built_in">string</span> str = s.substr(startIndex, i - startIndex + <span class="number">1</span>);</span><br><span class="line">        path.push_back(str);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;                <span class="comment">// 如果不是则直接跳过</span></span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    backtracking(s, i + <span class="number">1</span>); <span class="comment">// 寻找i+1为起始位置的子串</span></span><br><span class="line">    path.pop_back();        <span class="comment">// 回溯过程，弹出本次已经添加的子串</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="c">for (int i = startIndex; i &lt; s.size(); i++) &#123;
+    if (isPalindrome(s, startIndex, i)) &#123; // 是回文子串
+        // 获取[startIndex,i]在s中的子串
+        string str = s.substr(startIndex, i - startIndex + 1);
+        path.push_back(str);
+    &#125; else &#123;                // 如果不是则直接跳过
+        continue;
+    &#125;
+    backtracking(s, i + 1); // 寻找i+1为起始位置的子串
+    path.pop_back();        // 回溯过程，弹出本次已经添加的子串
+&#125;
+</code></pre>
 <blockquote>
 <p>因为不能切割在同一处, 遍历到下一层的时候, i+1</p>
 </blockquote>
 <ul>
 <li>判断回文字符串</li>
 </ul>
-<figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">bool</span> <span class="title function_">isPalindrome</span><span class="params">(<span class="type">const</span> <span class="built_in">string</span>&amp; s, <span class="type">int</span> start, <span class="type">int</span> end)</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = start, j = end; i &lt; j; i++, j--) &#123;</span><br><span class="line">        <span class="keyword">if</span> (s[i] != s[j]) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Code-2"><a href="#Code-2" class="headerlink" title="Code"></a>Code</h2><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line">private:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; result;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; path; <span class="comment">// 放已经回文的子串</span></span><br><span class="line">    <span class="type">void</span> <span class="title function_">backtracking</span> <span class="params">(<span class="type">const</span> <span class="built_in">string</span>&amp; s, <span class="type">int</span> startIndex)</span> &#123;</span><br><span class="line">        <span class="comment">// 如果起始位置已经大于s的大小，说明已经找到了一组分割方案了</span></span><br><span class="line">        <span class="keyword">if</span> (startIndex &gt;= s.size()) &#123;</span><br><span class="line">            result.push_back(path);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = startIndex; i &lt; s.size(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (isPalindrome(s, startIndex, i)) &#123;   <span class="comment">// 是回文子串</span></span><br><span class="line">                <span class="comment">// 获取[startIndex,i]在s中的子串</span></span><br><span class="line">                <span class="built_in">string</span> str = s.substr(startIndex, i - startIndex + <span class="number">1</span>);</span><br><span class="line">                path.push_back(str);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;                                <span class="comment">// 不是回文，跳过</span></span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            backtracking(s, i + <span class="number">1</span>); <span class="comment">// 寻找i+1为起始位置的子串</span></span><br><span class="line">            path.pop_back(); <span class="comment">// 回溯过程，弹出本次已经添加的子串</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">bool</span> <span class="title function_">isPalindrome</span><span class="params">(<span class="type">const</span> <span class="built_in">string</span>&amp; s, <span class="type">int</span> start, <span class="type">int</span> end)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = start, j = end; i &lt; j; i++, j--) &#123;</span><br><span class="line">            <span class="keyword">if</span> (s[i] != s[j]) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">public:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; partition(<span class="built_in">string</span> s) &#123;</span><br><span class="line">        result.clear();</span><br><span class="line">        path.clear();</span><br><span class="line">        backtracking(s, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="c"> bool isPalindrome(const string&amp; s, int start, int end) &#123;
+     for (int i = start, j = end; i &lt; j; i++, j--) &#123;
+         if (s[i] != s[j]) &#123;
+             return false;
+         &#125;
+     &#125;
+     return true;
+ &#125;
+</code></pre>
+<h2 id="Code-2"><a href="#Code-2" class="headerlink" title="Code"></a>Code</h2><pre><code class="c">class Solution &#123;
+private:
+    vector&lt;vector&lt;string&gt;&gt; result;
+    vector&lt;string&gt; path; // 放已经回文的子串
+    void backtracking (const string&amp; s, int startIndex) &#123;
+        // 如果起始位置已经大于s的大小，说明已经找到了一组分割方案了
+        if (startIndex &gt;= s.size()) &#123;
+            result.push_back(path);
+            return;
+        &#125;
+        for (int i = startIndex; i &lt; s.size(); i++) &#123;
+            if (isPalindrome(s, startIndex, i)) &#123;   // 是回文子串
+                // 获取[startIndex,i]在s中的子串
+                string str = s.substr(startIndex, i - startIndex + 1);
+                path.push_back(str);
+            &#125; else &#123;                                // 不是回文，跳过
+                continue;
+            &#125;
+            backtracking(s, i + 1); // 寻找i+1为起始位置的子串
+            path.pop_back(); // 回溯过程，弹出本次已经添加的子串
+        &#125;
+    &#125;
+    bool isPalindrome(const string&amp; s, int start, int end) &#123;
+        for (int i = start, j = end; i &lt; j; i++, j--) &#123;
+            if (s[i] != s[j]) &#123;
+                return false;
+            &#125;
+        &#125;
+        return true;
+    &#125;
+public:
+    vector&lt;vector&lt;string&gt;&gt; partition(string s) &#123;
+        result.clear();
+        path.clear();
+        backtracking(s, 0);
+        return result;
+    &#125;
+&#125;;
+</code></pre>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 waigo168@163.com </span>
@@ -1150,9 +1345,9 @@
 <script type="text/javascript">
     $.getScript('/js/gitalk.js', function () {
         var gitalk = new Gitalk({
-            clientID: '035ef548c9e9378701b6',
-            clientSecret: '83814063a9a58aa2ecd9d9ba1d8bbfe9d4205b6b',
-            repo: 'https://axdmdyj.github.io',
+            clientID: 'aeb83b87dc9753d290d4',
+            clientSecret: '179a325f86496596d1df38a53b7be77143374811',
+            repo: 'axdmdyj.github.io',
             owner: 'axdmdyj',
             admin: ['axdmdyj'],
             id: decodeURI(location.pathname),
@@ -1204,20 +1399,6 @@
 
         /*高亮代码块行号*/
         
-        $('pre code').each(function(){
-            var lines = $(this).text().trim().split('\n').length, widther='';
-            if (lines>99) {
-                widther = 'widther'
-            }
-            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
-            $(this).addClass('has-numbering ' + widther)
-                    .parent()
-                    .append($numbering);
-            for(var i=1;i<=lines;i++){
-                $numbering.append($('<li/>').text(i));
-            }
-        });
-        
 
         /*访问数量*/
         
@@ -1237,38 +1418,6 @@
 </script>
 
 <!--加入行号的高亮代码块样式-->
-
-<style>
-    pre{
-        position: relative;
-        margin-bottom: 24px;
-        border-radius: 10px;
-        border: 1px solid #e2dede;
-        background: #FFF;
-        overflow: hidden;
-    }
-    code.has-numbering{
-        margin-left: 30px;
-    }
-    code.has-numbering.widther{
-        margin-left: 35px;
-    }
-    .pre-numbering{
-        margin: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px;
-        padding: 18px 3px 15px 5px;
-        border-right: 1px solid #C3CCD0;
-        text-align: right;
-        color: #AAA;
-        background-color: ;
-    }
-    .pre-numbering.widther {
-        width: 35px;
-    }
-</style>
 
 <!--自定义样式设置-->
 <style>

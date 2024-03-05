@@ -1063,8 +1063,10 @@
 那么，Java 8 中 PermGen 为什么被移出 HotSpot JVM 了？
 </code></pre>
 <p>官网给出了解释：<a target="_blank" rel="noopener" href="http://openjdk.java.net/jeps/122">http://openjdk.java.net/jeps/122</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">This is part of the JRockit and Hotspot convergence effort. JRockit customers do not need to configure the permanent generation (since JRockit does not have a permanent generation) and are accustomed to not configuring the permanent generation.</span><br><span class="line"></span><br><span class="line">移除永久代是为融合HotSpot JVM与 JRockit VM而做出的努力，因为JRockit没有永久代，不需要配置永久代。</span><br></pre></td></tr></table></figure>
+<pre><code>This is part of the JRockit and Hotspot convergence effort. JRockit customers do not need to configure the permanent generation (since JRockit does not have a permanent generation) and are accustomed to not configuring the permanent generation.
 
+移除永久代是为融合HotSpot JVM与 JRockit VM而做出的努力，因为JRockit没有永久代，不需要配置永久代。
+</code></pre>
 <p>1）由于 PermGen 内存经常会溢出，引发OutOfMemoryError，因此 JVM 的开发者希望这一块内存可以更灵活地被管理，不要再经常出现这样的 OOM。</p>
 <p>2）移除 PermGen 可以促进 HotSpot JVM 与 JRockit VM 的融合，因为 JRockit 没有永久代。</p>
 <pre><code>准确来说，Perm 区中的字符串常量池被移到了堆内存中是在 Java7 之后，Java 8 时，PermGen 被元空间代替，其他内容比如**类元信息、字段、静态属性、方法、常量**等都移动到元空间区。比如 java/lang/Object 类元信息、静态属性 System.out、整型常量等。
@@ -1124,11 +1126,89 @@
 <h4 id="1-5-2-常量池"><a href="#1-5-2-常量池" class="headerlink" title="1.5.2 常量池"></a>1.5.2 常量池</h4><p><strong>可以看作是一张表</strong>，虚拟机指令根据这张常量表找到要执行的<strong>类名、方法名、参数类型、字面量</strong>等信息</p>
 <p>查看字节码结构（类的基本信息、常量池、方法定义）<code>javap -v xx.class</code></p>
 <p>比如下面是一个Application类的main方法执行，源码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Application</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;hello world&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">public class Application &#123;
+    public static void main(String[] args) &#123;
+        System.out.println(&quot;hello world&quot;);
+    &#125;
+&#125;
+</code></pre>
 <p>找到类对应的class文件存放目录，执行命令：<code>javap -v Application.class</code>   查看字节码结构</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">D:\code\jvm-demo\target\classes\com\heima\jvm&gt;javap -v Application.<span class="keyword">class</span></span><br><span class="line"><span class="title class_">Classfile</span> /D:/code/jvm-demo/target/classes/com/heima/jvm/Application.<span class="keyword">class</span></span><br><span class="line">  <span class="title class_">Last</span> modified <span class="number">2023</span>-<span class="number">05</span>-<span class="number">07</span>; size <span class="number">564</span> bytes    <span class="comment">//最后修改的时间</span></span><br><span class="line">  MD5 checksum c1b64ed6491b9a16c2baab5061c64f88   <span class="comment">//签名</span></span><br><span class="line">  Compiled from <span class="string">&quot;Application.java&quot;</span>   <span class="comment">//从哪个源码编译</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">com</span>.heima.jvm.Application   <span class="comment">//包名，类名</span></span><br><span class="line">  minor version: <span class="number">0</span></span><br><span class="line">  major version: <span class="number">52</span>     <span class="comment">//jdk版本	</span></span><br><span class="line">  flags: ACC_PUBLIC, ACC_SUPER  <span class="comment">//修饰符</span></span><br><span class="line">Constant pool:   <span class="comment">//常量池</span></span><br><span class="line">   #<span class="number">1</span> = Methodref          #<span class="number">6.</span>#<span class="number">20</span>         <span class="comment">// java/lang/Object.&quot;&lt;init&gt;&quot;:()V</span></span><br><span class="line">   #<span class="number">2</span> = Fieldref           #<span class="number">21.</span>#<span class="number">22</span>        <span class="comment">// java/lang/System.out:Ljava/io/PrintStream;</span></span><br><span class="line">   #<span class="number">3</span> = String             #<span class="number">23</span>            <span class="comment">// hello world</span></span><br><span class="line">   #<span class="number">4</span> = Methodref          #<span class="number">24.</span>#<span class="number">25</span>        <span class="comment">// java/io/PrintStream.println:(Ljava/lang/String;)V</span></span><br><span class="line">   #<span class="number">5</span> = Class              #<span class="number">26</span>            <span class="comment">// com/heima/jvm/Application</span></span><br><span class="line">   #<span class="number">6</span> = Class              #<span class="number">27</span>            <span class="comment">// java/lang/Object</span></span><br><span class="line">   #<span class="number">7</span> = Utf8               &lt;init&gt;</span><br><span class="line">   #<span class="number">8</span> = Utf8               ()V</span><br><span class="line">   #<span class="number">9</span> = Utf8               Code</span><br><span class="line">  #<span class="number">10</span> = Utf8               LineNumberTable</span><br><span class="line">  #<span class="number">11</span> = Utf8               LocalVariableTable</span><br><span class="line">  #<span class="number">12</span> = Utf8               <span class="built_in">this</span></span><br><span class="line">  #<span class="number">13</span> = Utf8               Lcom/heima/jvm/Application;</span><br><span class="line">  #<span class="number">14</span> = Utf8               main</span><br><span class="line">  #<span class="number">15</span> = Utf8               ([Ljava/lang/String;)V</span><br><span class="line">  #<span class="number">16</span> = Utf8               args</span><br><span class="line">  #<span class="number">17</span> = Utf8               [Ljava/lang/String;</span><br><span class="line">  #<span class="number">18</span> = Utf8               SourceFile</span><br><span class="line">  #<span class="number">19</span> = Utf8               Application.java</span><br><span class="line">  #<span class="number">20</span> = NameAndType        #<span class="number">7</span>:#<span class="number">8</span>          <span class="comment">// &quot;&lt;init&gt;&quot;:()V</span></span><br><span class="line">  #<span class="number">21</span> = Class              #<span class="number">28</span>            <span class="comment">// java/lang/System</span></span><br><span class="line">  #<span class="number">22</span> = NameAndType        #<span class="number">29</span>:#<span class="number">30</span>        <span class="comment">// out:Ljava/io/PrintStream;</span></span><br><span class="line">  #<span class="number">23</span> = Utf8               hello world</span><br><span class="line">  #<span class="number">24</span> = Class              #<span class="number">31</span>            <span class="comment">// java/io/PrintStream</span></span><br><span class="line">  #<span class="number">25</span> = NameAndType        #<span class="number">32</span>:#<span class="number">33</span>        <span class="comment">// println:(Ljava/lang/String;)V</span></span><br><span class="line">  #<span class="number">26</span> = Utf8               com/heima/jvm/Application</span><br><span class="line">  #<span class="number">27</span> = Utf8               java/lang/Object</span><br><span class="line">  #<span class="number">28</span> = Utf8               java/lang/System</span><br><span class="line">  #<span class="number">29</span> = Utf8               out</span><br><span class="line">  #<span class="number">30</span> = Utf8               Ljava/io/PrintStream;</span><br><span class="line">  #<span class="number">31</span> = Utf8               java/io/PrintStream</span><br><span class="line">  #<span class="number">32</span> = Utf8               println</span><br><span class="line">  #<span class="number">33</span> = Utf8               (Ljava/lang/String;)V</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span> com.heima.jvm.Application();  <span class="comment">//构造方法</span></span><br><span class="line">    descriptor: ()V</span><br><span class="line">    flags: ACC_PUBLIC</span><br><span class="line">    Code:</span><br><span class="line">      stack=<span class="number">1</span>, locals=<span class="number">1</span>, args_size=<span class="number">1</span></span><br><span class="line">         <span class="number">0</span>: aload_0</span><br><span class="line">         <span class="number">1</span>: invokespecial #<span class="number">1</span>                  <span class="comment">// Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V</span></span><br><span class="line">         <span class="number">4</span>: <span class="keyword">return</span></span><br><span class="line">      LineNumberTable:</span><br><span class="line">        line <span class="number">3</span>: <span class="number">0</span></span><br><span class="line">      LocalVariableTable:</span><br><span class="line">        Start  Length  Slot  Name   Signature</span><br><span class="line">            <span class="number">0</span>       <span class="number">5</span>     <span class="number">0</span>  <span class="built_in">this</span>   Lcom/heima/jvm/Application;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(java.lang.String[])</span>;  <span class="comment">//main方法</span></span><br><span class="line">    descriptor: ([Ljava/lang/String;)V</span><br><span class="line">    flags: ACC_PUBLIC, ACC_STATIC</span><br><span class="line">    Code:</span><br><span class="line">      stack=<span class="number">2</span>, locals=<span class="number">1</span>, args_size=<span class="number">1</span></span><br><span class="line">         <span class="number">0</span>: getstatic     #<span class="number">2</span>                  <span class="comment">// Field java/lang/System.out:Ljava/io/PrintStream;</span></span><br><span class="line">         <span class="number">3</span>: ldc           #<span class="number">3</span>                  <span class="comment">// String hello world</span></span><br><span class="line">         <span class="number">5</span>: invokevirtual #<span class="number">4</span>                  <span class="comment">// Method java/io/PrintStream.println:(Ljava/lang/String;)V</span></span><br><span class="line">         <span class="number">8</span>: <span class="keyword">return</span></span><br><span class="line">      LineNumberTable:</span><br><span class="line">        line <span class="number">7</span>: <span class="number">0</span></span><br><span class="line">        line <span class="number">8</span>: <span class="number">8</span></span><br><span class="line">      LocalVariableTable:</span><br><span class="line">        Start  Length  Slot  Name   Signature</span><br><span class="line">            <span class="number">0</span>       <span class="number">9</span>     <span class="number">0</span>  args   [Ljava/lang/String;</span><br><span class="line">&#125;</span><br><span class="line">SourceFile: <span class="string">&quot;Application.java&quot;</span></span><br></pre></td></tr></table></figure>
+<pre><code class="java">D:\code\jvm-demo\target\classes\com\heima\jvm&gt;javap -v Application.class
+Classfile /D:/code/jvm-demo/target/classes/com/heima/jvm/Application.class
+  Last modified 2023-05-07; size 564 bytes    //最后修改的时间
+  MD5 checksum c1b64ed6491b9a16c2baab5061c64f88   //签名
+  Compiled from &quot;Application.java&quot;   //从哪个源码编译
+public class com.heima.jvm.Application   //包名，类名
+  minor version: 0
+  major version: 52     //jdk版本	
+  flags: ACC_PUBLIC, ACC_SUPER  //修饰符
+Constant pool:   //常量池
+   #1 = Methodref          #6.#20         // java/lang/Object.&quot;&lt;init&gt;&quot;:()V
+   #2 = Fieldref           #21.#22        // java/lang/System.out:Ljava/io/PrintStream;
+   #3 = String             #23            // hello world
+   #4 = Methodref          #24.#25        // java/io/PrintStream.println:(Ljava/lang/String;)V
+   #5 = Class              #26            // com/heima/jvm/Application
+   #6 = Class              #27            // java/lang/Object
+   #7 = Utf8               &lt;init&gt;
+   #8 = Utf8               ()V
+   #9 = Utf8               Code
+  #10 = Utf8               LineNumberTable
+  #11 = Utf8               LocalVariableTable
+  #12 = Utf8               this
+  #13 = Utf8               Lcom/heima/jvm/Application;
+  #14 = Utf8               main
+  #15 = Utf8               ([Ljava/lang/String;)V
+  #16 = Utf8               args
+  #17 = Utf8               [Ljava/lang/String;
+  #18 = Utf8               SourceFile
+  #19 = Utf8               Application.java
+  #20 = NameAndType        #7:#8          // &quot;&lt;init&gt;&quot;:()V
+  #21 = Class              #28            // java/lang/System
+  #22 = NameAndType        #29:#30        // out:Ljava/io/PrintStream;
+  #23 = Utf8               hello world
+  #24 = Class              #31            // java/io/PrintStream
+  #25 = NameAndType        #32:#33        // println:(Ljava/lang/String;)V
+  #26 = Utf8               com/heima/jvm/Application
+  #27 = Utf8               java/lang/Object
+  #28 = Utf8               java/lang/System
+  #29 = Utf8               out
+  #30 = Utf8               Ljava/io/PrintStream;
+  #31 = Utf8               java/io/PrintStream
+  #32 = Utf8               println
+  #33 = Utf8               (Ljava/lang/String;)V
+&#123;
+  public com.heima.jvm.Application();  //构造方法
+    descriptor: ()V
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V
+         4: return
+      LineNumberTable:
+        line 3: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/heima/jvm/Application;
 
+  public static void main(java.lang.String[]);  //main方法
+    descriptor: ([Ljava/lang/String;)V
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=2, locals=1, args_size=1
+         0: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+         3: ldc           #3                  // String hello world
+         5: invokevirtual #4                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+         8: return
+      LineNumberTable:
+        line 7: 0
+        line 8: 8
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       9     0  args   [Ljava/lang/String;
+&#125;
+SourceFile: &quot;Application.java&quot;
+</code></pre>
 <p>下图，左侧是main方法的指令信息，右侧constant pool  是常量池</p>
 <p>main方法按照指令执行的时候，需要到常量池中查表翻译找到具体的类和方法地址去执行</p>
 <p><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1707656729824-54560ff6-8a35-4a58-8b11-9768fb2d4e95.png#averageHue=%23f7f4f2&id=ycQYo&originHeight=462&originWidth=1402&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="></p>
@@ -1147,8 +1227,66 @@
 <p>需求，在本地电脑中的一个较大的文件（超过	100m）从一个磁盘挪到另外一个磁盘</p>
 <p><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1707656729982-ce4bbe25-6fd5-47dc-a39b-f6cc1429bcf6.png#averageHue=%23f9f6f6&id=RiGOC&originHeight=254&originWidth=862&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="></p>
 <p>代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 演示 ByteBuffer 作用</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo1_9</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">FROM</span> <span class="operator">=</span> <span class="string">&quot;E:\\编程资料\\第三方教学视频\\youtube\\Getting Started with Spring Boot-sbPSjI4tt10.mp4&quot;</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">TO</span> <span class="operator">=</span> <span class="string">&quot;E:\\a.mp4&quot;</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">_1Mb</span> <span class="operator">=</span> <span class="number">1024</span> * <span class="number">1024</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        io(); <span class="comment">// io 用时：1535.586957 1766.963399 1359.240226</span></span><br><span class="line">        directBuffer(); <span class="comment">// directBuffer 用时：479.295165 702.291454 562.56592</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">directBuffer</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">long</span> <span class="variable">start</span> <span class="operator">=</span> System.nanoTime();</span><br><span class="line">        <span class="keyword">try</span> (<span class="type">FileChannel</span> <span class="variable">from</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileInputStream</span>(FROM).getChannel();</span><br><span class="line">             <span class="type">FileChannel</span> <span class="variable">to</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(TO).getChannel();</span><br><span class="line">        ) &#123;</span><br><span class="line">            <span class="type">ByteBuffer</span> <span class="variable">bb</span> <span class="operator">=</span> ByteBuffer.allocateDirect(_1Mb);</span><br><span class="line">            <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> from.read(bb);</span><br><span class="line">                <span class="keyword">if</span> (len == -<span class="number">1</span>) &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                bb.flip();</span><br><span class="line">                to.write(bb);</span><br><span class="line">                bb.clear();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">long</span> <span class="variable">end</span> <span class="operator">=</span> System.nanoTime();</span><br><span class="line">        System.out.println(<span class="string">&quot;directBuffer 用时：&quot;</span> + (end - start) / <span class="number">1000_000.0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">io</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">long</span> <span class="variable">start</span> <span class="operator">=</span> System.nanoTime();</span><br><span class="line">        <span class="keyword">try</span> (<span class="type">FileInputStream</span> <span class="variable">from</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileInputStream</span>(FROM);</span><br><span class="line">             <span class="type">FileOutputStream</span> <span class="variable">to</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(TO);</span><br><span class="line">        ) &#123;</span><br><span class="line">            <span class="type">byte</span>[] buf = <span class="keyword">new</span> <span class="title class_">byte</span>[_1Mb];</span><br><span class="line">            <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> from.read(buf);</span><br><span class="line">                <span class="keyword">if</span> (len == -<span class="number">1</span>) &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                to.write(buf, <span class="number">0</span>, len);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">long</span> <span class="variable">end</span> <span class="operator">=</span> System.nanoTime();</span><br><span class="line">        System.out.println(<span class="string">&quot;io 用时：&quot;</span> + (end - start) / <span class="number">1000_000.0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">io用时：<span class="number">182.7593</span></span><br><span class="line">directBuffer用时：</span><br><span class="line"><span class="number">98.</span>4438T</span><br></pre></td></tr></table></figure>
+<pre><code class="java">/**
+ * 演示 ByteBuffer 作用
+ */
+public class Demo1_9 &#123;
+    static final String FROM = &quot;E:\\编程资料\\第三方教学视频\\youtube\\Getting Started with Spring Boot-sbPSjI4tt10.mp4&quot;;
+    static final String TO = &quot;E:\\a.mp4&quot;;
+    static final int _1Mb = 1024 * 1024;
 
+    public static void main(String[] args) &#123;
+        io(); // io 用时：1535.586957 1766.963399 1359.240226
+        directBuffer(); // directBuffer 用时：479.295165 702.291454 562.56592
+    &#125;
+
+    private static void directBuffer() &#123;
+        long start = System.nanoTime();
+        try (FileChannel from = new FileInputStream(FROM).getChannel();
+             FileChannel to = new FileOutputStream(TO).getChannel();
+        ) &#123;
+            ByteBuffer bb = ByteBuffer.allocateDirect(_1Mb);
+            while (true) &#123;
+                int len = from.read(bb);
+                if (len == -1) &#123;
+                    break;
+                &#125;
+                bb.flip();
+                to.write(bb);
+                bb.clear();
+            &#125;
+        &#125; catch (IOException e) &#123;
+            e.printStackTrace();
+        &#125;
+        long end = System.nanoTime();
+        System.out.println(&quot;directBuffer 用时：&quot; + (end - start) / 1000_000.0);
+    &#125;
+
+    private static void io() &#123;
+        long start = System.nanoTime();
+        try (FileInputStream from = new FileInputStream(FROM);
+             FileOutputStream to = new FileOutputStream(TO);
+        ) &#123;
+            byte[] buf = new byte[_1Mb];
+            while (true) &#123;
+                int len = from.read(buf);
+                if (len == -1) &#123;
+                    break;
+                &#125;
+                to.write(buf, 0, len);
+            &#125;
+        &#125; catch (IOException e) &#123;
+            e.printStackTrace();
+        &#125;
+        long end = System.nanoTime();
+        System.out.println(&quot;io 用时：&quot; + (end - start) / 1000_000.0);
+    &#125;
+&#125;
+
+io用时：182.7593
+directBuffer用时：
+98.4438T
+</code></pre>
 <p>可以发现，使用传统的IO的时间要比NIO操作的时间长了很多了，也就说NIO的读性能更好。</p>
 <p>这个是跟我们的JVM的直接内存是有一定关系，如下图，是传统阻塞IO的数据传输流程</p>
 <p><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1707656730051-579d6bae-b1de-483a-8b95-b28c91458a63.png#averageHue=%23e9d8d7&id=zrFzQ&originHeight=461&originWidth=1163&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="></p>
@@ -1201,8 +1339,14 @@
 <p>（1）通过双亲委派机制可以避免某一个类被重复加载，当父类已经加载后则无需重复加载，保证唯一性。</p>
 <p>（2）为了安全，保证类库API不会被修改</p>
 <p>在工程中新建java.lang包，接着在该包下新建String类，并定义main函数</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">String</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;demo info&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="java">public class String &#123;
 
+    public static void main(String[] args) &#123;
+
+        System.out.println(&quot;demo info&quot;);
+    &#125;
+&#125;
+</code></pre>
 <pre><code>此时执行main函数，会出现异常，在类 java.lang.String 中找不到 main 方法
 </code></pre>
 <p><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1707656730445-79fe8094-7785-410f-85ed-c4159a027b12.png#averageHue=%23f8f4f2&id=Wz7IC&originHeight=144&originWidth=934&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="></p>
@@ -1277,11 +1421,11 @@
 <p>简单一句就是：如果一个或多个对象没有任何的引用指向它了，那么这个对象现在就是垃圾，如果定位了垃圾，则有可能会被垃圾回收器回收。</p>
 <p>如果要定位什么是垃圾，有两种方式来确定，第一个是引用计数法，第二个是可达性分析算法</p>
 <h4 id="3-2-1-引用计数法"><a href="#3-2-1-引用计数法" class="headerlink" title="3.2.1 引用计数法"></a>3.2.1 引用计数法</h4><p>一个对象被引用了一次，在当前的对象头上递增一次引用次数，如果这个对象的引用次数为0，代表这个对象可回收</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">demo</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">String</span>(<span class="string">&quot;123&quot;</span>);</span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">String demo = new String(&quot;123&quot;);
+</code></pre>
 <p><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1707656731417-23dfd02f-9d7a-4281-9cc6-feaf1fea6c3b.png#averageHue=%23faf5f5&id=XRa3R&originHeight=466&originWidth=994&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">demo</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">String demo = null;
+</code></pre>
 <p><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1707656731493-7222f863-32bf-4146-84cd-c82594369c33.png#averageHue=%23f9f5f5&id=C725C&originHeight=460&originWidth=989&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="></p>
 <p>当对象间出现了循环引用的话，则引用计数法就会失效</p>
 <p><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1707656731622-d7499443-9ec6-432a-80fd-820b0280f4a3.png#averageHue=%23e8eedb&id=ImlQ5&originHeight=261&originWidth=1299&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="></p>
@@ -1321,20 +1465,53 @@ finalize方法对于每一个对象来说，只会执行一次。如果第一次
 <li>虚拟机栈（栈帧中的本地变量表）中引用的对象</li>
 </ul>
 <p>“局部变量的引用存储在虚拟机栈中，而对象存储在堆中。”</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * demo是栈帧中的本地变量，当 demo = null 时，由于此时 demo 充当了 GC Root 的作用，demo与原来指向的实例 new Demo() 断开了连接，对象被回收。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    	<span class="type">Demo</span> <span class="variable">demo</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Demo</span>();</span><br><span class="line">    	demo = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">/**
+ * demo是栈帧中的本地变量，当 demo = null 时，由于此时 demo 充当了 GC Root 的作用，demo与原来指向的实例 new Demo() 断开了连接，对象被回收。
+ */
+public class Demo &#123;
+    public static  void main(String[] args) &#123;
+        Demo demo = new Demo();
+        demo = null;
+    &#125;
+&#125;
+</code></pre>
 <ul>
 <li>方法区中类静态属性引用的对象</li>
 </ul>
 <p>“静态变量的引用通常存储在元空间，而对象仍然存储在堆中。”</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 当栈帧中的本地变量 b = null 时，</span></span><br><span class="line"><span class="comment"> * 由于 b 原来指向的对象与 GC Root (变量 b) 断开了连接，</span></span><br><span class="line"><span class="comment"> * 所以 b 原来指向的对象会被回收，而由于我们给 a 赋值了变量的引用，</span></span><br><span class="line"><span class="comment"> * a在此时是类静态属性引用，充当了 GC Root 的作用，</span></span><br><span class="line"><span class="comment"> * 它指向的对象依然存活!</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Demo a;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">Demo</span> <span class="variable">b</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Demo</span>();</span><br><span class="line">        b.a = <span class="keyword">new</span> <span class="title class_">Demo</span>();</span><br><span class="line">        b = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">/**
+ * 当栈帧中的本地变量 b = null 时，
+ * 由于 b 原来指向的对象与 GC Root (变量 b) 断开了连接，
+ * 所以 b 原来指向的对象会被回收，而由于我们给 a 赋值了变量的引用，
+ * a在此时是类静态属性引用，充当了 GC Root 的作用，
+ * 它指向的对象依然存活!
+ */
+public class Demo &#123;
+    public static Demo a;
+    public static  void main(String[] args) &#123;
+        Demo b = new Demo();
+        b.a = new Demo();
+        b = null;
+    &#125;
+&#125;
+</code></pre>
 <ul>
 <li>方法区中常量引用的对象</li>
 </ul>
 <p>常量和这里的demo没有什么关系，所以不会因为demo指向的对象被回收而回收	</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 常量 a 指向的对象并不会因为 demo 指向的对象被回收而回收</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Demo</span> <span class="variable">a</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Demo</span>();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">Demo</span> <span class="variable">demo</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Demo</span>();</span><br><span class="line">        demo = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">/**
+ * 常量 a 指向的对象并不会因为 demo 指向的对象被回收而回收
+ */
+public class Demo &#123;
+    
+    public static final Demo a = new Demo();
+    
+    public static  void main(String[] args) &#123;
+        Demo demo = new Demo();
+        demo = null;
+    &#125;
+&#125;
+</code></pre>
 <ul>
 <li>本地方法栈中 JNI（即一般说的 Native 方法）引用的对象</li>
 </ul>
@@ -1518,23 +1695,32 @@ finalize方法对于每一个对象来说，只会执行一次。如果第一次
 <p>出现频率：☆☆☆</p>
 </blockquote>
 <h4 id="3-7-1-强引用"><a href="#3-7-1-强引用" class="headerlink" title="3.7.1 强引用"></a>3.7.1 强引用</h4><p>强引用：只有所有 GC Roots 对象都不通过【强引用】引用该对象，该对象才能被垃圾回收</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>();</span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">User user = new User();
+</code></pre>
 <p><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1707656733941-59def2dc-68b9-4629-b987-9573a6604a23.png#averageHue=%23f4eded&id=J6TS9&originHeight=95&originWidth=421&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="></p>
 <h4 id="3-7-2-软引用"><a href="#3-7-2-软引用" class="headerlink" title="3.7.2 软引用"></a>3.7.2 软引用</h4><p>软引用：仅有软引用引用该对象时，在垃圾回收后，内存仍不足时会再次出发垃圾回收</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line"><span class="type">SoftReference</span> <span class="variable">softReference</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SoftReference</span>(user);</span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">User user = new User();
+SoftReference softReference = new SoftReference(user);
+</code></pre>
 <p><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1707656734025-a81a4fb0-e0f0-4fe9-8ba1-0c221564c1e6.png#averageHue=%23f3ebeb&id=YR11J&originHeight=82&originWidth=796&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="></p>
 <h4 id="3-7-3-弱引用"><a href="#3-7-3-弱引用" class="headerlink" title="3.7.3 弱引用"></a>3.7.3 弱引用</h4><p>弱引用：仅有弱引用引用该对象时，在垃圾回收时，无论内存是否充足，都会回收弱引用对象</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line"><span class="type">WeakReference</span> <span class="variable">weakReference</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">WeakReference</span>(user);</span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">User user = new User();
+WeakReference weakReference = new WeakReference(user);
+</code></pre>
 <p><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1707656734092-24ab0e89-7a1a-4a13-869c-6fd502c60248.png#averageHue=%23f2ebeb&id=e2yWd&originHeight=84&originWidth=785&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="></p>
 <blockquote>
 <p>延伸话题：ThreadLocal内存泄漏问题</p>
 </blockquote>
 <p>ThreadLocal用的就是弱引用，看以下源码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">Entry</span> <span class="keyword">extends</span> <span class="title class_">WeakReference</span>&lt;ThreadLocal&lt;?&gt;&gt; &#123;</span><br><span class="line">    Object value;</span><br><span class="line"></span><br><span class="line">    Entry(ThreadLocal&lt;?&gt; k, Object v) &#123;</span><br><span class="line">         <span class="built_in">super</span>(k);</span><br><span class="line">         value = v; <span class="comment">//强引用，不会被回收</span></span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="java">static class Entry extends WeakReference&lt;ThreadLocal&lt;?&gt;&gt; &#123;
+    Object value;
 
+    Entry(ThreadLocal&lt;?&gt; k, Object v) &#123;
+         super(k);
+         value = v; //强引用，不会被回收
+     &#125;
+&#125;
+</code></pre>
 <p><code>Entry</code>的key是当前ThreadLocal，value值是我们要设置的数据。</p>
 <p><code>WeakReference</code>表示的是弱引用，当JVM进行GC时，一旦发现了只具有弱引用的对象，不管当前内存空间是否足够，都会回收它的内存。但是<code>value</code>是强引用，它不会被回收掉。</p>
 <blockquote>
@@ -1553,8 +1739,8 @@ finalize方法对于每一个对象来说，只会执行一次。如果第一次
 <p><code>JAVA_OPTS=&quot;-Xms512m -Xmx1024m&quot;</code></p>
 <p><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1707656734302-772c8315-6ea3-4328-a49b-2bc16bdb7a40.png#averageHue=%23faf9f8&id=p72z2&originHeight=555&originWidth=1667&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="></p>
 <h4 id="4-1-2-springboot项目jar文件启动"><a href="#4-1-2-springboot项目jar文件启动" class="headerlink" title="4.1.2 springboot项目jar文件启动"></a>4.1.2 springboot项目jar文件启动</h4><p>通常在linux系统下直接加参数启动springboot项目</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup java -Xms512m -Xmx1024m -jar xxxx.jar --spring.profiles.active=prod &amp;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="shell">nohup java -Xms512m -Xmx1024m -jar xxxx.jar --spring.profiles.active=prod &amp;
+</code></pre>
 <blockquote>
 <p>nohup  :  用于在系统后台不挂断地运行命令，退出终端不会影响程序的运行</p>
 <p>参数 <strong>&amp;</strong>  ：让命令在后台执行，终端退出后命令仍旧执行。</p>
@@ -1575,29 +1761,34 @@ finalize方法对于每一个对象来说，只会执行一次。如果第一次
 </code></pre>
 <p><a target="_blank" rel="noopener" href="https://_www.oracle.com_java_technologies_javase_vmoptions-jsp/">https://www.oracle.com/java/technologies/javase/vmoptions-jsp.html</a></p>
 <p>1）<strong>设置堆的初始大小和最大大小</strong>，为了防止垃圾收集器在初始大小、最大大小之间收缩堆而产生额外的时间，通常把最大、初始大小设置为相同的值。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-Xms：设置堆的初始化大小</span><br><span class="line"></span><br><span class="line">-Xmx：设置堆的最大大小</span><br></pre></td></tr></table></figure>
+<pre><code>-Xms：设置堆的初始化大小
 
+-Xmx：设置堆的最大大小
+</code></pre>
 <p>2） <strong>设置年轻代中Eden区和两个Survivor区的大小比例</strong>。该值如果不设置，则默认比例为8:1:1。Java官方通过增大Eden区的大小，来减少YGC发生的次数，但有时我们发现，虽然次数减少了，但Eden区满的时候，由于占用的空间较大，导致释放缓慢，此时STW的时间较长，因此需要按照程序情况去调优。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XXSurvivorRatio=3，表示年轻代中的分配比率：survivor:eden = 2:3</span><br></pre></td></tr></table></figure>
-
+<pre><code>-XXSurvivorRatio=3，表示年轻代中的分配比率：survivor:eden = 2:3
+</code></pre>
 <p>3）<strong>年轻代和老年代默认比例为1：2。可以通过调整二者空间大小比率来设置两者的大小。</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-XX:newSize   设置年轻代的初始大小</span><br><span class="line">-XX:MaxNewSize   设置年轻代的最大大小，  初始大小和最大大小两个值通常相同</span><br></pre></td></tr></table></figure>
-
+<pre><code>-XX:newSize   设置年轻代的初始大小
+-XX:MaxNewSize   设置年轻代的最大大小，  初始大小和最大大小两个值通常相同
+</code></pre>
 <p>4）<strong>线程堆栈的设置</strong>：<strong>每个线程默认会开启1M的堆栈</strong>，用于存放栈帧、调用参数、局部变量等，但一般256K就够用。通常减少每个线程的堆栈，可以产生更多的线程，但这实际上还受限于操作系统。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Xss   对每个线程stack大小的调整,-Xss128k</span><br></pre></td></tr></table></figure>
-
+<pre><code>-Xss   对每个线程stack大小的调整,-Xss128k
+</code></pre>
 <p>5）一般来说，当survivor区不够大或者占用量达到50%，就会把一些对象放到老年区。通过设置合理的eden区，survivor区及使用率，可以将年轻对象保存在年轻代，从而避免full GC，使<strong>用-Xmn设置年轻代的大小</strong></p>
 <p>6）系统CPU持续飙高的话，首先先排查代码问题，如果代码没问题，则咨询运维或者云服务器供应商，通常服务器重启或者服务器迁移即可解决。</p>
 <p>7）对于占用内存比较多的大对象，一般会选择在老年代分配内存。如果在年轻代给大对象分配内存，年轻代内存不够了，就要在eden区移动大量对象到老年代，然后这些移动的对象可能很快消亡，因此导致full GC。通过设置参数：-XX:PetenureSizeThreshold&#x3D;1000000，单位为B，标明对象大小超过1M时，在老年代(tenured)分配内存空间。</p>
 <p>8）一般情况下，年轻对象放在eden区，当第一次GC后，如果对象还存活，放到survivor区，此后，每GC一次，年龄增加1，当对象的年龄达到阈值，就被放到tenured老年区。这个阈值可以同构-XX:MaxTenuringThreshold设置。如果想让对象留在年轻代，可以设置比较大的阈值。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">（1）-XX:+UseParallelGC:年轻代使用并行垃圾回收收集器。这是一个关注吞吐量的收集器，可以尽可能的减少垃圾回收时间。</span><br><span class="line"></span><br><span class="line">（2）-XX:+UseParallelOldGC:设置老年代使用并行垃圾回收收集器。</span><br></pre></td></tr></table></figure>
+<pre><code>（1）-XX:+UseParallelGC:年轻代使用并行垃圾回收收集器。这是一个关注吞吐量的收集器，可以尽可能的减少垃圾回收时间。
 
+（2）-XX:+UseParallelOldGC:设置老年代使用并行垃圾回收收集器。
+</code></pre>
 <p>9）尝试使用大的内存分页：使用大的内存分页增加CPU的内存寻址能力，从而系统的性能。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:+LargePageSizeInBytes 设置内存页的大小</span><br></pre></td></tr></table></figure>
-
+<pre><code>-XX:+LargePageSizeInBytes 设置内存页的大小
+</code></pre>
 <p>10）使用非占用的垃圾收集器。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:+UseConcMarkSweepGC老年代使用CMS收集器降低停顿。</span><br></pre></td></tr></table></figure>
-
+<pre><code>-XX:+UseConcMarkSweepGC老年代使用CMS收集器降低停顿。
+</code></pre>
 <h3 id="4-3-说一下-JVM-调优的工具？"><a href="#4-3-说一下-JVM-调优的工具？" class="headerlink" title="4.3 说一下 JVM 调优的工具？"></a>4.3 说一下 JVM 调优的工具？</h3><blockquote>
 <p>难易程度：☆☆☆☆</p>
 <p>出现频率：☆☆☆☆</p>
@@ -1605,11 +1796,21 @@ finalize方法对于每一个对象来说，只会执行一次。如果第一次
 <h4 id="4-3-1-命令工具"><a href="#4-3-1-命令工具" class="headerlink" title="4.3.1 命令工具"></a>4.3.1 命令工具</h4><h5 id="4-3-1-1-jps（Java-Process-Status）"><a href="#4-3-1-1-jps（Java-Process-Status）" class="headerlink" title="4.3.1.1 jps（Java Process Status）"></a>4.3.1.1 jps（Java Process Status）</h5><p>输出JVM中运行的进程状态信息(现在一般使用jconsole)</p>
 <p><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1707656734374-61741ff8-4098-407e-8ac7-70a4ab6d1118.png#averageHue=%23161311&id=ADLj3&originHeight=133&originWidth=278&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="></p>
 <h5 id="4-3-1-2-jstack"><a href="#4-3-1-2-jstack" class="headerlink" title="4.3.1.2 jstack"></a>4.3.1.2 jstack</h5><p>查看java进程内<strong>线程的堆栈</strong>信息。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstack [option] &lt;pid&gt;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="shell">jstack [option] &lt;pid&gt;
+</code></pre>
 <p>java案例</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.heima.jvm;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Application</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>)&#123;</span><br><span class="line">            Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">            System.out.println(<span class="string">&quot;哈哈哈&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="java">package com.heima.jvm;
 
+public class Application &#123;
+
+    public static void main(String[] args) throws InterruptedException &#123;
+        while (true)&#123;
+            Thread.sleep(1000);
+            System.out.println(&quot;哈哈哈&quot;);
+        &#125;
+    &#125;
+&#125;
+</code></pre>
 <p>使用jstack查看进行堆栈运行信息</p>
 <p><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1707656734449-788ae465-ada2-421e-8854-806facfc6794.png#averageHue=%231a1816&id=GbZNK&originHeight=792&originWidth=1256&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="></p>
 <h5 id="4-3-1-3-jmap"><a href="#4-3-1-3-jmap" class="headerlink" title="4.3.1.3 jmap"></a>4.3.1.3 jmap</h5><p>用于生成堆转存快照</p>
@@ -1622,14 +1823,60 @@ file=用于指定快照dump文件的文件名。
 </code></pre>
 </blockquote>
 <p>例：显示了某一个java运行的堆信息</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\yuhon&gt;jmap -heap <span class="number">53280</span></span><br><span class="line">Attaching to process ID <span class="number">53280</span>, 	please wait...</span><br><span class="line">Debugger attached successfully.</span><br><span class="line">Server compiler detected.</span><br><span class="line">JVM version is <span class="number">25.321</span>-b07</span><br><span class="line"></span><br><span class="line">using thread-local object allocation.</span><br><span class="line">Parallel GC with <span class="number">8</span> thread(s)   <span class="comment">//并行的垃圾回收器</span></span><br><span class="line"></span><br><span class="line">Heap Configuration:  <span class="comment">//堆配置</span></span><br><span class="line">   MinHeapFreeRatio         = <span class="number">0</span>   <span class="comment">//空闲堆空间的最小百分比</span></span><br><span class="line">   MaxHeapFreeRatio         = <span class="number">100</span>  <span class="comment">//空闲堆空间的最大百分比</span></span><br><span class="line">   MaxHeapSize              = <span class="number">8524922880</span> (<span class="number">8130.</span>0MB) <span class="comment">//堆空间允许的最大值</span></span><br><span class="line">   NewSize                  = <span class="number">178257920</span> (<span class="number">170.</span>0MB) <span class="comment">//新生代堆空间的默认值</span></span><br><span class="line">   MaxNewSize               = <span class="number">2841640960</span> (<span class="number">2710.</span>0MB) <span class="comment">//新生代堆空间允许的最大值</span></span><br><span class="line">   OldSize                  = <span class="number">356515840</span> (<span class="number">340.</span>0MB) <span class="comment">//老年代堆空间的默认值</span></span><br><span class="line">   NewRatio                 = <span class="number">2</span> <span class="comment">//新生代与老年代的堆空间比值，表示新生代：老年代=1：2</span></span><br><span class="line">   SurvivorRatio            = <span class="number">8</span> <span class="comment">//两个Survivor区和Eden区的堆空间比值为8,表示S0:S1:Eden=1:1:8</span></span><br><span class="line">   MetaspaceSize            = <span class="number">21807104</span> (<span class="number">20.</span>796875MB) <span class="comment">//元空间的默认值</span></span><br><span class="line">   CompressedClassSpaceSize = <span class="number">1073741824</span> (<span class="number">1024.</span>0MB) <span class="comment">//压缩类使用空间大小</span></span><br><span class="line">   MaxMetaspaceSize         = <span class="number">17592186044415</span> MB <span class="comment">//元空间允许的最大值</span></span><br><span class="line">   G1HeapRegionSize         = <span class="number">0</span> (<span class="number">0.</span>0MB)<span class="comment">//在使用 G1 垃圾回收算法时，JVM 会将 Heap 空间分隔为若干个 Region，该参数用来指定每个 Region 空间的大小。</span></span><br><span class="line"></span><br><span class="line">Heap Usage:</span><br><span class="line">PS Young Generation</span><br><span class="line">Eden Space: <span class="comment">//Eden使用情况</span></span><br><span class="line">   capacity = <span class="number">134217728</span> (<span class="number">128.</span>0MB)</span><br><span class="line">   used     = <span class="number">10737496</span> (<span class="number">10.</span>240074157714844MB)</span><br><span class="line">   free     = <span class="number">123480232</span> (<span class="number">117.</span>75992584228516MB)</span><br><span class="line">   <span class="number">8.000057935714722</span>% used</span><br><span class="line">From Space: <span class="comment">//Survivor-From 使用情况</span></span><br><span class="line">   capacity = <span class="number">22020096</span> (<span class="number">21.</span>0MB)</span><br><span class="line">   used     = <span class="number">0</span> (<span class="number">0.</span>0MB)</span><br><span class="line">   free     = <span class="number">22020096</span> (<span class="number">21.</span>0MB)</span><br><span class="line">   <span class="number">0.0</span>% used</span><br><span class="line">To Space: <span class="comment">//Survivor-To 使用情况</span></span><br><span class="line">   capacity = <span class="number">22020096</span> (<span class="number">21.</span>0MB)</span><br><span class="line">   used     = <span class="number">0</span> (<span class="number">0.</span>0MB)</span><br><span class="line">   free     = <span class="number">22020096</span> (<span class="number">21.</span>0MB)</span><br><span class="line">   <span class="number">0.0</span>% used</span><br><span class="line">PS Old Generation  <span class="comment">//老年代 使用情况</span></span><br><span class="line">   capacity = <span class="number">356515840</span> (<span class="number">340.</span>0MB)</span><br><span class="line">   used     = <span class="number">0</span> (<span class="number">0.</span>0MB)</span><br><span class="line">   free     = <span class="number">356515840</span> (<span class="number">340.</span>0MB)</span><br><span class="line">   <span class="number">0.0</span>% used</span><br><span class="line"></span><br><span class="line"><span class="number">3185</span> interned Strings occupying <span class="number">261264</span> bytes.</span><br></pre></td></tr></table></figure>
+<pre><code class="java">C:\Users\yuhon&gt;jmap -heap 53280
+Attaching to process ID 53280, 	please wait...
+Debugger attached successfully.
+Server compiler detected.
+JVM version is 25.321-b07
 
+using thread-local object allocation.
+Parallel GC with 8 thread(s)   //并行的垃圾回收器
+
+Heap Configuration:  //堆配置
+   MinHeapFreeRatio         = 0   //空闲堆空间的最小百分比
+   MaxHeapFreeRatio         = 100  //空闲堆空间的最大百分比
+   MaxHeapSize              = 8524922880 (8130.0MB) //堆空间允许的最大值
+   NewSize                  = 178257920 (170.0MB) //新生代堆空间的默认值
+   MaxNewSize               = 2841640960 (2710.0MB) //新生代堆空间允许的最大值
+   OldSize                  = 356515840 (340.0MB) //老年代堆空间的默认值
+   NewRatio                 = 2 //新生代与老年代的堆空间比值，表示新生代：老年代=1：2
+   SurvivorRatio            = 8 //两个Survivor区和Eden区的堆空间比值为8,表示S0:S1:Eden=1:1:8
+   MetaspaceSize            = 21807104 (20.796875MB) //元空间的默认值
+   CompressedClassSpaceSize = 1073741824 (1024.0MB) //压缩类使用空间大小
+   MaxMetaspaceSize         = 17592186044415 MB //元空间允许的最大值
+   G1HeapRegionSize         = 0 (0.0MB)//在使用 G1 垃圾回收算法时，JVM 会将 Heap 空间分隔为若干个 Region，该参数用来指定每个 Region 空间的大小。
+
+Heap Usage:
+PS Young Generation
+Eden Space: //Eden使用情况
+   capacity = 134217728 (128.0MB)
+   used     = 10737496 (10.240074157714844MB)
+   free     = 123480232 (117.75992584228516MB)
+   8.000057935714722% used
+From Space: //Survivor-From 使用情况
+   capacity = 22020096 (21.0MB)
+   used     = 0 (0.0MB)
+   free     = 22020096 (21.0MB)
+   0.0% used
+To Space: //Survivor-To 使用情况
+   capacity = 22020096 (21.0MB)
+   used     = 0 (0.0MB)
+   free     = 22020096 (21.0MB)
+   0.0% used
+PS Old Generation  //老年代 使用情况
+   capacity = 356515840 (340.0MB)
+   used     = 0 (0.0MB)
+   free     = 356515840 (340.0MB)
+   0.0% used
+
+3185 interned Strings occupying 261264 bytes.
+</code></pre>
 <h5 id="4-3-1-4-jhat"><a href="#4-3-1-4-jhat" class="headerlink" title="4.3.1.4 jhat"></a>4.3.1.4 jhat</h5><p>用于分析jmap生成的堆转存快照（一般不推荐使用，而是使用Ecplise Memory Analyzer）</p>
 <h5 id="4-3-1-5-jstat"><a href="#4-3-1-5-jstat" class="headerlink" title="4.3.1.5 jstat"></a>4.3.1.5 jstat</h5><p>是JVM统计监测工具。可以用来显示垃圾回收信息、类加载信息、新生代统计信息等。</p>
 <p><strong>常见参数</strong>：</p>
 <p>①总结垃圾回收统计</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstat -gcutil pid</span><br></pre></td></tr></table></figure>
-
+<pre><code class="shell">jstat -gcutil pid
+</code></pre>
 <p><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1707656734528-c33ee29e-81ee-4201-a4d3-ba0606b8ce7d.png#averageHue=%2312100f&id=uADT3&originHeight=74&originWidth=827&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="></p>
 <table>
 <thead>
@@ -1684,8 +1931,8 @@ file=用于指定快照dump文件的文件名。
 </tr>
 </tbody></table>
 <p>②垃圾回收统计</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstat -gc pid</span><br></pre></td></tr></table></figure>
-
+<pre><code class="shell">jstat -gc pid
+</code></pre>
 <p><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1707656734597-c1c0a537-8959-4b17-aaa7-af547a4d73e3.png#averageHue=%2312100e&id=xEqG3&originHeight=78&originWidth=1385&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="></p>
 <h4 id="4-3-2-可视化工具"><a href="#4-3-2-可视化工具" class="headerlink" title="4.3.2 可视化工具"></a>4.3.2 可视化工具</h4><h5 id="4-3-2-1-jconsole"><a href="#4-3-2-1-jconsole" class="headerlink" title="4.3.2.1 jconsole"></a>4.3.2.1 jconsole</h5><p>用于对<strong>jvm的内存，线程，类 的监控</strong>，是一个基于 jmx 的 GUI 性能监控工具</p>
 <p>打开方式：java 安装目录 bin目录下 直接启动 jconsole.exe 就行</p>
@@ -1733,8 +1980,8 @@ file=用于指定快照dump文件的文件名。
 <p><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1707656735579-f1b24ff1-a44c-4edc-bb19-9a8a2daeab64.png#averageHue=%23274a60&id=Au6tC&originHeight=378&originWidth=963&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="></p>
 <p>2.通过top命令查看后，可以查看是哪一个进程占用cpu较高，上图所示的进程为：30978</p>
 <p>3.查看当前线程中的进程信息</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps H -eo pid,tid,%cpu | grep 40940</span><br></pre></td></tr></table></figure>
-
+<pre><code class="shell">ps H -eo pid,tid,%cpu | grep 40940
+</code></pre>
 <blockquote>
 <p>pid  进行id</p>
 <p>tid   进程中的线程id</p>
@@ -1751,8 +1998,8 @@ file=用于指定快照dump文件的文件名。
 </blockquote>
 <p>5.可以根据线程 id 找到有问题的线程，进一步定位到问题代码的源码行号</p>
 <p>执行命令</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstack 30978   此处是进程id</span><br></pre></td></tr></table></figure>
-
+<pre><code class="shell">jstack 30978   此处是进程id
+</code></pre>
 <p><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1707656735835-7b03ae3d-81ba-4756-bd39-bf8f0ddd164d.png#averageHue=%2329485c&id=kveRe&originHeight=577&originWidth=1056&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title="></p>
 <h2 id="5-面试现场"><a href="#5-面试现场" class="headerlink" title="5.面试现场"></a>5.面试现场</h2><h3 id="5-1-JVM组成"><a href="#5-1-JVM组成" class="headerlink" title="5.1 JVM组成"></a>5.1 JVM组成</h3><blockquote>
 <p><strong>面试官</strong>：JVM由那些部分组成，运行流程是什么？</p>
@@ -1945,9 +2192,9 @@ file=用于指定快照dump文件的文件名。
 <script type="text/javascript">
     $.getScript('/js/gitalk.js', function () {
         var gitalk = new Gitalk({
-            clientID: '035ef548c9e9378701b6',
-            clientSecret: '83814063a9a58aa2ecd9d9ba1d8bbfe9d4205b6b',
-            repo: 'https://axdmdyj.github.io',
+            clientID: 'aeb83b87dc9753d290d4',
+            clientSecret: '179a325f86496596d1df38a53b7be77143374811',
+            repo: 'axdmdyj.github.io',
             owner: 'axdmdyj',
             admin: ['axdmdyj'],
             id: decodeURI(location.pathname),
@@ -1999,20 +2246,6 @@ file=用于指定快照dump文件的文件名。
 
         /*高亮代码块行号*/
         
-        $('pre code').each(function(){
-            var lines = $(this).text().trim().split('\n').length, widther='';
-            if (lines>99) {
-                widther = 'widther'
-            }
-            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
-            $(this).addClass('has-numbering ' + widther)
-                    .parent()
-                    .append($numbering);
-            for(var i=1;i<=lines;i++){
-                $numbering.append($('<li/>').text(i));
-            }
-        });
-        
 
         /*访问数量*/
         
@@ -2032,38 +2265,6 @@ file=用于指定快照dump文件的文件名。
 </script>
 
 <!--加入行号的高亮代码块样式-->
-
-<style>
-    pre{
-        position: relative;
-        margin-bottom: 24px;
-        border-radius: 10px;
-        border: 1px solid #e2dede;
-        background: #FFF;
-        overflow: hidden;
-    }
-    code.has-numbering{
-        margin-left: 30px;
-    }
-    code.has-numbering.widther{
-        margin-left: 35px;
-    }
-    .pre-numbering{
-        margin: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px;
-        padding: 18px 3px 15px 5px;
-        border-right: 1px solid #C3CCD0;
-        text-align: right;
-        color: #AAA;
-        background-color: ;
-    }
-    .pre-numbering.widther {
-        width: 35px;
-    }
-</style>
 
 <!--自定义样式设置-->
 <style>

@@ -1011,20 +1011,60 @@
 <p><strong>收集正利润的区间，就是股票买卖的区间，而我们只需要关注最终利润，不需要记录区间</strong>。</p>
 <p>只收集正利润 就是贪心所贪的地方</p>
 <p>&#x3D;&#x3D;局部最优&#x3D;&#x3D; 收集每天的正利润, 全局最优: 求得最大利润</p>
-<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">maxProfit</span><span class="params">(<span class="type">int</span>[] prices)</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> <span class="variable">res</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; prices.length; i++)&#123;</span><br><span class="line"></span><br><span class="line">            </span><br><span class="line">            res += Math.max(prices[i] - prices[i - <span class="number">1</span>], <span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><pre><code class="java">class Solution &#123;
+    public int maxProfit(int[] prices) &#123;
 
+        int res = 0;
+        for(int i = 1; i &lt; prices.length; i++)&#123;
+
+            
+            res += Math.max(prices[i] - prices[i - 1], 0);
+        &#125;
+        return res;
+    &#125;
+&#125;
+</code></pre>
 <h1 id="55-跳跃游戏"><a href="#55-跳跃游戏" class="headerlink" title="55. 跳跃游戏"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/jump-game/">55. 跳跃游戏</a></h1><h2 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h2><p>跳几步无所谓, 关键在于可跳的覆盖范围</p>
 <p>&#x3D;&gt; <strong>问题转化为: 跳跃覆盖的范围能不能到达终点</strong></p>
 <h2 id="解法-1"><a href="#解法-1" class="headerlink" title="解法"></a>解法</h2><p>每次移动取最大跳跃步数（得到最大的覆盖范围），每移动一个单位，就更新最大覆盖范围。</p>
 <p><strong>贪心算法局部最优解：每次取最大跳跃步数（取最大覆盖范围），整体最优解：最后得到整体最大覆盖范围，看是否能到终点</strong>。</p>
-<h2 id="Code-1"><a href="#Code-1" class="headerlink" title="Code"></a>Code</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">canJump</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">cover</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(nums.length == <span class="number">1</span>) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt;= cover; i++)&#123;</span><br><span class="line">            cover = Math.max(i + nums[i] , cover);</span><br><span class="line">            <span class="keyword">if</span>(cover &gt;= nums.length - <span class="number">1</span>)&#123; </span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<h2 id="Code-1"><a href="#Code-1" class="headerlink" title="Code"></a>Code</h2><pre><code class="java">class Solution &#123;
+    public boolean canJump(int[] nums) &#123;
+        int cover = 0;
+        if(nums.length == 1) return true;
+        for(int i = 0; i &lt;= cover; i++)&#123;
+            cover = Math.max(i + nums[i] , cover);
+            if(cover &gt;= nums.length - 1)&#123; 
+                return true;
+            &#125;
+        &#125;
+        return false;
+    &#125;
+&#125;
+</code></pre>
 <p>注意 <code>i &lt;= cover</code> 在覆盖范围内移动, 超出覆盖范围没有意义</p>
 <h1 id="45-跳跃游戏-II"><a href="#45-跳跃游戏-II" class="headerlink" title="45. 跳跃游戏 II"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/jump-game-ii/">45. 跳跃游戏 II</a></h1><h2 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h2><p><strong>局部最优</strong>：当前可移动距离尽可能多走，如果还没到终点，步数再加一。</p>
 <p><strong>整体最优：</strong>一步尽可能多走，从而达到最少步数。</p>
 <p><strong>从覆盖范围出发，不管怎么跳，覆盖范围内一定是可以跳到的，以最小的步数增加覆盖范围，覆盖范围一旦覆盖了终点，得到的就是最少步数！</strong></p>
-<h2 id="Code-2"><a href="#Code-2" class="headerlink" title="Code"></a>Code</h2><figure class="highlight c"><figcaption><span>++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line">public:</span><br><span class="line">    <span class="type">int</span> <span class="title function_">jump</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;&amp; nums)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (nums.size() == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> curDistance = <span class="number">0</span>;    <span class="comment">// 当前覆盖最远距离下标</span></span><br><span class="line">        <span class="type">int</span> ans = <span class="number">0</span>;            <span class="comment">// 记录走的最大步数</span></span><br><span class="line">        <span class="type">int</span> nextDistance = <span class="number">0</span>;   <span class="comment">// 下一步覆盖最远距离下标</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; nums.size(); i++) &#123;</span><br><span class="line">            nextDistance = max(nums[i] + i, nextDistance);  <span class="comment">// 更新下一步覆盖最远距离下标</span></span><br><span class="line">            <span class="keyword">if</span> (i == curDistance) &#123;                         <span class="comment">// 遇到当前覆盖最远距离下标</span></span><br><span class="line">                ans++;                                  <span class="comment">// 需要走下一步</span></span><br><span class="line">                curDistance = nextDistance;             <span class="comment">// 更新当前覆盖最远距离下标（相当于加油了）</span></span><br><span class="line">                <span class="keyword">if</span> (nextDistance &gt;= nums.size() - <span class="number">1</span>) <span class="keyword">break</span>;  <span class="comment">// 当前覆盖最远距到达集合终点，不用做ans++操作了，直接结束</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+<h2 id="Code-2"><a href="#Code-2" class="headerlink" title="Code"></a>Code</h2><pre><code class="c">class Solution &#123;
+public:
+    int jump(vector&lt;int&gt;&amp; nums) &#123;
+        if (nums.size() == 1) return 0;
+        int curDistance = 0;    // 当前覆盖最远距离下标
+        int ans = 0;            // 记录走的最大步数
+        int nextDistance = 0;   // 下一步覆盖最远距离下标
+        for (int i = 0; i &lt; nums.size(); i++) &#123;
+            nextDistance = max(nums[i] + i, nextDistance);  // 更新下一步覆盖最远距离下标
+            if (i == curDistance) &#123;                         // 遇到当前覆盖最远距离下标
+                ans++;                                  // 需要走下一步
+                curDistance = nextDistance;             // 更新当前覆盖最远距离下标（相当于加油了）
+                if (nextDistance &gt;= nums.size() - 1) break;  // 当前覆盖最远距到达集合终点，不用做ans++操作了，直接结束
+            &#125;
+        &#125;
+        return ans;
+    &#125;
+&#125;;
+</code></pre>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 waigo168@163.com </span>
@@ -1041,9 +1081,9 @@
 <script type="text/javascript">
     $.getScript('/js/gitalk.js', function () {
         var gitalk = new Gitalk({
-            clientID: '035ef548c9e9378701b6',
-            clientSecret: '83814063a9a58aa2ecd9d9ba1d8bbfe9d4205b6b',
-            repo: 'https://axdmdyj.github.io',
+            clientID: 'aeb83b87dc9753d290d4',
+            clientSecret: '179a325f86496596d1df38a53b7be77143374811',
+            repo: 'axdmdyj.github.io',
             owner: 'axdmdyj',
             admin: ['axdmdyj'],
             id: decodeURI(location.pathname),
@@ -1095,20 +1135,6 @@
 
         /*高亮代码块行号*/
         
-        $('pre code').each(function(){
-            var lines = $(this).text().trim().split('\n').length, widther='';
-            if (lines>99) {
-                widther = 'widther'
-            }
-            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
-            $(this).addClass('has-numbering ' + widther)
-                    .parent()
-                    .append($numbering);
-            for(var i=1;i<=lines;i++){
-                $numbering.append($('<li/>').text(i));
-            }
-        });
-        
 
         /*访问数量*/
         
@@ -1128,38 +1154,6 @@
 </script>
 
 <!--加入行号的高亮代码块样式-->
-
-<style>
-    pre{
-        position: relative;
-        margin-bottom: 24px;
-        border-radius: 10px;
-        border: 1px solid #e2dede;
-        background: #FFF;
-        overflow: hidden;
-    }
-    code.has-numbering{
-        margin-left: 30px;
-    }
-    code.has-numbering.widther{
-        margin-left: 35px;
-    }
-    .pre-numbering{
-        margin: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px;
-        padding: 18px 3px 15px 5px;
-        border-right: 1px solid #C3CCD0;
-        text-align: right;
-        color: #AAA;
-        background-color: ;
-    }
-    .pre-numbering.widther {
-        width: 35px;
-    }
-</style>
 
 <!--自定义样式设置-->
 <style>

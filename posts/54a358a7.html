@@ -1003,12 +1003,25 @@
 <p><strong>任何一张表都应该有主键,没有主键表无效</strong>,</p>
 <p>主键的特征: not null + unique (不能为空,且不重复)</p>
 <p>给一张表添加主键:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">create table t_vip(</span><br><span class="line">	id int primary key,//列级约束</span><br><span class="line">	name varchar(255)</span><br><span class="line">);</span><br><span class="line">create table t_vip(</span><br><span class="line">	id int ,</span><br><span class="line">	name varchar(255),</span><br><span class="line">    primary key(id)  //表级约束</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre><code class="mysql">create table t_vip(
+    id int primary key,//列级约束
+    name varchar(255)
+);
+create table t_vip(
+    id int ,
+    name varchar(255),
+    primary key(id)  //表级约束
+);
 
+</code></pre>
 <p><img src="/../imgs/202308051618117.png" alt="image-20230805154406943"></p>
 <h1 id="添加主键约束"><a href="#添加主键约束" class="headerlink" title="添加主键约束"></a>添加主键约束</h1><p>id 和name 联合起来做主键,叫做复合主键</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">create table t_vip(</span><br><span class="line">	id int ,</span><br><span class="line">	name varchar(255),</span><br><span class="line">    primary key(id,name)  //表级约束</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-
+<pre><code class="mysql">create table t_vip(
+    id int ,
+    name varchar(255),
+    primary key(id,name)  //表级约束
+);
+</code></pre>
 <p><img src="/../imgs/202308051547340.png" alt="image-20230805154756288"></p>
 <p>在实际开发中不建议使用复合主键</p>
 <p>因为主键值存在的意义就是一行的唯一标识</p>
@@ -1017,8 +1030,21 @@
 <h1 id="主键值"><a href="#主键值" class="headerlink" title="主键值"></a>主键值</h1><p>建议使用,<code>int</code> <code>bigint</code> <code>char</code> 等类型</p>
 <p>不建议使用<code>varchar</code>来做主键.主键值一般都是数字,一般都是定长的1</p>
 <h1 id="主键分类"><a href="#主键分类" class="headerlink" title="主键分类"></a>主键分类</h1><p><strong>根据主键字段的字段数量来划分：</strong><br>            单一主键（推荐的，常用的。）<br>            复合主键(多个字段联合起来添加一个主键约束)（复合主键不建议使用，因为复合主键违背三范式。）<br>        <strong>根据主键性质来划分：</strong><br>            自然主键：主键值最好就是一个和业务没有任何关系的自然数。（这种方式是推荐的）<br>            业务主键：主键值和系统的业务挂钩，例如：拿着银行卡的卡号做主键，拿着身份证号码作为主键。（不推荐用）<br>                          最好不要拿着和业务挂钩的字段作为主键。因为以后的业务一旦发生改变的时候，主键值可能也需要<br>                          随着发生变化，但有的时候没有办法变化，因为变化可能会导致主键值重复。<br>    <strong>mysql提供主键值自增：</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">drop table if exists t_user;</span><br><span class="line">		create table t_user(</span><br><span class="line">			id int primary key auto_increment, // id字段自动维护一个自增的数字，从1开始，以1递增。</span><br><span class="line">			username varchar(255)</span><br><span class="line">		);</span><br><span class="line">		insert into t_user(username) values(&#x27;a&#x27;);</span><br><span class="line">		insert into t_user(username) values(&#x27;b&#x27;);</span><br><span class="line">		insert into t_user(username) values(&#x27;c&#x27;);</span><br><span class="line">		insert into t_user(username) values(&#x27;d&#x27;);</span><br><span class="line">		insert into t_user(username) values(&#x27;e&#x27;);</span><br><span class="line">		insert into t_user(username) values(&#x27;f&#x27;);</span><br><span class="line">		select * from t_user;</span><br><span class="line"></span><br><span class="line">		提示:Oracle当中也提供了一个自增机制，叫做：序列（sequence）对象。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre><code class="mysql">drop table if exists t_user;
+        create table t_user(
+            id int primary key auto_increment, // id字段自动维护一个自增的数字，从1开始，以1递增。
+            username varchar(255)
+        );
+        insert into t_user(username) values(&#39;a&#39;);
+        insert into t_user(username) values(&#39;b&#39;);
+        insert into t_user(username) values(&#39;c&#39;);
+        insert into t_user(username) values(&#39;d&#39;);
+        insert into t_user(username) values(&#39;e&#39;);
+        insert into t_user(username) values(&#39;f&#39;);
+        select * from t_user;
 
+        提示:Oracle当中也提供了一个自增机制，叫做：序列（sequence）对象。
+</code></pre>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 waigo168@163.com </span>
@@ -1035,9 +1061,9 @@
 <script type="text/javascript">
     $.getScript('/js/gitalk.js', function () {
         var gitalk = new Gitalk({
-            clientID: '035ef548c9e9378701b6',
-            clientSecret: '83814063a9a58aa2ecd9d9ba1d8bbfe9d4205b6b',
-            repo: 'https://axdmdyj.github.io',
+            clientID: 'aeb83b87dc9753d290d4',
+            clientSecret: '179a325f86496596d1df38a53b7be77143374811',
+            repo: 'axdmdyj.github.io',
             owner: 'axdmdyj',
             admin: ['axdmdyj'],
             id: decodeURI(location.pathname),
@@ -1089,20 +1115,6 @@
 
         /*高亮代码块行号*/
         
-        $('pre code').each(function(){
-            var lines = $(this).text().trim().split('\n').length, widther='';
-            if (lines>99) {
-                widther = 'widther'
-            }
-            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
-            $(this).addClass('has-numbering ' + widther)
-                    .parent()
-                    .append($numbering);
-            for(var i=1;i<=lines;i++){
-                $numbering.append($('<li/>').text(i));
-            }
-        });
-        
 
         /*访问数量*/
         
@@ -1122,38 +1134,6 @@
 </script>
 
 <!--加入行号的高亮代码块样式-->
-
-<style>
-    pre{
-        position: relative;
-        margin-bottom: 24px;
-        border-radius: 10px;
-        border: 1px solid #e2dede;
-        background: #FFF;
-        overflow: hidden;
-    }
-    code.has-numbering{
-        margin-left: 30px;
-    }
-    code.has-numbering.widther{
-        margin-left: 35px;
-    }
-    .pre-numbering{
-        margin: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px;
-        padding: 18px 3px 15px 5px;
-        border-right: 1px solid #C3CCD0;
-        text-align: right;
-        color: #AAA;
-        background-color: ;
-    }
-    .pre-numbering.widther {
-        width: 35px;
-    }
-</style>
 
 <!--自定义样式设置-->
 <style>

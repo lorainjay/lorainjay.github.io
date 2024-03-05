@@ -1020,9 +1020,47 @@
 </blockquote>
 </li>
 </ul>
-<h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><h2 id="暴力"><a href="#暴力" class="headerlink" title="暴力"></a>暴力</h2><figure class="highlight java"><figcaption><span>[]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">minSubArrayLen</span><span class="params">(<span class="type">int</span> target, <span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> Integer.MAX_VALUE;</span><br><span class="line">        <span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">st</span> <span class="operator">=</span> <span class="number">0</span>; st &lt; nums.length; st++)&#123;</span><br><span class="line">            sum = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">l</span> <span class="operator">=</span> st; l &lt; nums.length; l++)&#123;</span><br><span class="line">                sum += nums[l];</span><br><span class="line">                <span class="keyword">if</span>(sum &gt;= target)&#123;</span><br><span class="line">                    <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> l - st + <span class="number">1</span>;</span><br><span class="line">                    result = Math.min(len, result);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">         <span class="comment">// 如果result没有被赋值的话，就返回0，说明没有符合条件的子序列</span></span><br><span class="line">        <span class="keyword">return</span> result == Integer.MAX_VALUE ? <span class="number">0</span> : result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="滑动窗口"><a href="#滑动窗口" class="headerlink" title="滑动窗口"></a>滑动窗口</h2><figure class="highlight java"><figcaption><span>[]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">minSubArrayLen</span><span class="params">(<span class="type">int</span> target, <span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> Integer.MAX_VALUE;</span><br><span class="line">        <span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">st</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">la</span> <span class="operator">=</span> <span class="number">0</span>; la &lt; nums.length; la++)&#123; <span class="comment">// 遍历终止点</span></span><br><span class="line">            sum += nums[la];</span><br><span class="line">            <span class="keyword">while</span>(sum &gt;= target)&#123; <span class="comment">//满足条件就一直通过左端点往右移动</span></span><br><span class="line">                len = la - st + <span class="number">1</span>; <span class="comment">//取子序列的长度</span></span><br><span class="line">                <span class="comment">//result = Math.min(len, result);</span></span><br><span class="line">                result = result &lt; len ? result : len;</span><br><span class="line">                sum -= nums[st++];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result == Integer.MAX_VALUE ? <span class="number">0</span> :result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><h2 id="暴力"><a href="#暴力" class="headerlink" title="暴力"></a>暴力</h2><pre><code class="Java">
+class Solution &#123;
+    public int minSubArrayLen(int target, int[] nums) &#123;
+        int result = Integer.MAX_VALUE;
+        int sum = 0;
+        for(int st = 0; st &lt; nums.length; st++)&#123;
+            sum = 0;
+            for(int l = st; l &lt; nums.length; l++)&#123;
+                sum += nums[l];
+                if(sum &gt;= target)&#123;
+                    int len = l - st + 1;
+                    result = Math.min(len, result);
+                    break;
+                &#125;
+            &#125;
+        &#125;
+         // 如果result没有被赋值的话，就返回0，说明没有符合条件的子序列
+        return result == Integer.MAX_VALUE ? 0 : result;
+    &#125;
+&#125;
+</code></pre>
+<h2 id="滑动窗口"><a href="#滑动窗口" class="headerlink" title="滑动窗口"></a>滑动窗口</h2><pre><code class="Java">
+class Solution &#123;
+    public int minSubArrayLen(int target, int[] nums) &#123;
+        int result = Integer.MAX_VALUE;
+        int sum = 0;
+        int st = 0;
+        int len = 0;
+        for(int la = 0; la &lt; nums.length; la++)&#123; // 遍历终止点
+            sum += nums[la];
+            while(sum &gt;= target)&#123; //满足条件就一直通过左端点往右移动
+                len = la - st + 1; //取子序列的长度
+                //result = Math.min(len, result);
+                result = result &lt; len ? result : len;
+                sum -= nums[st++];
+            &#125;
+        &#125;
+        return result == Integer.MAX_VALUE ? 0 :result;
+    &#125;
+&#125;
+</code></pre>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 waigo168@163.com </span>
@@ -1039,9 +1077,9 @@
 <script type="text/javascript">
     $.getScript('/js/gitalk.js', function () {
         var gitalk = new Gitalk({
-            clientID: '035ef548c9e9378701b6',
-            clientSecret: '83814063a9a58aa2ecd9d9ba1d8bbfe9d4205b6b',
-            repo: 'https://axdmdyj.github.io',
+            clientID: 'aeb83b87dc9753d290d4',
+            clientSecret: '179a325f86496596d1df38a53b7be77143374811',
+            repo: 'axdmdyj.github.io',
             owner: 'axdmdyj',
             admin: ['axdmdyj'],
             id: decodeURI(location.pathname),
@@ -1093,20 +1131,6 @@
 
         /*高亮代码块行号*/
         
-        $('pre code').each(function(){
-            var lines = $(this).text().trim().split('\n').length, widther='';
-            if (lines>99) {
-                widther = 'widther'
-            }
-            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
-            $(this).addClass('has-numbering ' + widther)
-                    .parent()
-                    .append($numbering);
-            for(var i=1;i<=lines;i++){
-                $numbering.append($('<li/>').text(i));
-            }
-        });
-        
 
         /*访问数量*/
         
@@ -1126,38 +1150,6 @@
 </script>
 
 <!--加入行号的高亮代码块样式-->
-
-<style>
-    pre{
-        position: relative;
-        margin-bottom: 24px;
-        border-radius: 10px;
-        border: 1px solid #e2dede;
-        background: #FFF;
-        overflow: hidden;
-    }
-    code.has-numbering{
-        margin-left: 30px;
-    }
-    code.has-numbering.widther{
-        margin-left: 35px;
-    }
-    .pre-numbering{
-        margin: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px;
-        padding: 18px 3px 15px 5px;
-        border-right: 1px solid #C3CCD0;
-        text-align: right;
-        color: #AAA;
-        background-color: ;
-    }
-    .pre-numbering.widther {
-        width: 35px;
-    }
-</style>
 
 <!--自定义样式设置-->
 <style>

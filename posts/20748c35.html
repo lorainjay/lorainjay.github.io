@@ -1012,14 +1012,31 @@
 <h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><ul>
 <li>不引入泛型</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">target_01</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">List</span> <span class="variable">list</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ArrayList</span>();</span><br><span class="line">        list.add(<span class="number">11</span>);</span><br><span class="line">        list.add(<span class="string">&quot;落雨既然&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; list.size(); i++) &#123;</span><br><span class="line">            System.out.println((String)list.get(i));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">public class target_01 &#123;
+    public static void main(String[] args) &#123;
+        List list = new ArrayList();
+        list.add(11);
+        list.add(&quot;落雨既然&quot;);
+        for (int i = 0; i &lt; list.size(); i++) &#123;
+            System.out.println((String)list.get(i));
+        &#125;
+    &#125;
+&#125;
+</code></pre>
 <p>会报类型转换异常：<br><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/46b5cd26895e468a86a1d210994cc6b1~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1432&h=262&s=35825&e=png&b=202124" alt="image.png"></p>
 <ul>
 <li>使用泛型</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">target_01</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        List&lt;String&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>();</span><br><span class="line">        list.add(<span class="string">&quot;落雨既然&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; list.size(); i++) &#123;</span><br><span class="line">            System.out.println((String)list.get(i));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">public class target_01 &#123;
+    public static void main(String[] args) &#123;
+        List&lt;String&gt; list = new ArrayList();
+        list.add(&quot;落雨既然&quot;);
+        for (int i = 0; i &lt; list.size(); i++) &#123;
+            System.out.println((String)list.get(i));
+        &#125;
+    &#125;
+&#125;
+</code></pre>
 <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0b342e5999f74c66a171e95f213e2c51~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=918&h=236&s=12681&e=png&b=1e1f22" alt="image.png"><br>在上述的实例中，我们只能添加String类型的数据，否则编译器会报错。</p>
 <h2 id="泛型的基本使用"><a href="#泛型的基本使用" class="headerlink" title="泛型的基本使用"></a>泛型的基本使用</h2><h3 id="泛型类"><a href="#泛型类" class="headerlink" title="泛型类"></a>泛型类</h3><ul>
 <li>泛型类概述：把泛型定义在类上</li>
@@ -1035,28 +1052,85 @@
 <blockquote>
 <p>注意要点：<strong>方法声明</strong>中定义的<strong>形参只能在该方法里使用</strong>，而<strong>接口、类声明中定义的类型形参</strong>则可以在整个接口、类中使用。当调用fun()方法时，根据传入的实际对象，编译器就会判断出类型形参T所代表的实际类型。</p>
 </blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">  <span class="comment">// 泛型方法，可以接收任意类型的数据</span></span><br><span class="line">  <span class="keyword">public</span> &lt;T&gt; T <span class="title function_">fun</span><span class="params">(T t)</span> &#123;</span><br><span class="line">    <span class="comment">// 直接将参数返回</span></span><br><span class="line">    <span class="keyword">return</span> t;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">GenericsDemo26</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String args[])</span> &#123;</span><br><span class="line">    <span class="comment">// 实例化Demo对象</span></span><br><span class="line">    <span class="type">Demo</span> <span class="variable">d</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Demo</span>();</span><br><span class="line">    <span class="comment">// 传递字符串</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> d.fun(<span class="string">&quot;落雨既然&quot;</span>);</span><br><span class="line">    <span class="comment">// 传递数字，自动装箱</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> d.fun(<span class="number">30</span>);</span><br><span class="line">    <span class="comment">// 输出字符串内容</span></span><br><span class="line">    System.out.println(str);</span><br><span class="line">    <span class="comment">// 输出数字内容</span></span><br><span class="line">    System.out.println(i);</span><br><span class="line">  &#125;</span><br><span class="line"><span class="comment">//  输出：</span></span><br><span class="line"><span class="comment">//  落雨既然</span></span><br><span class="line"><span class="comment">//  30</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre><code class="java">class Demo &#123;
+  // 泛型方法，可以接收任意类型的数据
+  public &lt;T&gt; T fun(T t) &#123;
+    // 直接将参数返回
+    return t;
+  &#125;
+&#125;
 
+public class GenericsDemo26 &#123;
+  public static void main(String args[]) &#123;
+    // 实例化Demo对象
+    Demo d = new Demo();
+    // 传递字符串
+    String str = d.fun(&quot;落雨既然&quot;);
+    // 传递数字，自动装箱
+    int i = d.fun(30);
+    // 输出字符串内容
+    System.out.println(str);
+    // 输出数字内容
+    System.out.println(i);
+  &#125;
+//  输出：
+//  落雨既然
+//  30
+&#125;
+</code></pre>
 <h3 id="泛型方法"><a href="#泛型方法" class="headerlink" title="泛型方法"></a>泛型方法</h3><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/075218b91c3a42418fe096972490a7fd~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1199&h=543&s=25686&e=png&b=fefefe" alt="image.png"><br><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/de3e70bb1a0c4e27b035264405a907f7~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=950&h=248&s=22406&e=png&b=ffffff" alt="image.png"><br>说明一下，定义泛型方法时，必须在返回值前边加一个<T>，来声明这是一个泛型方法，持有一个泛型T，然后才可以用泛型T作为方法的返回值。<br>Class<T>的作用就是指明泛型的具体类型，而Class<T>类型的变量c，可以用来创建泛型类的对象。<br>为什么要用变量c来创建对象呢？既然是泛型方法，就代表着我们不知道具体的类型是什么，也不知道构造方法如何，因此没有办法去new一个对象，但可以利用变量c的newInstance方法去创建对象，也就是利用反射创建对象。<br>泛型方法要求的参数是Class<T>类型，而Class.forName()方法的返回值也是Class<T>，因此可以用Class.forName()作为参数。其中，forName()方法中的参数是何种类型，返回的Class<T>就是何种类型。在本例中，forName()方法中传入的是User类的完整路径，因此返回的是Class<User>类型的对象，因此调用泛型方法时，变量c的类型就是Class<User>，因此泛型方法中的泛型T就被指明为User，因此变量obj的类型为User。<br>当然，泛型方法不是仅仅可以有一个参数Class<T>，可以根据需要添加其他参数。<br><strong>为什么要使用泛型方法呢</strong>？<br>因为泛型类要在实例化的时候就指明类型，如果想换一种类型，不得不重新new一次，可能不够灵活；而泛型方法可以在调用的时候指明类型，更加灵活。</p>
-<h3 id="泛型上下限"><a href="#泛型上下限" class="headerlink" title="泛型上下限"></a>泛型上下限</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">funC</span><span class="params">(List&lt;? extends A&gt; listA)</span> &#123;</span><br><span class="line">    <span class="comment">// ...          </span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">funD</span><span class="params">(List&lt;B&gt; listB)</span> &#123;</span><br><span class="line">    funC(listB); <span class="comment">// OK</span></span><br><span class="line">    <span class="comment">// ...             </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<h3 id="泛型上下限"><a href="#泛型上下限" class="headerlink" title="泛型上下限"></a>泛型上下限</h3><pre><code class="java">    public static void funC(List&lt;? extends A&gt; listA) &#123;
+        // ...          
+    &#125;
+    public static void funD(List&lt;B&gt; listB) &#123;
+        funC(listB); // OK
+        // ...             
+    &#125;
+</code></pre>
 <p>为了解决泛型中隐含的转换问题，Java泛型加入了类型参数的上下边界机制。&lt;? extends A&gt;表示该类型参数可以是A(上边界)或者A的子类类型。编译时擦除到类型A，即用A类型代替类型参数。这种方法可以解决开始遇到的问题，编译器知道类型参数的范围，如果传入的实例类型B是在这个范围内的话允许转换，这时只要一次类型转换就可以了，运行时会把对象当做A的实例看待。<br>如果不用泛型就会报错：</p>
 <p>上界：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Info</span>&lt;T <span class="keyword">extends</span> <span class="title class_">Number</span>&gt;&#123;    <span class="comment">// 此处泛型只能是数字类型</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">class Info&lt;T extends Number&gt;&#123;    // 此处泛型只能是数字类型
+</code></pre>
 <p>下界：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">fun</span><span class="params">(Info&lt;? <span class="built_in">super</span> String&gt; temp)</span>&#123;    <span class="comment">// 只能接收String或Object类型的泛型，String类的父类只有Object类</span></span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">    public static void fun(Info&lt;? super String&gt; temp)&#123;    // 只能接收String或Object类型的泛型，String类的父类只有Object类
+</code></pre>
 <p>小结：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?&gt; 无限制通配符</span><br><span class="line">&lt;? <span class="keyword">extends</span> <span class="title class_">E</span>&gt; extends 关键字声明了类型的上界，表示参数化的类型可能是所指定的类型，或者是此类型的子类</span><br><span class="line">&lt;? <span class="built_in">super</span> E&gt; <span class="built_in">super</span> 关键字声明了类型的下界，表示参数化的类型可能是指定的类型，或者是此类型的父类</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用原则《Effictive Java》</span></span><br><span class="line"><span class="comment">// 为了获得最大限度的灵活性，要在表示 生产者或者消费者 的输入参数上使用通配符，使用的规则就是：生产者有上限、消费者有下限</span></span><br><span class="line"><span class="number">1.</span> 如果参数化类型表示一个 T 的生产者，使用 &lt; ? <span class="keyword">extends</span> <span class="title class_">T</span>&gt;;</span><br><span class="line"><span class="number">2.</span> 如果它表示一个 T 的消费者，就使用 &lt; ? <span class="built_in">super</span> T&gt;；</span><br><span class="line"><span class="number">3.</span> 如果既是生产又是消费，那使用通配符就没什么意义了，因为你需要的是精确的参数类型。</span><br></pre></td></tr></table></figure>
+<pre><code class="java">&lt;?&gt; 无限制通配符
+&lt;? extends E&gt; extends 关键字声明了类型的上界，表示参数化的类型可能是所指定的类型，或者是此类型的子类
+&lt;? super E&gt; super 关键字声明了类型的下界，表示参数化的类型可能是指定的类型，或者是此类型的父类
 
-<h3 id="泛型数组"><a href="#泛型数组" class="headerlink" title="泛型数组"></a>泛型数组</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt;[] list11 = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;String&gt;[<span class="number">10</span>]; <span class="comment">//编译错误，非法创建 </span></span><br><span class="line">List&lt;String&gt;[] list12 = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;?&gt;[<span class="number">10</span>]; <span class="comment">//编译错误，需要强转类型 </span></span><br><span class="line">List&lt;String&gt;[] list13 = (List&lt;String&gt;[]) <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;?&gt;[<span class="number">10</span>]; <span class="comment">//OK，但是会有警告 </span></span><br><span class="line">List&lt;?&gt;[] list14 = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;String&gt;[<span class="number">10</span>]; <span class="comment">//编译错误，非法创建 </span></span><br><span class="line">List&lt;?&gt;[] list15 = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;?&gt;[<span class="number">10</span>]; <span class="comment">//OK </span></span><br><span class="line">List&lt;String&gt;[] list6 = <span class="keyword">new</span> <span class="title class_">ArrayList</span>[<span class="number">10</span>]; <span class="comment">//OK，但是会有警告</span></span><br></pre></td></tr></table></figure>
-
+// 使用原则《Effictive Java》
+// 为了获得最大限度的灵活性，要在表示 生产者或者消费者 的输入参数上使用通配符，使用的规则就是：生产者有上限、消费者有下限
+1. 如果参数化类型表示一个 T 的生产者，使用 &lt; ? extends T&gt;;
+2. 如果它表示一个 T 的消费者，就使用 &lt; ? super T&gt;；
+3. 如果既是生产又是消费，那使用通配符就没什么意义了，因为你需要的是精确的参数类型。
+</code></pre>
+<h3 id="泛型数组"><a href="#泛型数组" class="headerlink" title="泛型数组"></a>泛型数组</h3><pre><code class="java">List&lt;String&gt;[] list11 = new ArrayList&lt;String&gt;[10]; //编译错误，非法创建 
+List&lt;String&gt;[] list12 = new ArrayList&lt;?&gt;[10]; //编译错误，需要强转类型 
+List&lt;String&gt;[] list13 = (List&lt;String&gt;[]) new ArrayList&lt;?&gt;[10]; //OK，但是会有警告 
+List&lt;?&gt;[] list14 = new ArrayList&lt;String&gt;[10]; //编译错误，非法创建 
+List&lt;?&gt;[] list15 = new ArrayList&lt;?&gt;[10]; //OK 
+List&lt;String&gt;[] list6 = new ArrayList[10]; //OK，但是会有警告
+</code></pre>
 <ul>
 <li>使用场景</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">GenericsDemo30</span>&#123;  </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String args[])</span>&#123;  </span><br><span class="line">        Integer i[] = fun1(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>) ;   <span class="comment">// 返回泛型数组  </span></span><br><span class="line">        fun2(i) ;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; T[] fun1(T...arg)&#123;  <span class="comment">// 接收可变参数  </span></span><br><span class="line">        <span class="keyword">return</span> arg ;            <span class="comment">// 返回泛型数组  </span></span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="keyword">void</span> <span class="title function_">fun2</span><span class="params">(T param[])</span>&#123;   <span class="comment">// 输出  </span></span><br><span class="line">        System.out.print(<span class="string">&quot;接收泛型数组：&quot;</span>) ;  </span><br><span class="line">        <span class="keyword">for</span>(T t:param)&#123;  </span><br><span class="line">            System.out.print(t + <span class="string">&quot;、&quot;</span>) ;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="java">public class GenericsDemo30&#123;  
+    public static void main(String args[])&#123;  
+        Integer i[] = fun1(1,2,3,4,5,6) ;   // 返回泛型数组  
+        fun2(i) ;  
+    &#125;  
+    public static &lt;T&gt; T[] fun1(T...arg)&#123;  // 接收可变参数  
+        return arg ;            // 返回泛型数组  
+    &#125;  
+    public static &lt;T&gt; void fun2(T param[])&#123;   // 输出  
+        System.out.print(&quot;接收泛型数组：&quot;) ;  
+        for(T t:param)&#123;  
+            System.out.print(t + &quot;、&quot;) ;  
+        &#125;  
+    &#125;  
+&#125;
+</code></pre>
 <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/da0e9136ae784482a65592dd47561d02~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1756&h=1130&s=248753&e=png&b=222427" alt="image.png"></p>
 <h1 id="深入理解泛型"><a href="#深入理解泛型" class="headerlink" title="深入理解泛型"></a>深入理解泛型</h1><h2 id="类型擦除"><a href="#类型擦除" class="headerlink" title="类型擦除"></a>类型擦除</h2><p><strong>泛型的类型擦除原则</strong>是：</p>
 <ul>
@@ -1068,8 +1142,13 @@
 <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c2dc031266c04baf8fca9ac12a25ad22~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=776&h=223&s=30986&e=png&a=1&b=000000" alt="image.png"><br><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d4ac4d20ae2a479fb71d9ff2f7a7101e~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=822&h=236&s=31204&e=png&a=1&b=000000" alt="image.png"><br><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a56013c830d44a2fa84bac6bc42eb717~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=982&h=144&s=20440&e=png&a=1&b=fb9f00" alt="image.png"></p>
 <h2 id="类型擦除保留的原始类型"><a href="#类型擦除保留的原始类型" class="headerlink" title="类型擦除保留的原始类型"></a>类型擦除保留的原始类型</h2><p>原始类型 就是擦除去了泛型信息，最后在字节码中的类型变量的真正类型，无论何时定义一个泛型，相应的原始类型都会被自动提供，类型变量擦除，并使用其限定类型（无限定的变量用Object）替换。</p>
 <h2 id="泛型在编译器的检查"><a href="#泛型在编译器的检查" class="headerlink" title="泛型在编译器的检查"></a>泛型在编译器的检查</h2><p>java编译器是通过先检查代码中泛型的类型，然后在进行类型擦除，再进行编译。<br>例如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;  </span><br><span class="line"></span><br><span class="line">    ArrayList&lt;String&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;String&gt;();  </span><br><span class="line">    list.add(<span class="string">&quot;123&quot;</span>);  </span><br><span class="line">    list.add(<span class="number">123</span>);<span class="comment">//编译错误  </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="java">public static  void main(String[] args) &#123;  
 
+    ArrayList&lt;String&gt; list = new ArrayList&lt;String&gt;();  
+    list.add(&quot;123&quot;);  
+    list.add(123);//编译错误  
+&#125;
+</code></pre>
 <p>在上面的程序中，使用add方法添加一个整型，在IDE中，直接会报错，说明这就是在编译之前的检查，因为如果是在编译之后检查，类型擦除后，原始类型为Object，是应该允许任意引用类型添加的。可实际上却不是这样的，这恰恰说明了关于泛型变量的使用，是会在编译之前检查的。</p>
 <h1 id="项目中的泛型实战"><a href="#项目中的泛型实战" class="headerlink" title="项目中的泛型实战"></a>项目中的泛型实战</h1><p>泛型很多都是理论，在项目中怎么用呢？<br>比如对于常见的缓存穿透，缓存击穿，我们就可以使用泛型将其封装到一个类里面。<br>比如下面代码，是黑马点评项目中的一个点：<strong>通过泛型 + 函数式编程封装成通用解决方案。</strong><br><strong>难点：</strong></p>
 <ul>
@@ -1079,8 +1158,232 @@
 </ul>
 </li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 缓存工具封装</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CacheClient</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line">    <span class="comment">//缓存击穿使用的线程池</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">ExecutorService</span> <span class="variable">CACHE_REBUILD_EXECUTOR</span> <span class="operator">=</span> Executors.newFixedThreadPool(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 将任意java对象序列化为json字符串并存储在string类型的key中，并设置TTL</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> key   string类型的key</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> value 任意java对象</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> time  时间</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> unit  单位</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">set</span><span class="params">(String key, Object value, Long time, TimeUnit unit)</span> &#123;</span><br><span class="line">        stringRedisTemplate.opsForValue().set(key, JSONUtil.toJsonStr(value), time, unit);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 将任意java对象序列化为json字符串并存储在string类型的key中，并设置逻辑过期时间，用于处理缓存击穿</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> key   string类型的key</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> value 任意java对象</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> time  逻辑时间</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> unit  单位</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setWithLogicalExpire</span><span class="params">(String key, Object value, Long time, TimeUnit unit)</span> &#123;</span><br><span class="line">        <span class="comment">// RedisData对象，设置逻辑过期</span></span><br><span class="line">        <span class="type">RedisData</span> <span class="variable">redisData</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RedisData</span>();</span><br><span class="line">        redisData.setData(value);</span><br><span class="line">        redisData.setExpireTime(LocalDateTime.now().plusSeconds(unit.toSeconds(time)));</span><br><span class="line">        <span class="comment">// 写入Redis</span></span><br><span class="line">        stringRedisTemplate.opsForValue().set(key, JSONUtil.toJsonStr(redisData));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 解决缓存穿透</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> keyPrefix  key前缀</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> id         id不知道什么类型，所以需要声名泛型ID，名字随意起</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> type       是什么类型</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> dbFallback 如果redis查询的不是&quot;&quot;，那就需要查询数据库，函数式接口指定逻辑</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> time       重建缓存后的有效时间</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> unit       时间单位</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;R&gt;        返回值类型，例如Shop类型</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;ID&gt;       id不知道什么类型，所以需要声名泛型ID，名字随意起</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> &lt;R, ID&gt; R <span class="title function_">queryWithPassThrough</span><span class="params">(</span></span><br><span class="line"><span class="params">            String keyPrefix, ID id, Class&lt;R&gt; type, Function&lt;ID, R&gt; dbFallback, Long time, TimeUnit unit)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">key</span> <span class="operator">=</span> keyPrefix + id;</span><br><span class="line">        <span class="comment">// 1.从redis查询缓存</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">json</span> <span class="operator">=</span> stringRedisTemplate.opsForValue().get(key);</span><br><span class="line">        <span class="comment">// 2.判断是否存在 。isNotBlank只有在 字符串 才返回true。 换行 ，null, &quot;&quot;等都是false</span></span><br><span class="line">        <span class="keyword">if</span> (StrUtil.isNotBlank(json)) &#123;</span><br><span class="line">        <span class="comment">// 3.存在，直接返回</span></span><br><span class="line">            <span class="keyword">return</span> JSONUtil.toBean(json, type);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//      3.2  如果不存在，则有  null，&quot;&quot;,换行  等可能性。如果是&quot;&quot;， 则是为了解决缓存穿透而约定的规则</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="string">&quot;&quot;</span>.equals(json)) &#123;</span><br><span class="line">            <span class="comment">// 解决缓存穿透，不会再去查数据库</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 4.如果不存在，且不是&quot;&quot; ；那么原因可能是缓存中为null，需要根据id去查询数据库</span></span><br><span class="line">        <span class="type">R</span> <span class="variable">r</span> <span class="operator">=</span> dbFallback.apply(id);</span><br><span class="line">        <span class="comment">// 5.不存在，返回错误</span></span><br><span class="line">        <span class="keyword">if</span> (r == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="comment">// 将空值写入redis</span></span><br><span class="line">            stringRedisTemplate.opsForValue().set(key, <span class="string">&quot;&quot;</span>, CACHE_NULL_TTL, TimeUnit.MINUTES);</span><br><span class="line">            <span class="comment">// 返回错误信息</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 6.存在，写入redis，调用已经写好的方法,超时剔除</span></span><br><span class="line">        <span class="built_in">this</span>.set(key, r, time, unit);</span><br><span class="line">        <span class="keyword">return</span> r;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 逻辑过期 解决缓存击穿</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> &lt;R, ID&gt; R <span class="title function_">queryWithLogicalExpire</span><span class="params">(</span></span><br><span class="line"><span class="params">            String keyPrefix, ID id, Class&lt;R&gt; type,String lockKeyPrefix, Function&lt;ID, R&gt; dbFallback, Long time, TimeUnit unit)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">key</span> <span class="operator">=</span> keyPrefix + id;</span><br><span class="line">        <span class="comment">// 1.从redis查询缓存</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">json</span> <span class="operator">=</span> stringRedisTemplate.opsForValue().get(key);</span><br><span class="line">        <span class="comment">// 2.判断是否存在</span></span><br><span class="line">        <span class="keyword">if</span> (StrUtil.isBlank(json)) &#123;</span><br><span class="line">            <span class="comment">//  3.1 不存在直接返回null，不是热点key</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">            <span class="comment">//  3.2 存在，反序列化为RedisData对象</span></span><br><span class="line">        <span class="type">RedisData</span> <span class="variable">redisData</span> <span class="operator">=</span> JSONUtil.toBean(json, RedisData.class);</span><br><span class="line">        <span class="comment">//        得到R对象</span></span><br><span class="line">        <span class="type">R</span> <span class="variable">r</span> <span class="operator">=</span> JSONUtil.toBean((JSONObject) redisData.getData(), type);</span><br><span class="line">        <span class="type">LocalDateTime</span> <span class="variable">expireTime</span> <span class="operator">=</span> redisData.getExpireTime();</span><br><span class="line">        <span class="comment">// 4.判断是否过期</span></span><br><span class="line">        <span class="keyword">if</span> (expireTime.isAfter(LocalDateTime.now())) &#123;</span><br><span class="line">            <span class="comment">// 4.1.未过期，直接返回</span></span><br><span class="line">            <span class="keyword">return</span> r;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 5. 已过期，需要缓存重建</span></span><br><span class="line">        <span class="comment">// 6.缓存重建</span></span><br><span class="line">        <span class="comment">// 6.1.获取互斥锁</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">lockKey</span> <span class="operator">=</span> lockKeyPrefix + id;</span><br><span class="line">        <span class="type">boolean</span> <span class="variable">isLock</span> <span class="operator">=</span> tryLock(lockKey);</span><br><span class="line">        <span class="comment">// 6.2.判断是否获取锁成功</span></span><br><span class="line">        <span class="keyword">if</span> (isLock) &#123;</span><br><span class="line">            <span class="comment">// 6.3.成功，开启独立线程，实现缓存重建</span></span><br><span class="line"><span class="comment">//            在这之前需要DoubleCheck，再次查看redis缓存是否过期</span></span><br><span class="line">            json = stringRedisTemplate.opsForValue().get(key);</span><br><span class="line"><span class="comment">//            判断是否存在</span></span><br><span class="line">            <span class="keyword">if</span> (StrUtil.isNotBlank(json)) &#123;</span><br><span class="line">                <span class="comment">//            5.2.2.1 存在则判断是否过期，未过期就直接返回，不需要缓存构建</span></span><br><span class="line">                redisData = JSONUtil.toBean(json, RedisData.class);</span><br><span class="line">                r = JSONUtil.toBean((JSONObject) redisData.getData(), type);</span><br><span class="line">                expireTime = redisData.getExpireTime();</span><br><span class="line">                <span class="keyword">if</span> (expireTime.isAfter(LocalDateTime.now())) &#123;</span><br><span class="line">                    <span class="comment">//   未过期，直接返回</span></span><br><span class="line">                    <span class="keyword">return</span> r;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//   6.4 已过期 || 不存在  则重新构建，开启线程池（如果自己new 线程，性能不好）</span></span><br><span class="line"></span><br><span class="line">            CACHE_REBUILD_EXECUTOR.submit(() -&gt; &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="comment">// 查询数据库</span></span><br><span class="line">                    <span class="type">R</span> <span class="variable">newR</span> <span class="operator">=</span> dbFallback.apply(id);</span><br><span class="line">                    <span class="comment">// 重建缓存--热点key</span></span><br><span class="line">                    <span class="built_in">this</span>.setWithLogicalExpire(key, newR, time, unit);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                    <span class="comment">// 释放锁</span></span><br><span class="line">                    unlock(lockKey);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 6.4.返回过期的信息</span></span><br><span class="line">        <span class="keyword">return</span> r;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 互斥锁 解决缓存击穿</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> &lt;R, ID&gt; R <span class="title function_">queryWithMutex</span><span class="params">(</span></span><br><span class="line"><span class="params">            String keyPrefix, ID id, Class&lt;R&gt; type,String lockKeyPrefix, <span class="type">long</span> sleepTime,Function&lt;ID, R&gt; dbFallback, Long time, TimeUnit unit)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">key</span> <span class="operator">=</span> keyPrefix + id;</span><br><span class="line">        <span class="comment">// 1.从redis查询缓存</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">json</span> <span class="operator">=</span> stringRedisTemplate.opsForValue().get(key);</span><br><span class="line"><span class="comment">//        2.判断是否存在 。isNotBlank只有在 字符串 才返回true。 换行 ，null, &quot;&quot;等都是false</span></span><br><span class="line">        <span class="keyword">if</span> (StrUtil.isNotBlank(json)) &#123;</span><br><span class="line">            <span class="comment">// 3.存在，直接返回</span></span><br><span class="line">            <span class="keyword">return</span> JSONUtil.toBean(json, type);</span><br><span class="line">        &#125;</span><br><span class="line"><span class="comment">//      3.2  如果不存在，则有  null，&quot;&quot;,换行  等可能性。如果是&quot;&quot;， 则是为了解决缓存穿透而约定的规则</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="string">&quot;&quot;</span>.equals(json)) &#123;</span><br><span class="line"><span class="comment">//            解决缓存穿透，不会再去查数据库</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//        4.如果不存在，且不是&quot;&quot; ；那么原因可能是缓存中为null，需要根据id去查询数据库</span></span><br><span class="line"><span class="comment">//        ==========解决缓存击穿==========</span></span><br><span class="line"><span class="comment">//        4.1 获取互斥锁</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">lockKey</span> <span class="operator">=</span> lockKeyPrefix + id;</span><br><span class="line">        <span class="type">R</span> <span class="variable">r</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="type">boolean</span> <span class="variable">isLock</span> <span class="operator">=</span> tryLock(lockKey);</span><br><span class="line">            <span class="comment">// 4.2.判断是否获取成功</span></span><br><span class="line">            <span class="keyword">if</span> (!isLock) &#123;</span><br><span class="line">                <span class="comment">// 4.3.获取锁失败，休眠并重试</span></span><br><span class="line">                Thread.sleep(sleepTime);</span><br><span class="line">                <span class="keyword">return</span> queryWithMutex(keyPrefix, id ,type,lockKeyPrefix,sleepTime, dbFallback, time, unit);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 4.4 成功，做双重检查锁，查看redis缓存是否存在，存在则无需重建缓存</span></span><br><span class="line">            json = stringRedisTemplate.opsForValue().get(key);</span><br><span class="line">            <span class="comment">// 判断是否存在 。isNotBlank只有在 字符串 才返回true。 换行 ，null, &quot;&quot;等都是false</span></span><br><span class="line">            <span class="keyword">if</span> (StrUtil.isNotBlank(json)) &#123;</span><br><span class="line">                <span class="comment">//   存在直接返回</span></span><br><span class="line">                r = JSONUtil.toBean(json, type);</span><br><span class="line">                <span class="keyword">return</span> r;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//   如果不存在，则有  null，&quot;&quot;,换行  等可能性。如果是&quot;&quot;， 则是为了解决缓存穿透而约定的规则</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="string">&quot;&quot;</span>.equals(json)) &#123;</span><br><span class="line">                <span class="comment">//           解决缓存穿透，不会再去查数据库</span></span><br><span class="line">                <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//  5. 到这里说明通过双重检查锁，代表是第一个线程，则根据id查询数据库</span></span><br><span class="line">            r = dbFallback.apply(id);</span><br><span class="line">            <span class="comment">// 不存在，返回错误</span></span><br><span class="line">            <span class="keyword">if</span> (r == <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="comment">// 将空值写入redis</span></span><br><span class="line">                stringRedisTemplate.opsForValue().set(key, <span class="string">&quot;&quot;</span>, CACHE_NULL_TTL, TimeUnit.MINUTES);</span><br><span class="line">                <span class="comment">// 返回错误信息</span></span><br><span class="line">                <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 6.存在，写入redis</span></span><br><span class="line">            <span class="built_in">this</span>.set(key, r, time, unit);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="comment">// 7.释放锁</span></span><br><span class="line">            unlock(lockKey);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 8.返回</span></span><br><span class="line">        <span class="keyword">return</span> r;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">tryLock</span><span class="params">(String key)</span> &#123;</span><br><span class="line">        <span class="type">Boolean</span> <span class="variable">flag</span> <span class="operator">=</span> stringRedisTemplate.opsForValue().setIfAbsent(key, <span class="string">&quot;1&quot;</span>, <span class="number">10</span>, TimeUnit.SECONDS);</span><br><span class="line"><span class="comment">//        不要直接返回，因为会自动拆箱，如果为null，会报空指针异常。</span></span><br><span class="line"><span class="comment">//        使用工具类</span></span><br><span class="line">        <span class="keyword">return</span> BooleanUtil.isTrue(flag);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">unlock</span><span class="params">(String key)</span> &#123;</span><br><span class="line">        stringRedisTemplate.delete(key);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="java">/**
+ * 缓存工具封装
+ */
+@Slf4j
+@Component
+public class CacheClient &#123;
 
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
+    //缓存击穿使用的线程池
+    private static final ExecutorService CACHE_REBUILD_EXECUTOR = Executors.newFixedThreadPool(10);
+
+    /**
+     * 将任意java对象序列化为json字符串并存储在string类型的key中，并设置TTL
+     *
+     * @param key   string类型的key
+     * @param value 任意java对象
+     * @param time  时间
+     * @param unit  单位
+     */
+    public void set(String key, Object value, Long time, TimeUnit unit) &#123;
+        stringRedisTemplate.opsForValue().set(key, JSONUtil.toJsonStr(value), time, unit);
+    &#125;
+
+    /**
+     * 将任意java对象序列化为json字符串并存储在string类型的key中，并设置逻辑过期时间，用于处理缓存击穿
+     *
+     * @param key   string类型的key
+     * @param value 任意java对象
+     * @param time  逻辑时间
+     * @param unit  单位
+     */
+    public void setWithLogicalExpire(String key, Object value, Long time, TimeUnit unit) &#123;
+        // RedisData对象，设置逻辑过期
+        RedisData redisData = new RedisData();
+        redisData.setData(value);
+        redisData.setExpireTime(LocalDateTime.now().plusSeconds(unit.toSeconds(time)));
+        // 写入Redis
+        stringRedisTemplate.opsForValue().set(key, JSONUtil.toJsonStr(redisData));
+    &#125;
+
+    /**
+     * 解决缓存穿透
+     *
+     * @param keyPrefix  key前缀
+     * @param id         id不知道什么类型，所以需要声名泛型ID，名字随意起
+     * @param type       是什么类型
+     * @param dbFallback 如果redis查询的不是&quot;&quot;，那就需要查询数据库，函数式接口指定逻辑
+     * @param time       重建缓存后的有效时间
+     * @param unit       时间单位
+     * @param &lt;R&gt;        返回值类型，例如Shop类型
+     * @param &lt;ID&gt;       id不知道什么类型，所以需要声名泛型ID，名字随意起
+     * @return
+     */
+    public &lt;R, ID&gt; R queryWithPassThrough(
+            String keyPrefix, ID id, Class&lt;R&gt; type, Function&lt;ID, R&gt; dbFallback, Long time, TimeUnit unit) &#123;
+        String key = keyPrefix + id;
+        // 1.从redis查询缓存
+        String json = stringRedisTemplate.opsForValue().get(key);
+        // 2.判断是否存在 。isNotBlank只有在 字符串 才返回true。 换行 ，null, &quot;&quot;等都是false
+        if (StrUtil.isNotBlank(json)) &#123;
+        // 3.存在，直接返回
+            return JSONUtil.toBean(json, type);
+        &#125;
+        //      3.2  如果不存在，则有  null，&quot;&quot;,换行  等可能性。如果是&quot;&quot;， 则是为了解决缓存穿透而约定的规则
+        if (&quot;&quot;.equals(json)) &#123;
+            // 解决缓存穿透，不会再去查数据库
+            return null;
+        &#125;
+
+        // 4.如果不存在，且不是&quot;&quot; ；那么原因可能是缓存中为null，需要根据id去查询数据库
+        R r = dbFallback.apply(id);
+        // 5.不存在，返回错误
+        if (r == null) &#123;
+            // 将空值写入redis
+            stringRedisTemplate.opsForValue().set(key, &quot;&quot;, CACHE_NULL_TTL, TimeUnit.MINUTES);
+            // 返回错误信息
+            return null;
+        &#125;
+        // 6.存在，写入redis，调用已经写好的方法,超时剔除
+        this.set(key, r, time, unit);
+        return r;
+    &#125;
+
+    /**
+     * 逻辑过期 解决缓存击穿
+     */
+    public &lt;R, ID&gt; R queryWithLogicalExpire(
+            String keyPrefix, ID id, Class&lt;R&gt; type,String lockKeyPrefix, Function&lt;ID, R&gt; dbFallback, Long time, TimeUnit unit) &#123;
+        String key = keyPrefix + id;
+        // 1.从redis查询缓存
+        String json = stringRedisTemplate.opsForValue().get(key);
+        // 2.判断是否存在
+        if (StrUtil.isBlank(json)) &#123;
+            //  3.1 不存在直接返回null，不是热点key
+            return null;
+        &#125;
+            //  3.2 存在，反序列化为RedisData对象
+        RedisData redisData = JSONUtil.toBean(json, RedisData.class);
+        //        得到R对象
+        R r = JSONUtil.toBean((JSONObject) redisData.getData(), type);
+        LocalDateTime expireTime = redisData.getExpireTime();
+        // 4.判断是否过期
+        if (expireTime.isAfter(LocalDateTime.now())) &#123;
+            // 4.1.未过期，直接返回
+            return r;
+        &#125;
+        // 5. 已过期，需要缓存重建
+        // 6.缓存重建
+        // 6.1.获取互斥锁
+        String lockKey = lockKeyPrefix + id;
+        boolean isLock = tryLock(lockKey);
+        // 6.2.判断是否获取锁成功
+        if (isLock) &#123;
+            // 6.3.成功，开启独立线程，实现缓存重建
+//            在这之前需要DoubleCheck，再次查看redis缓存是否过期
+            json = stringRedisTemplate.opsForValue().get(key);
+//            判断是否存在
+            if (StrUtil.isNotBlank(json)) &#123;
+                //            5.2.2.1 存在则判断是否过期，未过期就直接返回，不需要缓存构建
+                redisData = JSONUtil.toBean(json, RedisData.class);
+                r = JSONUtil.toBean((JSONObject) redisData.getData(), type);
+                expireTime = redisData.getExpireTime();
+                if (expireTime.isAfter(LocalDateTime.now())) &#123;
+                    //   未过期，直接返回
+                    return r;
+                &#125;
+            &#125;
+            //   6.4 已过期 || 不存在  则重新构建，开启线程池（如果自己new 线程，性能不好）
+
+            CACHE_REBUILD_EXECUTOR.submit(() -&gt; &#123;
+                try &#123;
+                    // 查询数据库
+                    R newR = dbFallback.apply(id);
+                    // 重建缓存--热点key
+                    this.setWithLogicalExpire(key, newR, time, unit);
+                &#125; catch (Exception e) &#123;
+                    throw new RuntimeException(e);
+                &#125; finally &#123;
+                    // 释放锁
+                    unlock(lockKey);
+                &#125;
+            &#125;);
+        &#125;
+        // 6.4.返回过期的信息
+        return r;
+    &#125;
+
+    /**
+     * 互斥锁 解决缓存击穿
+     */
+    public &lt;R, ID&gt; R queryWithMutex(
+            String keyPrefix, ID id, Class&lt;R&gt; type,String lockKeyPrefix, long sleepTime,Function&lt;ID, R&gt; dbFallback, Long time, TimeUnit unit) &#123;
+        String key = keyPrefix + id;
+        // 1.从redis查询缓存
+        String json = stringRedisTemplate.opsForValue().get(key);
+//        2.判断是否存在 。isNotBlank只有在 字符串 才返回true。 换行 ，null, &quot;&quot;等都是false
+        if (StrUtil.isNotBlank(json)) &#123;
+            // 3.存在，直接返回
+            return JSONUtil.toBean(json, type);
+        &#125;
+//      3.2  如果不存在，则有  null，&quot;&quot;,换行  等可能性。如果是&quot;&quot;， 则是为了解决缓存穿透而约定的规则
+        if (&quot;&quot;.equals(json)) &#123;
+//            解决缓存穿透，不会再去查数据库
+            return null;
+        &#125;
+
+//        4.如果不存在，且不是&quot;&quot; ；那么原因可能是缓存中为null，需要根据id去查询数据库
+//        ==========解决缓存击穿==========
+//        4.1 获取互斥锁
+        String lockKey = lockKeyPrefix + id;
+        R r = null;
+        try &#123;
+            boolean isLock = tryLock(lockKey);
+            // 4.2.判断是否获取成功
+            if (!isLock) &#123;
+                // 4.3.获取锁失败，休眠并重试
+                Thread.sleep(sleepTime);
+                return queryWithMutex(keyPrefix, id ,type,lockKeyPrefix,sleepTime, dbFallback, time, unit);
+            &#125;
+            // 4.4 成功，做双重检查锁，查看redis缓存是否存在，存在则无需重建缓存
+            json = stringRedisTemplate.opsForValue().get(key);
+            // 判断是否存在 。isNotBlank只有在 字符串 才返回true。 换行 ，null, &quot;&quot;等都是false
+            if (StrUtil.isNotBlank(json)) &#123;
+                //   存在直接返回
+                r = JSONUtil.toBean(json, type);
+                return r;
+            &#125;
+            //   如果不存在，则有  null，&quot;&quot;,换行  等可能性。如果是&quot;&quot;， 则是为了解决缓存穿透而约定的规则
+            if (&quot;&quot;.equals(json)) &#123;
+                //           解决缓存穿透，不会再去查数据库
+                return null;
+            &#125;
+            //  5. 到这里说明通过双重检查锁，代表是第一个线程，则根据id查询数据库
+            r = dbFallback.apply(id);
+            // 不存在，返回错误
+            if (r == null) &#123;
+                // 将空值写入redis
+                stringRedisTemplate.opsForValue().set(key, &quot;&quot;, CACHE_NULL_TTL, TimeUnit.MINUTES);
+                // 返回错误信息
+                return null;
+            &#125;
+            // 6.存在，写入redis
+            this.set(key, r, time, unit);
+        &#125; catch (InterruptedException e) &#123;
+            throw new RuntimeException(e);
+        &#125; finally &#123;
+            // 7.释放锁
+            unlock(lockKey);
+        &#125;
+        // 8.返回
+        return r;
+    &#125;
+
+    private boolean tryLock(String key) &#123;
+        Boolean flag = stringRedisTemplate.opsForValue().setIfAbsent(key, &quot;1&quot;, 10, TimeUnit.SECONDS);
+//        不要直接返回，因为会自动拆箱，如果为null，会报空指针异常。
+//        使用工具类
+        return BooleanUtil.isTrue(flag);
+    &#125;
+
+    private void unlock(String key) &#123;
+        stringRedisTemplate.delete(key);
+    &#125;
+&#125;
+</code></pre>
 <p>参考文章：<br><a target="_blank" rel="noopener" href="https://pdai.tech/md/java/basic/java-basic-x-generic.html#%E6%B3%9B%E5%9E%8B%E7%B1%BB">https://pdai.tech/md/java/basic/java-basic-x-generic.html#泛型类</a><br>    <a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903925666021389?searchId=202402142156151370FABE70EBA2501841#heading-8">https://juejin.cn/post/6844903925666021389?searchId=202402142156151370FABE70EBA2501841#heading-8</a></p>
 
       
@@ -1098,9 +1401,9 @@
 <script type="text/javascript">
     $.getScript('/js/gitalk.js', function () {
         var gitalk = new Gitalk({
-            clientID: '035ef548c9e9378701b6',
-            clientSecret: '83814063a9a58aa2ecd9d9ba1d8bbfe9d4205b6b',
-            repo: 'https://axdmdyj.github.io',
+            clientID: 'aeb83b87dc9753d290d4',
+            clientSecret: '179a325f86496596d1df38a53b7be77143374811',
+            repo: 'axdmdyj.github.io',
             owner: 'axdmdyj',
             admin: ['axdmdyj'],
             id: decodeURI(location.pathname),
@@ -1152,20 +1455,6 @@
 
         /*高亮代码块行号*/
         
-        $('pre code').each(function(){
-            var lines = $(this).text().trim().split('\n').length, widther='';
-            if (lines>99) {
-                widther = 'widther'
-            }
-            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
-            $(this).addClass('has-numbering ' + widther)
-                    .parent()
-                    .append($numbering);
-            for(var i=1;i<=lines;i++){
-                $numbering.append($('<li/>').text(i));
-            }
-        });
-        
 
         /*访问数量*/
         
@@ -1185,38 +1474,6 @@
 </script>
 
 <!--加入行号的高亮代码块样式-->
-
-<style>
-    pre{
-        position: relative;
-        margin-bottom: 24px;
-        border-radius: 10px;
-        border: 1px solid #e2dede;
-        background: #FFF;
-        overflow: hidden;
-    }
-    code.has-numbering{
-        margin-left: 30px;
-    }
-    code.has-numbering.widther{
-        margin-left: 35px;
-    }
-    .pre-numbering{
-        margin: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px;
-        padding: 18px 3px 15px 5px;
-        border-right: 1px solid #C3CCD0;
-        text-align: right;
-        color: #AAA;
-        background-color: ;
-    }
-    .pre-numbering.widther {
-        width: 35px;
-    }
-</style>
 
 <!--自定义样式设置-->
 <style>

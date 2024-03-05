@@ -1020,7 +1020,45 @@
 </blockquote>
 </li>
 </ul>
-<h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><figure class="highlight java"><figcaption><span>[]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[][] generateMatrix(<span class="type">int</span> n) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">loop</span> <span class="operator">=</span> <span class="number">0</span>; <span class="comment">// 控制循环次数</span></span><br><span class="line">        <span class="type">int</span> [][] res = <span class="keyword">new</span> <span class="title class_">int</span>[n][n];</span><br><span class="line">        <span class="type">int</span> <span class="variable">start</span> <span class="operator">=</span> <span class="number">0</span>; <span class="comment">//每次循环的开始点(start, start)</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> <span class="number">1</span>; <span class="comment">//定义填充数字</span></span><br><span class="line">        <span class="type">int</span> i,j;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(loop ++ &lt; n/<span class="number">2</span>)&#123;<span class="comment">//判断边界后,loop从1开始</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//模拟上侧从左到右</span></span><br><span class="line">        <span class="keyword">for</span>(j = start; j&lt;n-loop; j++)&#123;<span class="comment">// n-loop 是为了左闭又开</span></span><br><span class="line">            res[start][j] = count++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//模拟右侧从上到下</span></span><br><span class="line">        <span class="keyword">for</span>(i = start; i &lt; n-loop; i++)&#123;</span><br><span class="line">            res[i][j] = count++;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(;j&gt;=loop;j--)&#123;<span class="comment">//此时loop等于一,startX+1的位置</span></span><br><span class="line">            res[i][j] = count++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 模拟从下到上</span></span><br><span class="line">        <span class="keyword">for</span>(;i&gt;=loop;i--)&#123; <span class="comment">//此时loop等于一,startY+1的位置</span></span><br><span class="line">            res[i][j] = count++;</span><br><span class="line">        &#125;</span><br><span class="line">        start++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(n%<span class="number">2</span> == <span class="number">1</span>)&#123;</span><br><span class="line">            res[start][start] = count;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><pre><code class="Java">
+class Solution &#123;
+    public int[][] generateMatrix(int n) &#123;
+        int loop = 0; // 控制循环次数
+        int [][] res = new int[n][n];
+        int start = 0; //每次循环的开始点(start, start)
+        int count = 1; //定义填充数字
+        int i,j;
+
+        while(loop ++ &lt; n/2)&#123;//判断边界后,loop从1开始
+
+        //模拟上侧从左到右
+        for(j = start; j&lt;n-loop; j++)&#123;// n-loop 是为了左闭又开
+            res[start][j] = count++;
+        &#125;
+
+        //模拟右侧从上到下
+        for(i = start; i &lt; n-loop; i++)&#123;
+            res[i][j] = count++;
+        &#125;
+        
+        for(;j&gt;=loop;j--)&#123;//此时loop等于一,startX+1的位置
+            res[i][j] = count++;
+        &#125;
+
+
+        // 模拟从下到上
+        for(;i&gt;=loop;i--)&#123; //此时loop等于一,startY+1的位置
+            res[i][j] = count++;
+        &#125;
+        start++;
+        &#125;
+        if(n%2 == 1)&#123;
+            res[start][start] = count;
+        &#125;
+        return res;
+    &#125;
+&#125;
+</code></pre>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 waigo168@163.com </span>
@@ -1037,9 +1075,9 @@
 <script type="text/javascript">
     $.getScript('/js/gitalk.js', function () {
         var gitalk = new Gitalk({
-            clientID: '035ef548c9e9378701b6',
-            clientSecret: '83814063a9a58aa2ecd9d9ba1d8bbfe9d4205b6b',
-            repo: 'https://axdmdyj.github.io',
+            clientID: 'aeb83b87dc9753d290d4',
+            clientSecret: '179a325f86496596d1df38a53b7be77143374811',
+            repo: 'axdmdyj.github.io',
             owner: 'axdmdyj',
             admin: ['axdmdyj'],
             id: decodeURI(location.pathname),
@@ -1091,20 +1129,6 @@
 
         /*高亮代码块行号*/
         
-        $('pre code').each(function(){
-            var lines = $(this).text().trim().split('\n').length, widther='';
-            if (lines>99) {
-                widther = 'widther'
-            }
-            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
-            $(this).addClass('has-numbering ' + widther)
-                    .parent()
-                    .append($numbering);
-            for(var i=1;i<=lines;i++){
-                $numbering.append($('<li/>').text(i));
-            }
-        });
-        
 
         /*访问数量*/
         
@@ -1124,38 +1148,6 @@
 </script>
 
 <!--加入行号的高亮代码块样式-->
-
-<style>
-    pre{
-        position: relative;
-        margin-bottom: 24px;
-        border-radius: 10px;
-        border: 1px solid #e2dede;
-        background: #FFF;
-        overflow: hidden;
-    }
-    code.has-numbering{
-        margin-left: 30px;
-    }
-    code.has-numbering.widther{
-        margin-left: 35px;
-    }
-    .pre-numbering{
-        margin: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px;
-        padding: 18px 3px 15px 5px;
-        border-right: 1px solid #C3CCD0;
-        text-align: right;
-        color: #AAA;
-        background-color: ;
-    }
-    .pre-numbering.widther {
-        width: 35px;
-    }
-</style>
 
 <!--自定义样式设置-->
 <style>

@@ -1011,16 +1011,96 @@
 <p>&#x3D;&#x3D;java通过什么来保证代理的样子&#x3D;&#x3D;</p>
 <p>通过接口保证,后面的对象和代理需要实现同一个接口,接口中就是要被代理的方法</p>
 <h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308091949245.png" alt="image-20230809192308305"></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对象和代理的接口</span></span><br><span class="line"><span class="keyword">package</span> DaiLi;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Star</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> String <span class="title function_">sing</span><span class="params">(String name)</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">dance</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre><code class="java">// 对象和代理的接口
+package DaiLi;
 
+public interface Star &#123;
+    public abstract String sing(String name);
+    public abstract void dance();
+&#125;
+</code></pre>
+<pre><code class="java">//BigStar 对象 
+package DaiLi;
 
+public class BigStar implements Star&#123;
+    String name;
 
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//BigStar 对象 </span></span><br><span class="line"><span class="keyword">package</span> DaiLi;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">BigStar</span> <span class="keyword">implements</span> <span class="title class_">Star</span>&#123;</span><br><span class="line">    String name;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">BigStar</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">BigStar</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">sing</span><span class="params">(String name)</span>&#123;</span><br><span class="line">        System.out.println(<span class="built_in">this</span>.name + <span class="string">&quot;正在唱&quot;</span> +name);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;谢谢大家&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">dance</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="built_in">this</span>.name + <span class="string">&quot;正在跳舞&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;BigStar&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;name=&#x27;&quot;</span> + name + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+    public BigStar() &#123;
+    &#125;
 
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建代理</span></span><br><span class="line"><span class="keyword">package</span> DaiLi;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationHandler;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Proxy;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProxyUtile</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Star <span class="title function_">createProxy</span><span class="params">(BigStar bigStar)</span>&#123;</span><br><span class="line">        <span class="type">Star</span> <span class="variable">star</span> <span class="operator">=</span> (Star) Proxy.newProxyInstance(</span><br><span class="line">                ProxyUtile.class.getClassLoader(),</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">Class</span>[]&#123;Star.class&#125;,</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">InvocationHandler</span>() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="keyword">public</span> Object <span class="title function_">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">                        <span class="keyword">if</span> (<span class="string">&quot;sing&quot;</span>.equals(method.getName()))&#123;</span><br><span class="line">                            System.out.println(<span class="string">&quot;准备话筒,收钱&quot;</span>);</span><br><span class="line">                        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="string">&quot;dance&quot;</span>.equals(method.getName())) System.out.println(<span class="string">&quot;准备场地收钱&quot;</span>);</span><br><span class="line">                        <span class="keyword">return</span> method.invoke(bigStar, args);</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">                <span class="keyword">return</span> star;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+    public BigStar(String name) &#123;
+        this.name = name;
+    &#125;
+    @Override
+    public String sing(String name)&#123;
+        System.out.println(this.name + &quot;正在唱&quot; +name);
+        return &quot;谢谢大家&quot;;
+    &#125;
+    @Override
+    public void dance()&#123;
+        System.out.println(this.name + &quot;正在跳舞&quot;);
+    &#125;
 
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//测试类</span></span><br><span class="line"><span class="keyword">package</span> DaiLi;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">test</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">BigStar</span> <span class="variable">bigStar</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BigStar</span>(<span class="string">&quot;鸡哥&quot;</span>);</span><br><span class="line">        <span class="type">Star</span> <span class="variable">proxy</span> <span class="operator">=</span> ProxyUtile.createProxy(bigStar);</span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">result</span> <span class="operator">=</span> proxy.sing(<span class="string">&quot;只因你太美&quot;</span>);</span><br><span class="line">        System.out.println(result);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+    public String getName() &#123;
+        return name;
+    &#125;
 
+    public void setName(String name) &#123;
+        this.name = name;
+    &#125;
+
+    @Override
+    public String toString() &#123;
+        return &quot;BigStar&#123;&quot; +
+                &quot;name=&#39;&quot; + name + &#39;\&#39;&#39; +
+                &#39;&#125;&#39;;
+    &#125;
+&#125;
+</code></pre>
+<pre><code class="java">//创建代理
+package DaiLi;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+
+public class ProxyUtile&#123;
+
+    public static Star createProxy(BigStar bigStar)&#123;
+        Star star = (Star) Proxy.newProxyInstance(
+                ProxyUtile.class.getClassLoader(),
+                new Class[]&#123;Star.class&#125;,
+                new InvocationHandler() &#123;
+                    @Override
+                    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;
+                        if (&quot;sing&quot;.equals(method.getName()))&#123;
+                            System.out.println(&quot;准备话筒,收钱&quot;);
+                        &#125;else if(&quot;dance&quot;.equals(method.getName())) System.out.println(&quot;准备场地收钱&quot;);
+                        return method.invoke(bigStar, args);
+                    &#125;
+
+                &#125;
+
+        );
+
+                return star;
+    &#125;
+
+&#125;
+</code></pre>
+<pre><code class="java">//测试类
+package DaiLi;
+
+public class test &#123;
+    public static void main(String[] args) &#123;
+        BigStar bigStar = new BigStar(&quot;鸡哥&quot;);
+        Star proxy = ProxyUtile.createProxy(bigStar);
+
+        String result = proxy.sing(&quot;只因你太美&quot;);
+        System.out.println(result);
+    &#125;
+&#125;
+</code></pre>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 waigo168@163.com </span>
@@ -1037,9 +1117,9 @@
 <script type="text/javascript">
     $.getScript('/js/gitalk.js', function () {
         var gitalk = new Gitalk({
-            clientID: '035ef548c9e9378701b6',
-            clientSecret: '83814063a9a58aa2ecd9d9ba1d8bbfe9d4205b6b',
-            repo: 'https://axdmdyj.github.io',
+            clientID: 'aeb83b87dc9753d290d4',
+            clientSecret: '179a325f86496596d1df38a53b7be77143374811',
+            repo: 'axdmdyj.github.io',
             owner: 'axdmdyj',
             admin: ['axdmdyj'],
             id: decodeURI(location.pathname),
@@ -1091,20 +1171,6 @@
 
         /*高亮代码块行号*/
         
-        $('pre code').each(function(){
-            var lines = $(this).text().trim().split('\n').length, widther='';
-            if (lines>99) {
-                widther = 'widther'
-            }
-            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
-            $(this).addClass('has-numbering ' + widther)
-                    .parent()
-                    .append($numbering);
-            for(var i=1;i<=lines;i++){
-                $numbering.append($('<li/>').text(i));
-            }
-        });
-        
 
         /*访问数量*/
         
@@ -1124,38 +1190,6 @@
 </script>
 
 <!--加入行号的高亮代码块样式-->
-
-<style>
-    pre{
-        position: relative;
-        margin-bottom: 24px;
-        border-radius: 10px;
-        border: 1px solid #e2dede;
-        background: #FFF;
-        overflow: hidden;
-    }
-    code.has-numbering{
-        margin-left: 30px;
-    }
-    code.has-numbering.widther{
-        margin-left: 35px;
-    }
-    .pre-numbering{
-        margin: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px;
-        padding: 18px 3px 15px 5px;
-        border-right: 1px solid #C3CCD0;
-        text-align: right;
-        color: #AAA;
-        background-color: ;
-    }
-    .pre-numbering.widther {
-        width: 35px;
-    }
-</style>
 
 <!--自定义样式设置-->
 <style>

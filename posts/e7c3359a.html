@@ -1221,8 +1221,12 @@
 <li><strong>2-3树，你能手写一下吗</strong>？</li>
 </ul>
 <p>以下是一个简单的示例，假设我们要插入元素 7 到一个已经包含元素 4、9 的节点中：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Before Insertion:</span><br><span class="line">     4 9</span><br><span class="line"></span><br><span class="line">After Insertion:</span><br><span class="line">    4 7 9</span><br></pre></td></tr></table></figure>
+<pre><code class="plain">Before Insertion:
+     4 9
 
+After Insertion:
+    4 7 9
+</code></pre>
 <p>在这个示例中，插入元素 7 后，原节点中的元素 4 和 9 会变成两个独立的节点，中间元素 7 上移，成为它们的新父节点。这就是 2-3树的分裂操作。</p>
 <h1 id="day11-红黑树"><a href="#day11-红黑树" class="headerlink" title="day11-红黑树"></a>day11-红黑树</h1><ul>
 <li><strong>红黑树都有哪些使用场景？</strong></li>
@@ -1390,9 +1394,9 @@
 <script type="text/javascript">
     $.getScript('/js/gitalk.js', function () {
         var gitalk = new Gitalk({
-            clientID: '035ef548c9e9378701b6',
-            clientSecret: '83814063a9a58aa2ecd9d9ba1d8bbfe9d4205b6b',
-            repo: 'https://axdmdyj.github.io',
+            clientID: 'aeb83b87dc9753d290d4',
+            clientSecret: '179a325f86496596d1df38a53b7be77143374811',
+            repo: 'axdmdyj.github.io',
             owner: 'axdmdyj',
             admin: ['axdmdyj'],
             id: decodeURI(location.pathname),
@@ -1444,20 +1448,6 @@
 
         /*高亮代码块行号*/
         
-        $('pre code').each(function(){
-            var lines = $(this).text().trim().split('\n').length, widther='';
-            if (lines>99) {
-                widther = 'widther'
-            }
-            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
-            $(this).addClass('has-numbering ' + widther)
-                    .parent()
-                    .append($numbering);
-            for(var i=1;i<=lines;i++){
-                $numbering.append($('<li/>').text(i));
-            }
-        });
-        
 
         /*访问数量*/
         
@@ -1477,38 +1467,6 @@
 </script>
 
 <!--加入行号的高亮代码块样式-->
-
-<style>
-    pre{
-        position: relative;
-        margin-bottom: 24px;
-        border-radius: 10px;
-        border: 1px solid #e2dede;
-        background: #FFF;
-        overflow: hidden;
-    }
-    code.has-numbering{
-        margin-left: 30px;
-    }
-    code.has-numbering.widther{
-        margin-left: 35px;
-    }
-    .pre-numbering{
-        margin: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px;
-        padding: 18px 3px 15px 5px;
-        border-right: 1px solid #C3CCD0;
-        text-align: right;
-        color: #AAA;
-        background-color: ;
-    }
-    .pre-numbering.widther {
-        width: 35px;
-    }
-</style>
 
 <!--自定义样式设置-->
 <style>

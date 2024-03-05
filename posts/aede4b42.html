@@ -1012,16 +1012,68 @@
 <blockquote>
 <p>$O(n)$</p>
 </blockquote>
-<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><h3 id="暴力"><a href="#暴力" class="headerlink" title="暴力"></a>暴力</h3><figure class="highlight java"><figcaption><span>[]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] sortedSquares(<span class="type">int</span>[] nums) &#123;</span><br><span class="line">        <span class="type">int</span>[] res = nums;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span> ; i &lt; nums.length; i++)&#123;</span><br><span class="line">            res[i] *= nums[i];</span><br><span class="line">        &#125;                   </span><br><span class="line">        Arrays.sort(res) ;<span class="comment">//如果递减就  Arrays.sort(a, Collections.reverseOrder());</span></span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><h3 id="暴力"><a href="#暴力" class="headerlink" title="暴力"></a>暴力</h3><pre><code class="Java">class Solution &#123;
+    public int[] sortedSquares(int[] nums) &#123;
+        int[] res = nums;
+        for(int i = 0 ; i &lt; nums.length; i++)&#123;
+            res[i] *= nums[i];
+        &#125;                   
+        Arrays.sort(res) ;//如果递减就  Arrays.sort(a, Collections.reverseOrder());
+        return res;
+    &#125;
+  
+&#125;
+</code></pre>
 <p>时间复杂度:$O(n + nlog n)$</p>
-<h3 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h3><figure class="highlight java"><figcaption><span>[]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] sortedSquares(<span class="type">int</span>[] nums) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> []res = <span class="keyword">new</span> <span class="title class_">int</span>[nums.length]; <span class="comment">//递增存到新数组中</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">k</span> <span class="operator">=</span> nums.length-<span class="number">1</span>; <span class="comment">//新数组的索引</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">l</span> <span class="operator">=</span> <span class="number">0</span>, r = nums.length-<span class="number">1</span>; l &lt;= r; )&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[l]*nums[l] &lt;= nums[r]*nums[r]) &#123;</span><br><span class="line">                 res[k--] = nums[r]*nums[r];</span><br><span class="line">                 r --;</span><br><span class="line">            &#125;</span><br><span class="line">               </span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                res[k--] = nums[l]*nums[l];</span><br><span class="line">                l++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h3><pre><code class="Java">class Solution &#123;
+    public int[] sortedSquares(int[] nums) &#123;
+
+        int []res = new int[nums.length]; //递增存到新数组中
+        int k = nums.length-1; //新数组的索引
+        
+        for(int l = 0, r = nums.length-1; l &lt;= r; )&#123;
+            if(nums[l]*nums[l] &lt;= nums[r]*nums[r]) &#123;
+                 res[k--] = nums[r]*nums[r];
+                 r --;
+            &#125;
+               
+            else&#123;
+                res[k--] = nums[l]*nums[l];
+                l++;
+            &#125;
+        &#125;
+        return res;
+    &#125;
+&#125;
+</code></pre>
 <p>时间复杂度:$O(n)$</p>
 <h2 id="Problem-209-长度最小的子数组"><a href="#Problem-209-长度最小的子数组" class="headerlink" title="Problem: 209. 长度最小的子数组"></a>Problem: <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-size-subarray-sum/description/">209. 长度最小的子数组</a></h2><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><h3 id="直接暴力"><a href="#直接暴力" class="headerlink" title="直接暴力"></a>直接暴力</h3><p>两层for循环,比较简单,不做演示</p>
 <h3 id="滑动窗口解法"><a href="#滑动窗口解法" class="headerlink" title="滑动窗口解法"></a>滑动窗口解法</h3><p>使用一个for循环完成操作:</p>
 <p>所谓滑动窗口,就是不断调节子序列的起始位置和终止位置,从而得出我们想要的结果</p>
 <p><img src="https://img-blog.csdnimg.cn/img_convert/2f78be28a0f2fc7596c032b7706bdbd7.png" alt="image-20230907220554936"></p>
 <p><img src="https://img-blog.csdnimg.cn/img_convert/806b60109cf14179c01840ca94112367.png" alt="image-20230907220606299"></p>
-<h3 id="代码-java"><a href="#代码-java" class="headerlink" title="代码(java)"></a>代码(java)</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">minSubArrayLen</span><span class="params">(<span class="type">int</span> target, <span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">							<span class="comment">// 使用滑动窗口解法</span></span><br><span class="line">							<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>;<span class="comment">// 起始位置</span></span><br><span class="line">							<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; <span class="comment">// 滑动窗口右端点</span></span><br><span class="line">							<span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">							<span class="type">int</span> <span class="variable">subL</span> <span class="operator">=</span> <span class="number">0</span>; <span class="comment">//滑动窗口长度</span></span><br><span class="line">							<span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> Integer.MAX_VALUE;</span><br><span class="line">							<span class="keyword">for</span>(j = <span class="number">0</span> ; j &lt; nums.length; j++)&#123;</span><br><span class="line">							    sum += nums[j];</span><br><span class="line">							    <span class="keyword">while</span>(sum &gt;= target)&#123;<span class="comment">//开始缩小窗口,注意这里是while循环，缩小滑动窗口操作是一个持续性的操作</span></span><br><span class="line">							      subL = j - i + <span class="number">1</span>;</span><br><span class="line">							      result = Math.min(result,subL);</span><br><span class="line">							    		sum = sum - nums[i];</span><br><span class="line">							      i++;</span><br><span class="line">							    &#125;</span><br><span class="line">							    </span><br><span class="line">							&#125;</span><br><span class="line">							<span class="keyword">return</span> result == Integer.MAX_VALUE ? <span class="number">0</span> : result; <span class="comment">// 注意有没有被赋值</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="代码-java"><a href="#代码-java" class="headerlink" title="代码(java)"></a>代码(java)</h3><pre><code class="java">class Solution &#123;
+    public int minSubArrayLen(int target, int[] nums) &#123;
+                            // 使用滑动窗口解法
+                            int i = 0;// 起始位置
+                            int j = 0; // 滑动窗口右端点
+                            int sum = 0;
+                            int subL = 0; //滑动窗口长度
+                            int result = Integer.MAX_VALUE;
+                            for(j = 0 ; j &lt; nums.length; j++)&#123;
+                                sum += nums[j];
+                                while(sum &gt;= target)&#123;//开始缩小窗口,注意这里是while循环，缩小滑动窗口操作是一个持续性的操作
+                                  subL = j - i + 1;
+                                  result = Math.min(result,subL);
+                                		sum = sum - nums[i];
+                                  i++;
+                                &#125;
+                                
+                            &#125;
+                            return result == Integer.MAX_VALUE ? 0 : result; // 注意有没有被赋值
+    &#125;
+&#125;
+</code></pre>
 <p>时间复杂度：$O(n)$<br>空间复杂度：$O(1)$</p>
 <h2 id="Problem-59-螺旋矩阵-II"><a href="#Problem-59-螺旋矩阵-II" class="headerlink" title="Problem: 59. 螺旋矩阵 II"></a>Problem: <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/spiral-matrix-ii/description/">59. 螺旋矩阵 II</a></h2><h3 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h3><p>本题无非就是遍历二维数组,一层层向里遍历,但是不统一规定遍历每一条边的边界,会非常的混乱</p>
 <p>所以本题采用循环不变量,对于判断每次螺旋的边界麻烦,不妨都采取左闭又开的原则</p>
@@ -1031,8 +1083,44 @@
 <p>第二个地方就是左开右闭,每到一个节点就进入下一个边的循环.</p>
 <p>在每个圈数结束后,更新起点,横纵坐标都加一.startX+1;startY+1</p>
 <p>如果n&#x2F;2等于一,说明最中间有单独的数,直接单独赋值</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码:"></a>代码:</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[][] generateMatrix(<span class="type">int</span> n) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">loop</span> <span class="operator">=</span> <span class="number">0</span>; <span class="comment">// 控制循环次数</span></span><br><span class="line">        <span class="type">int</span> [][] res = <span class="keyword">new</span> <span class="title class_">int</span>[n][n];</span><br><span class="line">        <span class="type">int</span> <span class="variable">start</span> <span class="operator">=</span> <span class="number">0</span>; <span class="comment">//每次循环的开始点(start, start)</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> <span class="number">1</span>; <span class="comment">//定义填充数字</span></span><br><span class="line">        <span class="type">int</span> i,j;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(loop ++ &lt; n/<span class="number">2</span>)&#123;<span class="comment">//判断边界后,loop从1开始</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//模拟上侧从左到右</span></span><br><span class="line">        <span class="keyword">for</span>(j = start; j&lt;n-loop; j++)&#123;<span class="comment">// n-loop 是为了左闭又开</span></span><br><span class="line">            res[start][j] = count++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//模拟右侧从上到下</span></span><br><span class="line">        <span class="keyword">for</span>(i = start; i &lt; n-loop; i++)&#123;</span><br><span class="line">            res[i][j] = count++;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(;j&gt;=loop;j--)&#123;<span class="comment">//此时loop等于一,startX+1的位置</span></span><br><span class="line">            res[i][j] = count++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 模拟从下到上</span></span><br><span class="line">        <span class="keyword">for</span>(;i&gt;=loop;i--)&#123; <span class="comment">//此时loop等于一,startY+1的位置</span></span><br><span class="line">            res[i][j] = count++;</span><br><span class="line">        &#125;</span><br><span class="line">        start++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(n%<span class="number">2</span> == <span class="number">1</span>)&#123;</span><br><span class="line">            res[start][start] = count;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码:"></a>代码:</h3><pre><code class="java">class Solution &#123;
+    public int[][] generateMatrix(int n) &#123;
+        int loop = 0; // 控制循环次数
+        int [][] res = new int[n][n];
+        int start = 0; //每次循环的开始点(start, start)
+        int count = 1; //定义填充数字
+        int i,j;
 
+        while(loop ++ &lt; n/2)&#123;//判断边界后,loop从1开始
+
+        //模拟上侧从左到右
+        for(j = start; j&lt;n-loop; j++)&#123;// n-loop 是为了左闭又开
+            res[start][j] = count++;
+        &#125;
+
+        //模拟右侧从上到下
+        for(i = start; i &lt; n-loop; i++)&#123;
+            res[i][j] = count++;
+        &#125;
+        
+        for(;j&gt;=loop;j--)&#123;//此时loop等于一,startX+1的位置
+            res[i][j] = count++;
+        &#125;
+
+
+        // 模拟从下到上
+        for(;i&gt;=loop;i--)&#123; //此时loop等于一,startY+1的位置
+            res[i][j] = count++;
+        &#125;
+        start++;
+        &#125;
+        if(n%2 == 1)&#123;
+            res[start][start] = count;
+        &#125;
+        return res;
+    &#125;
+&#125;
+</code></pre>
 <p>时间复杂度 O(n^2): 模拟遍历二维矩阵的时间<br>空间复杂度 O(1)</p>
 
       
@@ -1050,9 +1138,9 @@
 <script type="text/javascript">
     $.getScript('/js/gitalk.js', function () {
         var gitalk = new Gitalk({
-            clientID: '035ef548c9e9378701b6',
-            clientSecret: '83814063a9a58aa2ecd9d9ba1d8bbfe9d4205b6b',
-            repo: 'https://axdmdyj.github.io',
+            clientID: 'aeb83b87dc9753d290d4',
+            clientSecret: '179a325f86496596d1df38a53b7be77143374811',
+            repo: 'axdmdyj.github.io',
             owner: 'axdmdyj',
             admin: ['axdmdyj'],
             id: decodeURI(location.pathname),
@@ -1104,20 +1192,6 @@
 
         /*高亮代码块行号*/
         
-        $('pre code').each(function(){
-            var lines = $(this).text().trim().split('\n').length, widther='';
-            if (lines>99) {
-                widther = 'widther'
-            }
-            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
-            $(this).addClass('has-numbering ' + widther)
-                    .parent()
-                    .append($numbering);
-            for(var i=1;i<=lines;i++){
-                $numbering.append($('<li/>').text(i));
-            }
-        });
-        
 
         /*访问数量*/
         
@@ -1137,38 +1211,6 @@
 </script>
 
 <!--加入行号的高亮代码块样式-->
-
-<style>
-    pre{
-        position: relative;
-        margin-bottom: 24px;
-        border-radius: 10px;
-        border: 1px solid #e2dede;
-        background: #FFF;
-        overflow: hidden;
-    }
-    code.has-numbering{
-        margin-left: 30px;
-    }
-    code.has-numbering.widther{
-        margin-left: 35px;
-    }
-    .pre-numbering{
-        margin: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px;
-        padding: 18px 3px 15px 5px;
-        border-right: 1px solid #C3CCD0;
-        text-align: right;
-        color: #AAA;
-        background-color: ;
-    }
-    .pre-numbering.widther {
-        width: 35px;
-    }
-</style>
 
 <!--自定义样式设置-->
 <style>

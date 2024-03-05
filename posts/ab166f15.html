@@ -1020,10 +1020,49 @@
 <blockquote>
 <p>O(1)</p>
 </blockquote>
-<h3 id="Code-JAVA"><a href="#Code-JAVA" class="headerlink" title="Code[JAVA]"></a>Code[JAVA]</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">search</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> target)</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> <span class="number">0</span>, right = nums.length;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(left &lt; right) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> right+left &gt;&gt; <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span>(nums[mid] &gt; target)&#123;</span><br><span class="line">                right = mid;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &lt; target)&#123;</span><br><span class="line">                left = mid+<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">return</span> mid;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Code-JAVA"><a href="#Code-JAVA" class="headerlink" title="Code[JAVA]"></a>Code[JAVA]</h3><pre><code class="java">class Solution &#123;
+    public int search(int[] nums, int target) &#123;
 
-<h3 id="Code-C"><a href="#Code-C" class="headerlink" title="Code[C++]"></a>Code[C++]</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">search</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> target)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="type">int</span> left = <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> right = nums.<span class="built_in">size</span>()<span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(left &lt;= right)&#123;</span><br><span class="line">            <span class="type">int</span> middle  = left + ((right-left)&gt;&gt;<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(nums[middle] &lt; target)&#123;</span><br><span class="line">                left = middle+<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(nums[middle] &gt; target)&#123;</span><br><span class="line">                right = middle<span class="number">-1</span>;<span class="comment">//右开</span></span><br><span class="line">            &#125;</span><br><span class="line">           <span class="keyword">if</span>(nums[middle] == target)&#123;</span><br><span class="line">              <span class="keyword">return</span> middle;</span><br><span class="line">           &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+        int left = 0, right = nums.length;
 
+        while(left &lt; right) &#123;
+            int mid = right+left &gt;&gt; 1;
+            if(nums[mid] &gt; target)&#123;
+                right = mid;
+            &#125;
+            else if(nums[mid] &lt; target)&#123;
+                left = mid+1;
+            &#125;
+            else return mid;
+        &#125;
+        return -1;
+    &#125;
+&#125;
+</code></pre>
+<h3 id="Code-C"><a href="#Code-C" class="headerlink" title="Code[C++]"></a>Code[C++]</h3><pre><code class="C++">class Solution &#123;
+public:
+    int search(vector&lt;int&gt;&amp; nums, int target) &#123;
+        
+        int left = 0;
+        int right = nums.size()-1;
+
+        while(left &lt;= right)&#123;
+            int middle  = left + ((right-left)&gt;&gt;1);
+
+            if(nums[middle] &lt; target)&#123;
+                left = middle+1;
+            &#125;
+            if(nums[middle] &gt; target)&#123;
+                right = middle-1;//右开
+            &#125;
+           if(nums[middle] == target)&#123;
+              return middle;
+           &#125;
+        &#125;
+        return -1;
+    &#125;
+&#125;;
+</code></pre>
 <h2 id="Problem-27-移除元素"><a href="#Problem-27-移除元素" class="headerlink" title="Problem: 27. 移除元素"></a>Problem: <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/remove-element/description/">27. 移除元素</a></h2><h3 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h3><p>首先可以两个for循环遍历.很简单</p>
 <p>但是如果要减小时间复杂度,可以采用双指针解法</p>
 <h3 id="双指针方法"><a href="#双指针方法" class="headerlink" title="双指针方法"></a>双指针方法</h3><p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/imags/202309101546315.png" alt="image-20230910154659274"></p>
@@ -1042,7 +1081,25 @@
 </blockquote>
 </li>
 </ul>
-<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">removeElement</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> val)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> fastIndex = <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> slowIndex = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(fastIndex; fastIndex &lt; nums.<span class="built_in">size</span>(); fastIndex++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[fastIndex] != val)&#123;</span><br><span class="line">                nums[slowIndex]  = nums[fastIndex];</span><br><span class="line">                slowIndex++;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> slowIndex;<span class="comment">//移动几次说明有几个重复元素</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><pre><code class="C++">
+class Solution &#123;
+public:
+    int removeElement(vector&lt;int&gt;&amp; nums, int val) &#123;
+        int fastIndex = 0;
+        int slowIndex = 0;
+
+        for(fastIndex; fastIndex &lt; nums.size(); fastIndex++)&#123;
+            if(nums[fastIndex] != val)&#123;
+                nums[slowIndex]  = nums[fastIndex];
+                slowIndex++;
+            &#125;
+            
+        &#125;
+        return slowIndex;//移动几次说明有几个重复元素
+
+    &#125;
+&#125;;
+</code></pre>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 waigo168@163.com </span>
@@ -1059,9 +1116,9 @@
 <script type="text/javascript">
     $.getScript('/js/gitalk.js', function () {
         var gitalk = new Gitalk({
-            clientID: '035ef548c9e9378701b6',
-            clientSecret: '83814063a9a58aa2ecd9d9ba1d8bbfe9d4205b6b',
-            repo: 'https://axdmdyj.github.io',
+            clientID: 'aeb83b87dc9753d290d4',
+            clientSecret: '179a325f86496596d1df38a53b7be77143374811',
+            repo: 'axdmdyj.github.io',
             owner: 'axdmdyj',
             admin: ['axdmdyj'],
             id: decodeURI(location.pathname),
@@ -1113,20 +1170,6 @@
 
         /*高亮代码块行号*/
         
-        $('pre code').each(function(){
-            var lines = $(this).text().trim().split('\n').length, widther='';
-            if (lines>99) {
-                widther = 'widther'
-            }
-            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
-            $(this).addClass('has-numbering ' + widther)
-                    .parent()
-                    .append($numbering);
-            for(var i=1;i<=lines;i++){
-                $numbering.append($('<li/>').text(i));
-            }
-        });
-        
 
         /*访问数量*/
         
@@ -1146,38 +1189,6 @@
 </script>
 
 <!--加入行号的高亮代码块样式-->
-
-<style>
-    pre{
-        position: relative;
-        margin-bottom: 24px;
-        border-radius: 10px;
-        border: 1px solid #e2dede;
-        background: #FFF;
-        overflow: hidden;
-    }
-    code.has-numbering{
-        margin-left: 30px;
-    }
-    code.has-numbering.widther{
-        margin-left: 35px;
-    }
-    .pre-numbering{
-        margin: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px;
-        padding: 18px 3px 15px 5px;
-        border-right: 1px solid #C3CCD0;
-        text-align: right;
-        color: #AAA;
-        background-color: ;
-    }
-    .pre-numbering.widther {
-        width: 35px;
-    }
-</style>
 
 <!--自定义样式设置-->
 <style>

@@ -1000,25 +1000,143 @@
       
         <meta name="referrer" content="no-referrer" />
 
-<h1 id="Vue3"><a href="#Vue3" class="headerlink" title="Vue3"></a>Vue3</h1><h2 id="1-vue语法初探"><a href="#1-vue语法初探" class="headerlink" title="1.vue语法初探"></a>1.vue语法初探</h2><h3 id="1-1-HelloWord"><a href="#1-1-HelloWord" class="headerlink" title="1.1 HelloWord"></a>1.1 HelloWord</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">// 从面向dom编程到面向数据编程</span><br><span class="line">Vue.createApp(&#123;</span><br><span class="line">data()&#123;</span><br><span class="line">return &#123;</span><br><span class="line">content: 1</span><br><span class="line">&#125;</span><br><span class="line">&#125;,</span><br><span class="line">// 当页面加载完成,会自动调用mounted</span><br><span class="line">mounted() &#123;</span><br><span class="line">setInterval( ()=&gt;&#123;</span><br><span class="line">this.content++</span><br><span class="line">&#125;,1000)</span><br><span class="line">&#125;,</span><br><span class="line">template: `&lt;div&gt;&#123;&#123;content&#125;&#125;&lt;/div&gt;`</span><br><span class="line">&#125;).mount(&#x27;#root&#x27;)</span><br><span class="line">&lt;/script&gt; </span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
-
+<h1 id="Vue3"><a href="#Vue3" class="headerlink" title="Vue3"></a>Vue3</h1><h2 id="1-vue语法初探"><a href="#1-vue语法初探" class="headerlink" title="1.vue语法初探"></a>1.vue语法初探</h2><h3 id="1-1-HelloWord"><a href="#1-1-HelloWord" class="headerlink" title="1.1 HelloWord"></a>1.1 HelloWord</h3><pre><code class="Vue">    &lt;body&gt;
+    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;
+    &lt;script&gt;
+    // 从面向dom编程到面向数据编程
+    Vue.createApp(&#123;
+    data()&#123;
+    return &#123;
+    content: 1
+    &#125;
+    &#125;,
+    // 当页面加载完成,会自动调用mounted
+    mounted() &#123;
+    setInterval( ()=&gt;&#123;
+    this.content++
+    &#125;,1000)
+    &#125;,
+    template: `&lt;div&gt;&#123;&#123;content&#125;&#125;&lt;/div&gt;`
+    &#125;).mount(&#39;#root&#39;)
+    &lt;/script&gt; 
+    &lt;/body&gt;
+</code></pre>
 <p>这里要引用<code>&lt;script src=&quot;https://unpkg.com/vue@next&quot;&gt;&lt;/script&gt;</code>		</p>
 <p>&#x3D;&#x3D;要慢慢将思维由面向dom到面向数据&#x3D;&#x3D;</p>
-<h3 id="1-2-反转和隐藏"><a href="#1-2-反转和隐藏" class="headerlink" title="1.2 反转和隐藏"></a>1.2 反转和隐藏</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">   &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">   &lt;script&gt;</span><br><span class="line">   // 从面向dom编程到面向数据编程</span><br><span class="line">   Vue.createApp(&#123;</span><br><span class="line">   data()&#123;</span><br><span class="line">   return &#123;</span><br><span class="line">   content: &#x27;helloworld&#x27;</span><br><span class="line">   &#125;</span><br><span class="line">   &#125;,</span><br><span class="line">   methods:&#123;</span><br><span class="line">   handClick()&#123;</span><br><span class="line">   this.content  = this.content.split(&#x27;&#x27;).reverse().join(&#x27;&#x27;)</span><br><span class="line">   &#125;</span><br><span class="line">   &#125;,</span><br><span class="line">   // 绑定反转函数,实习写在methods里面</span><br><span class="line">   template: `</span><br><span class="line">   &lt;div&gt;&#123;&#123;content&#125;&#125;&lt;/div&gt;</span><br><span class="line">   &lt;button @click = &quot;handClick&quot;&gt;反转&lt;/button&gt;</span><br><span class="line">   ` </span><br><span class="line">   &#125;).mount(&#x27;#root&#x27;)</span><br><span class="line">   &lt;/script&gt; </span><br><span class="line">&lt;/body&gt;	</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">// 从面向dom编程到面向数据编程</span><br><span class="line">Vue.createApp(&#123;</span><br><span class="line">data()&#123;</span><br><span class="line">return &#123;</span><br><span class="line">show: true</span><br><span class="line">&#125;</span><br><span class="line">&#125;,</span><br><span class="line">methods:&#123;</span><br><span class="line">handClick()&#123;</span><br><span class="line">// 面向数据编程,改变数据的值</span><br><span class="line">this.show = !this.show</span><br><span class="line">&#125;</span><br><span class="line">&#125;,</span><br><span class="line">template: `</span><br><span class="line">&lt;span v-if = &quot;show&quot;&gt;hello&lt;/span&gt;</span><br><span class="line">&lt;button @click = &quot;handClick&quot;&gt;隐藏/出现&lt;/button&gt;</span><br><span class="line">` </span><br><span class="line">&#125;).mount(&#x27;#root&#x27;)</span><br><span class="line">&lt;/script&gt; </span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="1-3-todolist"><a href="#1-3-todolist" class="headerlink" title="1.3 todolist"></a>1.3 todolist</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">// 从面向dom编程到面向数据编程</span><br><span class="line">Vue.createApp(&#123;</span><br><span class="line">data()&#123;</span><br><span class="line">return &#123;</span><br><span class="line">list: [],</span><br><span class="line">inputValue: &#x27;&#x27;</span><br><span class="line">&#125;</span><br><span class="line">&#125;,</span><br><span class="line">methods:&#123;</span><br><span class="line">handClick()&#123;</span><br><span class="line">this.list.push(this.inputValue)</span><br><span class="line">    inputValue = &#x27;&#x27;</span><br><span class="line">&#125;</span><br><span class="line">&#125;,</span><br><span class="line">template: `</span><br><span class="line">&lt;input v-model = &quot;inputValue&quot;&gt;</span><br><span class="line">&lt;button @click = &quot;handClick&quot;&gt;增加&lt;/button&gt;</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">&lt;li v-for = &quot;(item,index) of list&quot;&gt;&#123;&#123;item&#125;&#125; &#123;&#123;index&#125;&#125;&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line">` </span><br><span class="line">&#125;).mount(&#x27;#root&#x27;)</span><br><span class="line">&lt;/script&gt; </span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
-
+<h3 id="1-2-反转和隐藏"><a href="#1-2-反转和隐藏" class="headerlink" title="1.2 反转和隐藏"></a>1.2 反转和隐藏</h3><pre><code class="Vue">    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;
+    &lt;script&gt;
+    // 从面向dom编程到面向数据编程
+    Vue.createApp(&#123;
+    data()&#123;
+    return &#123;
+    content: &#39;helloworld&#39;
+    &#125;
+    &#125;,
+    methods:&#123;
+    handClick()&#123;
+    this.content  = this.content.split(&#39;&#39;).reverse().join(&#39;&#39;)
+    &#125;
+    &#125;,
+    // 绑定反转函数,实习写在methods里面
+    template: `
+    &lt;div&gt;&#123;&#123;content&#125;&#125;&lt;/div&gt;
+    &lt;button @click = &quot;handClick&quot;&gt;反转&lt;/button&gt;
+    ` 
+    &#125;).mount(&#39;#root&#39;)
+    &lt;/script&gt; 
+    &lt;/body&gt;	
+</code></pre>
+<pre><code class="Vue">    &lt;body&gt;
+    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;
+    &lt;script&gt;
+    // 从面向dom编程到面向数据编程
+    Vue.createApp(&#123;
+    data()&#123;
+    return &#123;
+    show: true
+    &#125;
+    &#125;,
+    methods:&#123;
+    handClick()&#123;
+    // 面向数据编程,改变数据的值
+    this.show = !this.show
+    &#125;
+    &#125;,
+    template: `
+    &lt;span v-if = &quot;show&quot;&gt;hello&lt;/span&gt;
+    &lt;button @click = &quot;handClick&quot;&gt;隐藏/出现&lt;/button&gt;
+    ` 
+    &#125;).mount(&#39;#root&#39;)
+    &lt;/script&gt; 
+    &lt;/body&gt;
+</code></pre>
+<h3 id="1-3-todolist"><a href="#1-3-todolist" class="headerlink" title="1.3 todolist"></a>1.3 todolist</h3><pre><code class="Vue">    &lt;body&gt;
+    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;
+    &lt;script&gt;
+    // 从面向dom编程到面向数据编程
+    Vue.createApp(&#123;
+    data()&#123;
+    return &#123;
+    list: [],
+    inputValue: &#39;&#39;
+    &#125;
+    &#125;,
+    methods:&#123;
+    handClick()&#123;
+    this.list.push(this.inputValue)
+        inputValue = &#39;&#39;
+    &#125;
+    &#125;,
+    template: `
+    &lt;input v-model = &quot;inputValue&quot;&gt;
+    &lt;button @click = &quot;handClick&quot;&gt;增加&lt;/button&gt;
+    &lt;ul&gt;
+    &lt;li v-for = &quot;(item,index) of list&quot;&gt;&#123;&#123;item&#125;&#125; &#123;&#123;index&#125;&#125;&lt;/li&gt;
+    &lt;/ul&gt;
+    ` 
+    &#125;).mount(&#39;#root&#39;)
+    &lt;/script&gt; 
+    &lt;/body&gt;
+</code></pre>
 <p>index ,是item遍历的索引</p>
 <p><code>&lt;button @click = &quot;handClick&quot; title = &quot;222&quot;&gt;增加&lt;/button&gt;</code></p>
 <p>这样不对,如果title要和数据绑定,需要使用v-bind指令 :title&#x3D;   </p>
 <h3 id="1-4-组件概念初探"><a href="#1-4-组件概念初探" class="headerlink" title="1,4 组件概念初探"></a>1,4 组件概念初探</h3><p>如果<code>.mount(&#39;#root&#39;)</code>挂载了组件之后再去<code>qpp.component()</code>去创建组件就来不及了</p>
 <p>展示组件:定义完组件之后再去挂载<code>app.mount(&#39;#root&#39;)</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">// 从面向dom编程到面向数据编程</span><br><span class="line">const app = Vue.createApp(&#123;</span><br><span class="line">data()&#123;</span><br><span class="line">return &#123;</span><br><span class="line">list: [],</span><br><span class="line">inputValue: &#x27;&#x27;</span><br><span class="line">&#125;</span><br><span class="line">&#125;,</span><br><span class="line">methods:&#123;</span><br><span class="line">handClick()&#123;</span><br><span class="line">this.list.push(this.inputValue)</span><br><span class="line">&#125;</span><br><span class="line">&#125;,</span><br><span class="line">template: `</span><br><span class="line">&lt;input v-model = &quot;inputValue&quot;&gt;</span><br><span class="line">&lt;button @click = &quot;handClick&quot;&gt;增加&lt;/button&gt;</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">&lt;todo-item v-for = &quot;(item, index) of list&quot;</span><br><span class="line">:content = &quot;item&quot;</span><br><span class="line">:index = &quot;index&quot;</span><br><span class="line">&gt;&lt;/todo-item&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line">` </span><br><span class="line">&#125;);</span><br><span class="line">app.component(&#x27;todo-item&#x27;, &#123;</span><br><span class="line">props: [&#x27;content&#x27;, &#x27;index&#x27;],</span><br><span class="line">template: &#x27;&lt;div&gt;&#123;&#123;content&#125;&#125;----&#123;&#123;index&#125;&#125;&lt;/div&gt;&#x27;</span><br><span class="line">&#125;)</span><br><span class="line">app.mount(&#x27;#root&#x27;)</span><br><span class="line">&lt;/script&gt; </span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
-
+<pre><code class="vue">    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;
+    &lt;script&gt;
+    // 从面向dom编程到面向数据编程
+    const app = Vue.createApp(&#123;
+    data()&#123;
+    return &#123;
+    list: [],
+    inputValue: &#39;&#39;
+    &#125;
+    &#125;,
+    methods:&#123;
+    handClick()&#123;
+    this.list.push(this.inputValue)
+    &#125;
+    &#125;,
+    template: `
+    &lt;input v-model = &quot;inputValue&quot;&gt;
+    &lt;button @click = &quot;handClick&quot;&gt;增加&lt;/button&gt;
+    &lt;ul&gt;
+    &lt;todo-item v-for = &quot;(item, index) of list&quot;
+    :content = &quot;item&quot;
+    :index = &quot;index&quot;
+    &gt;&lt;/todo-item&gt;
+    &lt;/ul&gt;
+    ` 
+    &#125;);
+    app.component(&#39;todo-item&#39;, &#123;
+    props: [&#39;content&#39;, &#39;index&#39;],
+    template: &#39;&lt;div&gt;&#123;&#123;content&#125;&#125;----&#123;&#123;index&#125;&#125;&lt;/div&gt;&#39;
+    &#125;)
+    app.mount(&#39;#root&#39;)
+    &lt;/script&gt; 
+    &lt;/body&gt;
+</code></pre>
 <p>在这里,将li标签的属性通过组件化展示出来,:index :content分别绑定两个变量, 在组件中,由<code>props:[绑定值1,绑定值2...]</code>去接收</p>
 <h2 id="2-Vue基础语法"><a href="#2-Vue基础语法" class="headerlink" title="2. Vue基础语法"></a>2. Vue基础语法</h2><h3 id="2-1-基础概念"><a href="#2-1-基础概念" class="headerlink" title="2.1 基础概念"></a>2.1 基础概念</h3><p>获取数据要用<code>vm.$data.xxx</code></p>
 <p>createApp 表示创建一个Vue应用, 存储到app变量中, 传入的参数表示,这个应用最外层的组件应该如何展示</p>
@@ -1049,40 +1167,140 @@
 <p>@[event] , 而event可以在data中 event: ‘click’ &#x2F;‘ mouseenter’ 绑定其他事件</p>
 <p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031551123.png" alt="image-20230731215311197"></p>
 <p>阻止默认行为  @click.prevent &#x3D; “函数名”</p>
-<h3 id="2-4-数据-方法-计算属性-侦听器"><a href="#2-4-数据-方法-计算属性-侦听器" class="headerlink" title="2.4 数据,方法,计算属性,侦听器"></a>2.4 数据,方法,计算属性,侦听器</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  methods:&#123;</span><br><span class="line">    formatString(string)&#123;</span><br><span class="line">      return string.toUpperCase();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  template: `&lt;div&gt;&#123;&#123;formatString(message)&#125;&#125;&lt;/div&gt;`</span><br><span class="line">&#125;).mount(&#x27;#root&#x27;)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  const vm = Vue.createApp(&#123;</span><br><span class="line">    data()&#123;</span><br><span class="line">      return &#123;</span><br><span class="line">        message: &#x27;hello world&#x27;,</span><br><span class="line">        count: 2,</span><br><span class="line">        price: 5</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    computed:&#123;</span><br><span class="line">      // 当计算属性依赖的内容发生改变,才会重新执行计算</span><br><span class="line">      total()&#123;</span><br><span class="line">        // 注意计算属性别漏了this</span><br><span class="line">        // return this.count * this.price; </span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods:&#123;</span><br><span class="line">      formatString(string)&#123;</span><br><span class="line">        return string.toUpperCase();</span><br><span class="line">      &#125;,</span><br><span class="line">      // 只要页面重新渲染,就会重新计算</span><br><span class="line">      </span><br><span class="line">        Date.now();</span><br><span class="line">        // return this.count * this.price; </span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    template: `&lt;div&gt;&#123;&#123;total&#125;&#125;&lt;/div&gt;`</span><br><span class="line">  &#125;).mount(&#x27;#root&#x27;)</span><br><span class="line">&lt;/script&gt; </span><br></pre></td></tr></table></figure>
-
-
-
+<h3 id="2-4-数据-方法-计算属性-侦听器"><a href="#2-4-数据-方法-计算属性-侦听器" class="headerlink" title="2.4 数据,方法,计算属性,侦听器"></a>2.4 数据,方法,计算属性,侦听器</h3><pre><code class="vue">   methods:&#123;
+     formatString(string)&#123;
+       return string.toUpperCase();
+     &#125;
+   &#125;,
+   template: `&lt;div&gt;&#123;&#123;formatString(message)&#125;&#125;&lt;/div&gt;`
+ &#125;).mount(&#39;#root&#39;)
+</code></pre>
+<pre><code class="Vue"> &lt;script&gt;
+   const vm = Vue.createApp(&#123;
+     data()&#123;
+       return &#123;
+         message: &#39;hello world&#39;,
+         count: 2,
+         price: 5
+       &#125;
+     &#125;,
+     computed:&#123;
+       // 当计算属性依赖的内容发生改变,才会重新执行计算
+       total()&#123;
+         // 注意计算属性别漏了this
+         // return this.count * this.price; 
+       &#125;
+     &#125;,
+     methods:&#123;
+       formatString(string)&#123;
+         return string.toUpperCase();
+       &#125;,
+       // 只要页面重新渲染,就会重新计算
+       
+         Date.now();
+         // return this.count * this.price; 
+       &#125;
+     &#125;,
+     template: `&lt;div&gt;&#123;&#123;total&#125;&#125;&lt;/div&gt;`
+   &#125;).mount(&#39;#root&#39;)
+ &lt;/script&gt; 
+</code></pre>
 <p> total()(在computed中)</p>
 <p>   &#x2F;当计算属性依赖的内容发生改变,才会重新执行计算<br>getTotal()(在函数方法中)</p>
 <p> 只要页面重新渲染,就会重新计算</p>
 <p><strong>侦听器</strong></p>
 <p>如果想数据改变隔五秒打印一些东西,用computed肯定是不行的,这是后就需要加一个watch侦听器</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  const vm = Vue.createApp(&#123;</span><br><span class="line">    data()&#123;</span><br><span class="line">      return &#123;</span><br><span class="line">        message: &#x27;hello world&#x27;,</span><br><span class="line">        count: 2,</span><br><span class="line">        price: 5</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    computed:&#123;</span><br><span class="line">      // 当计算属性依赖的内容发生改变,才会重新执行计算</span><br><span class="line">      total()&#123;</span><br><span class="line">        // 注意计算属性别漏了this</span><br><span class="line">         return this.count * this.price; </span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    watch: &#123;</span><br><span class="line">      price()&#123;</span><br><span class="line">        setTimeout(() =&gt; &#123;</span><br><span class="line">          console.log(&#x27;price changed&#x27;)</span><br><span class="line">        &#125;,3000)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods:&#123;</span><br><span class="line">      formatString(string)&#123;</span><br><span class="line">        return string.toUpperCase();</span><br><span class="line">      &#125;,</span><br><span class="line">      // 只要页面重新渲染,就会重新计算</span><br><span class="line">      getTotal()&#123;</span><br><span class="line">        Date.now();</span><br><span class="line">        // return this.count * this.price; </span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    template: `&lt;div&gt;&#123;&#123;total&#125;&#125;&lt;/div&gt;`</span><br><span class="line">  &#125;).mount(&#x27;#root&#x27;)</span><br></pre></td></tr></table></figure>
-
-
-
+<pre><code class="Vue">&lt;script&gt;
+  const vm = Vue.createApp(&#123;
+    data()&#123;
+      return &#123;
+        message: &#39;hello world&#39;,
+        count: 2,
+        price: 5
+      &#125;
+    &#125;,
+    computed:&#123;
+      // 当计算属性依赖的内容发生改变,才会重新执行计算
+      total()&#123;
+        // 注意计算属性别漏了this
+         return this.count * this.price; 
+      &#125;
+    &#125;,
+    watch: &#123;
+      price()&#123;
+        setTimeout(() =&gt; &#123;
+          console.log(&#39;price changed&#39;)
+        &#125;,3000)
+      &#125;
+    &#125;,
+    methods:&#123;
+      formatString(string)&#123;
+        return string.toUpperCase();
+      &#125;,
+      // 只要页面重新渲染,就会重新计算
+      getTotal()&#123;
+        Date.now();
+        // return this.count * this.price; 
+      &#125;
+    &#125;,
+    template: `&lt;div&gt;&#123;&#123;total&#125;&#125;&lt;/div&gt;`
+  &#125;).mount(&#39;#root&#39;)
+</code></pre>
 <p><strong>computed 和 method 都能实现的一个功能,建议使用computed,因为有缓存, computed 和 watcher 都能实现的功能,建议使用computed,因为更加简洁. watched 也可以监听price改变,然后对页面重新与安然,但是麻烦,不如computed</strong></p>
 <p>异步可以在watch 里面, 但同步不如在computed里面更简洁</p>
-<h3 id="2-5-样式绑定语法"><a href="#2-5-样式绑定语法" class="headerlink" title="2.5.样式绑定语法"></a>2.5.样式绑定语法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  const app = Vue.createApp(&#123;</span><br><span class="line">    data()&#123;</span><br><span class="line">      return&#123;</span><br><span class="line">        classString: &#x27;red&#x27;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    template: `&lt;div :class = &#x27;classString&#x27;&gt; hello&lt;/div&gt;`</span><br><span class="line">  &#125;)</span><br><span class="line">  const vm =  app.mount(&#x27;#root&#x27;)</span><br></pre></td></tr></table></figure>
-
+<h3 id="2-5-样式绑定语法"><a href="#2-5-样式绑定语法" class="headerlink" title="2.5.样式绑定语法"></a>2.5.样式绑定语法</h3><pre><code class="Vue"> &lt;script&gt;
+   const app = Vue.createApp(&#123;
+     data()&#123;
+       return&#123;
+         classString: &#39;red&#39;
+       &#125;
+     &#125;,
+     template: `&lt;div :class = &#39;classString&#39;&gt; hello&lt;/div&gt;`
+   &#125;)
+   const vm =  app.mount(&#39;#root&#39;)
+</code></pre>
 <p>通过字符串绑定来改变style样式</p>
 <p><img src="/../imgs/image-20230802133154875.png" alt="image-20230802133154875"></p>
 <p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031552596.png" alt="image-20230802135424710"></p>
 <p>添加子组件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  const app = Vue.createApp(&#123;</span><br><span class="line">    data()&#123;</span><br><span class="line">      return&#123;</span><br><span class="line">        classString: &#x27;red&#x27;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    template: `&lt;div :class = &#x27;classString&#x27;&gt; hello</span><br><span class="line">      &lt;demo /&gt;</span><br><span class="line">      &lt;/div&gt;`</span><br><span class="line">  &#125;)</span><br><span class="line">  // 创建组件</span><br><span class="line">  app.component(&#x27;demo&#x27;, &#123;</span><br><span class="line">    template: &#x27; &lt;div class = &quot;green&quot; &gt; single &lt;/div&gt;&#x27;</span><br><span class="line">  &#125;)</span><br><span class="line">  const vm =  app.mount(&#x27;#root&#x27;)</span><br><span class="line">&lt;/script&gt; </span><br></pre></td></tr></table></figure>
-
+<pre><code class="Vue">&lt;script&gt;
+  const app = Vue.createApp(&#123;
+    data()&#123;
+      return&#123;
+        classString: &#39;red&#39;
+      &#125;
+    &#125;,
+    template: `&lt;div :class = &#39;classString&#39;&gt; hello
+      &lt;demo /&gt;
+      &lt;/div&gt;`
+  &#125;)
+  // 创建组件
+  app.component(&#39;demo&#39;, &#123;
+    template: &#39; &lt;div class = &quot;green&quot; &gt; single &lt;/div&gt;&#39;
+  &#125;)
+  const vm =  app.mount(&#39;#root&#39;)
+&lt;/script&gt; 
+</code></pre>
 <p>如果子组件有两个div. 当把class加到父组件demo中时,可以控制显示哪个div:</p>
 <p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031552559.png" alt="image-20230802140326043"></p>
 <p><strong>通过style的方式写样式:</strong></p>
 <p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031552543.png" alt="image-20230802140537613"></p>
 <p>这里简写写styleObject 可读性更强</p>
-<h3 id="2-6-条件渲染"><a href="#2-6-条件渲染" class="headerlink" title="2.6 条件渲染"></a>2.6 条件渲染</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  const app = Vue.createApp(&#123;</span><br><span class="line">    data()&#123;</span><br><span class="line">      return&#123;</span><br><span class="line">        show : false</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    template: `</span><br><span class="line">      &lt;div v-if = &#x27;show&#x27;&gt; hello&lt;/div&gt;</span><br><span class="line">      &lt;div v-show = &#x27;show&#x27;&gt; hello&lt;/div&gt;</span><br><span class="line">    `</span><br><span class="line">  &#125;);</span><br><span class="line">  const vm =  app.mount(&#x27;#root&#x27;)</span><br><span class="line">&lt;/script&gt; </span><br></pre></td></tr></table></figure>
-
-
-
+<h3 id="2-6-条件渲染"><a href="#2-6-条件渲染" class="headerlink" title="2.6 条件渲染"></a>2.6 条件渲染</h3><pre><code class="Vue"> &lt;script&gt;
+   const app = Vue.createApp(&#123;
+     data()&#123;
+       return&#123;
+         show : false
+       &#125;
+     &#125;,
+     template: `
+       &lt;div v-if = &#39;show&#39;&gt; hello&lt;/div&gt;
+       &lt;div v-show = &#39;show&#39;&gt; hello&lt;/div&gt;
+     `
+   &#125;);
+   const vm =  app.mount(&#39;#root&#39;)
+ &lt;/script&gt; 
+</code></pre>
 <p>v-if 是直接在DOM上添加或者删除,而v-show值通过冬至<code>display:none属性</code>来控制是否显示</p>
 <p>如果频繁改变的话还是建议使用v-show</p>
 <p>除此之外,在vue中还可以使用if else if else逻辑</p>
@@ -1157,17 +1375,55 @@
 <p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031549888.png" alt="image-20230802171807151"></p>
 <p>只去除字符串前后字符,中间的不会去除</p>
 <h2 id="3-探索组件的概念"><a href="#3-探索组件的概念" class="headerlink" title="3.探索组件的概念"></a>3.探索组件的概念</h2><h3 id="3-1-组件的定义及复用性"><a href="#3-1-组件的定义及复用性" class="headerlink" title="3.1 组件的定义及复用性"></a>3.1 组件的定义及复用性</h3><p> <img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031556849.png" alt="image-20230803152607203"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">  &lt;script&gt;</span><br><span class="line">    const app = Vue.createApp(&#123;</span><br><span class="line">      template: `&lt;div&gt;&lt;hello /&gt;&lt;world /&gt;&lt;/div&gt;`,</span><br><span class="line">    &#125;)</span><br><span class="line">    app.component(&#x27;hello&#x27;, &#123;</span><br><span class="line">      template: `&lt;div&gt;hello&lt;/div&gt;`</span><br><span class="line">    &#125;)</span><br><span class="line">    app.component(&#x27;world&#x27;, &#123;</span><br><span class="line">    template: `&lt;div&gt;world&lt;/div&gt;`</span><br><span class="line">    &#125;)    </span><br><span class="line"></span><br><span class="line">    const vm =  app.mount(&#x27;#root&#x27;)</span><br><span class="line">  &lt;/script&gt; </span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+<pre><code class="vue">&lt;body&gt;
+  &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;
+  &lt;script&gt;
+    const app = Vue.createApp(&#123;
+      template: `&lt;div&gt;&lt;hello /&gt;&lt;world /&gt;&lt;/div&gt;`,
+    &#125;)
+    app.component(&#39;hello&#39;, &#123;
+      template: `&lt;div&gt;hello&lt;/div&gt;`
+    &#125;)
+    app.component(&#39;world&#39;, &#123;
+    template: `&lt;div&gt;world&lt;/div&gt;`
+    &#125;)    
 
-
-
+    const vm =  app.mount(&#39;#root&#39;)
+  &lt;/script&gt; 
+&lt;/body&gt;
+</code></pre>
 <p>组件可以被复用,但不会和其他组件共享</p>
 <p>独享</p>
 <p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031616842.png" alt="image-20230803161654775"></p>
 <p>app.component定义的组件是全局的,不仅在父组件可以用,在其他的组件里也可以用,</p>
 <p>就算不用组件,但仍会挂载到app上,影响性能,使用简单</p>
-<h3 id="3-2-局部组件"><a href="#3-2-局部组件" class="headerlink" title="3.2 局部组件"></a>3.2 局部组件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">  &lt;script&gt;</span><br><span class="line"></span><br><span class="line">  const hello = &#123;</span><br><span class="line">    template: `&lt;div&gt;hello&lt;/div&gt;`</span><br><span class="line">  &#125;</span><br><span class="line">  const counter = &#123;</span><br><span class="line">   data()&#123;</span><br><span class="line">     return&#123;</span><br><span class="line">       count: 1</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;,</span><br><span class="line">   template:   `&lt;div @click = &quot;count += 1&quot;&gt;&#123;&#123;count&#125;&#125;&lt;/div&gt;`</span><br><span class="line"> &#125;</span><br><span class="line">    const app = Vue.createApp(&#123;</span><br><span class="line">      components: &#123;&#x27;counter&#x27;: counter,</span><br><span class="line">                  &#x27;hello&#x27;:hello</span><br><span class="line">                   &#125;,  // counter ES6</span><br><span class="line">      template: `&lt;div&gt;&lt;counter /&gt;&lt;hello /&gt;&lt;/div&gt;`,</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    const vm = app.mount(&#x27;#root&#x27;)</span><br><span class="line"></span><br><span class="line">  &lt;/script&gt; </span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="3-2-局部组件"><a href="#3-2-局部组件" class="headerlink" title="3.2 局部组件"></a>3.2 局部组件</h3><pre><code class="vue">&lt;body&gt;
+  &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;
+  &lt;script&gt;
 
+  const hello = &#123;
+    template: `&lt;div&gt;hello&lt;/div&gt;`
+  &#125;
+  const counter = &#123;
+   data()&#123;
+     return&#123;
+       count: 1
+     &#125;
+   &#125;,
+   template:   `&lt;div @click = &quot;count += 1&quot;&gt;&#123;&#123;count&#125;&#125;&lt;/div&gt;`
+ &#125;
+    const app = Vue.createApp(&#123;
+      components: &#123;&#39;counter&#39;: counter,
+                  &#39;hello&#39;:hello
+                   &#125;,  // counter ES6
+      template: `&lt;div&gt;&lt;counter /&gt;&lt;hello /&gt;&lt;/div&gt;`,
+    &#125;)
+
+    const vm = app.mount(&#39;#root&#39;)
+
+  &lt;/script&gt; 
+&lt;/body&gt;
+</code></pre>
 <p>全局组件建议小写字母单词,中间横线连接</p>
 <p>一般将局部组件首字母大写,驼峰命名法: HelloWorld;</p>
 <p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031632348.png" alt="image-20230803163246287"></p>
@@ -1176,13 +1432,31 @@
 <p>局部组件使用时,要做一个名字和组件间的映射印象</p>
 <h3 id="3-3-组件间传值及传值校验"><a href="#3-3-组件间传值及传值校验" class="headerlink" title="3.3 组件间传值及传值校验"></a>3.3 组件间传值及传值校验</h3><p><code>props:[]</code></p>
 <p><strong>动态传参</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">  &lt;script&gt;</span><br><span class="line">    const app = Vue.createApp(&#123;</span><br><span class="line">      data()&#123;</span><br><span class="line">        return &#123;num:132&#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      template: `&lt;div&gt;&lt;test :content = &quot;num&quot;/&gt;&lt;/div&gt;`</span><br><span class="line">    &#125;)    </span><br><span class="line">    app.component(&#x27;test&#x27;,&#123;</span><br><span class="line">      props: [&#x27;content&#x27;],</span><br><span class="line">      template:`</span><br><span class="line">        &lt;div&gt;&#123;&#123;content&#125;&#125;&lt;/div&gt;</span><br><span class="line">      `</span><br><span class="line">    &#125;)</span><br><span class="line">    const vm =  app.mount(&#x27;#root&#x27;)</span><br><span class="line">  &lt;/script&gt; </span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
-
-
-
+<pre><code class="vue">&lt;body&gt;
+  &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;
+  &lt;script&gt;
+    const app = Vue.createApp(&#123;
+      data()&#123;
+        return &#123;num:132&#125;
+      &#125;,
+      template: `&lt;div&gt;&lt;test :content = &quot;num&quot;/&gt;&lt;/div&gt;`
+    &#125;)    
+    app.component(&#39;test&#39;,&#123;
+      props: [&#39;content&#39;],
+      template:`
+        &lt;div&gt;&#123;&#123;content&#125;&#125;&lt;/div&gt;
+      `
+    &#125;)
+    const vm =  app.mount(&#39;#root&#39;)
+  &lt;/script&gt; 
+&lt;/body&gt;
+</code></pre>
 <p>通过父组件中的content与data中的num绑定,来实现动态的传参</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">app.component(&#x27;test&#x27;,&#123;</span><br><span class="line">  props: &#123;</span><br><span class="line">    content: String</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
-
+<pre><code class="vue"> app.component(&#39;test&#39;,&#123;
+   props: &#123;
+     content: String
+   &#125;,
+</code></pre>
 <p>意思是需要传递字符串进来,其他类型会警告</p>
 <p><strong>函数传递</strong></p>
 <p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308031731183.png" alt="image-20230803173120103"></p>
@@ -1222,10 +1496,37 @@
 <h3 id="3-7-插槽"><a href="#3-7-插槽" class="headerlink" title="3.7 插槽"></a>3.7 插槽</h3><p>如果传递dom或者标签元素时,用props是非常麻烦,这时候就可以采用插槽</p>
 <p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308051245440.png" alt="image-20230805124502379"></p>
 <p>如果父组件想给子组件传递dom元素或者节点时,可以通过插槽来完成</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">  &lt;script&gt;</span><br><span class="line">    const app = Vue.createApp(&#123;</span><br><span class="line">      </span><br><span class="line">      template: `&lt;myform&gt;</span><br><span class="line">         &lt;div&gt;提交&lt;/div&gt;</span><br><span class="line">        &lt;/myform&gt;</span><br><span class="line">        &lt;myform&gt;</span><br><span class="line">          &lt;button&gt;提交&lt;/button&gt;</span><br><span class="line">        &lt;/myform&gt;</span><br><span class="line">        `,</span><br><span class="line"></span><br><span class="line">    &#125;)</span><br><span class="line">    app.component(&#x27;myform&#x27;,&#123;</span><br><span class="line">      methods:&#123;</span><br><span class="line">        handleClick()&#123;</span><br><span class="line">          alert(123)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      template:`</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;input /&gt;</span><br><span class="line">        &lt;span @click = &quot;handleClick&quot;&gt;</span><br><span class="line">          &lt;slot&gt;&lt;/slot&gt; </span><br><span class="line">        &lt;/span&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">      `</span><br><span class="line">    &#125;)</span><br><span class="line">    const vm = app.mount(&#x27;#root&#x27;)</span><br></pre></td></tr></table></figure>
+<pre><code class="Vue">&lt;body&gt;
+  &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;
+  &lt;script&gt;
+    const app = Vue.createApp(&#123;
+      
+      template: `&lt;myform&gt;
+         &lt;div&gt;提交&lt;/div&gt;
+        &lt;/myform&gt;
+        &lt;myform&gt;
+          &lt;button&gt;提交&lt;/button&gt;
+        &lt;/myform&gt;
+        `,
 
-
-
+    &#125;)
+    app.component(&#39;myform&#39;,&#123;
+      methods:&#123;
+        handleClick()&#123;
+          alert(123)
+        &#125;
+      &#125;,
+      template:`
+      &lt;div&gt;
+        &lt;input /&gt;
+        &lt;span @click = &quot;handleClick&quot;&gt;
+          &lt;slot&gt;&lt;/slot&gt; 
+        &lt;/span&gt;
+        &lt;/div&gt;
+      `
+    &#125;)
+    const vm = app.mount(&#39;#root&#39;)
+</code></pre>
 <p>但slot不能绑定事件,如果要绑定事件,可以写在被绑定事件的span标签里面</p>
 <ul>
 <li>slot插槽</li>
@@ -1238,8 +1539,38 @@
 <p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308051255773.png" alt="image-20230805125547696"></p>
 <p>template是占位符</p>
 <p><strong>给slot命名</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  const app = Vue.createApp(&#123;</span><br><span class="line">    </span><br><span class="line">    template: `</span><br><span class="line">    &lt;myform&gt;</span><br><span class="line">      &lt;template v-slot:header&gt;</span><br><span class="line">       &lt;div&gt;提交1&lt;/div&gt;</span><br><span class="line">      &lt;/template&gt;</span><br><span class="line">      &lt;template v-slot:footer&gt;</span><br><span class="line">        &lt;button&gt;提交2&lt;/button&gt;</span><br><span class="line">      &lt;/template&gt;</span><br><span class="line">    &lt;/myform&gt;</span><br><span class="line">      `,</span><br><span class="line">  &#125;)</span><br><span class="line">  app.component(&#x27;myform&#x27;,&#123;</span><br><span class="line">    methods:&#123;</span><br><span class="line">      handleClick()&#123;</span><br><span class="line">        alert(123)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    template:`</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;span @click = &quot;handleClick&quot;&gt;</span><br><span class="line">        &lt;slot name = &quot;footer&quot;&gt;&lt;/slot&gt; </span><br><span class="line">        &lt;slot name = &quot;header&quot;&gt;&lt;/slot&gt; </span><br><span class="line">      &lt;/span&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    `</span><br><span class="line">  &#125;)</span><br><span class="line">  const vm = app.mount(&#x27;#root&#x27;)</span><br><span class="line">&lt;/script&gt; </span><br></pre></td></tr></table></figure>
-
+<pre><code class="vUE"> &lt;script&gt;
+   const app = Vue.createApp(&#123;
+     
+     template: `
+     &lt;myform&gt;
+       &lt;template v-slot:header&gt;
+        &lt;div&gt;提交1&lt;/div&gt;
+       &lt;/template&gt;
+       &lt;template v-slot:footer&gt;
+         &lt;button&gt;提交2&lt;/button&gt;
+       &lt;/template&gt;
+     &lt;/myform&gt;
+       `,
+   &#125;)
+   app.component(&#39;myform&#39;,&#123;
+     methods:&#123;
+       handleClick()&#123;
+         alert(123)
+       &#125;
+     &#125;,
+     template:`
+     &lt;div&gt;
+       &lt;span @click = &quot;handleClick&quot;&gt;
+         &lt;slot name = &quot;footer&quot;&gt;&lt;/slot&gt; 
+         &lt;slot name = &quot;header&quot;&gt;&lt;/slot&gt; 
+       &lt;/span&gt;
+       &lt;/div&gt;
+     `
+   &#125;)
+   const vm = app.mount(&#39;#root&#39;)
+ &lt;/script&gt; 
+</code></pre>
 <p><strong>作用域插槽</strong></p>
 <p>父组件使用子组件里面的数据</p>
 <p><img src="https://gitee.com/coderlyj916/picture/raw/master/img/202308051339916.png" alt="image-20230805133945833"></p>
@@ -1292,9 +1623,9 @@
 <script type="text/javascript">
     $.getScript('/js/gitalk.js', function () {
         var gitalk = new Gitalk({
-            clientID: '035ef548c9e9378701b6',
-            clientSecret: '83814063a9a58aa2ecd9d9ba1d8bbfe9d4205b6b',
-            repo: 'https://axdmdyj.github.io',
+            clientID: 'aeb83b87dc9753d290d4',
+            clientSecret: '179a325f86496596d1df38a53b7be77143374811',
+            repo: 'axdmdyj.github.io',
             owner: 'axdmdyj',
             admin: ['axdmdyj'],
             id: decodeURI(location.pathname),
@@ -1346,20 +1677,6 @@
 
         /*高亮代码块行号*/
         
-        $('pre code').each(function(){
-            var lines = $(this).text().trim().split('\n').length, widther='';
-            if (lines>99) {
-                widther = 'widther'
-            }
-            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
-            $(this).addClass('has-numbering ' + widther)
-                    .parent()
-                    .append($numbering);
-            for(var i=1;i<=lines;i++){
-                $numbering.append($('<li/>').text(i));
-            }
-        });
-        
 
         /*访问数量*/
         
@@ -1379,38 +1696,6 @@
 </script>
 
 <!--加入行号的高亮代码块样式-->
-
-<style>
-    pre{
-        position: relative;
-        margin-bottom: 24px;
-        border-radius: 10px;
-        border: 1px solid #e2dede;
-        background: #FFF;
-        overflow: hidden;
-    }
-    code.has-numbering{
-        margin-left: 30px;
-    }
-    code.has-numbering.widther{
-        margin-left: 35px;
-    }
-    .pre-numbering{
-        margin: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px;
-        padding: 18px 3px 15px 5px;
-        border-right: 1px solid #C3CCD0;
-        text-align: right;
-        color: #AAA;
-        background-color: ;
-    }
-    .pre-numbering.widther {
-        width: 35px;
-    }
-</style>
 
 <!--自定义样式设置-->
 <style>
