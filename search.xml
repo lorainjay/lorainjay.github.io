@@ -20,7 +20,7 @@
       
         <tags>
             
-            <tag> MySQL </tag>
+            <tag> 事务 </tag>
             
         </tags>
       
@@ -45,7 +45,7 @@
       
         <tags>
             
-            <tag> JVM </tag>
+            <tag> 常见问题 </tag>
             
         </tags>
       
@@ -70,7 +70,7 @@
       
         <tags>
             
-            <tag> Java </tag>
+            <tag> 泛型 </tag>
             
         </tags>
       
@@ -95,7 +95,7 @@
       
         <tags>
             
-            <tag> JVM </tag>
+            <tag> 垃圾回收 </tag>
             
         </tags>
       
@@ -120,7 +120,7 @@
       
         <tags>
             
-            <tag> JVM </tag>
+            <tag> 内存结构 </tag>
             
         </tags>
       
@@ -129,7 +129,7 @@
     
     
     <entry>
-      <title>JUC并发编程-JMM</title>
+      <title>JMM</title>
       <link href="/posts/13a1a5fd.html"/>
       <url>/posts/13a1a5fd.html</url>
       
@@ -138,14 +138,14 @@
       
       <categories>
           
-          <category> JUC并发编程 </category>
+          <category> JUC </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> JUC </tag>
+            <tag> JMM </tag>
             
         </tags>
       
@@ -154,7 +154,7 @@
     
     
     <entry>
-      <title>动态规划（1）</title>
+      <title>动态规划理论</title>
       <link href="/posts/cc7ca809.html"/>
       <url>/posts/cc7ca809.html</url>
       
@@ -173,7 +173,7 @@
     
     
     <entry>
-      <title>redis实战篇</title>
+      <title>点评项目实战</title>
       <link href="/posts/6bd5204f.html"/>
       <url>/posts/6bd5204f.html</url>
       
@@ -189,7 +189,7 @@
       
         <tags>
             
-            <tag> Redis </tag>
+            <tag> 点评项目 </tag>
             
         </tags>
       
@@ -198,7 +198,7 @@
     
     
     <entry>
-      <title>数据结构常见面试题（1）</title>
+      <title>数据结构常见问题</title>
       <link href="/posts/e7c3359a.html"/>
       <url>/posts/e7c3359a.html</url>
       
@@ -207,14 +207,14 @@
       
       <categories>
           
-          <category> 面试题 </category>
+          <category> 小知识 </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> 面试题 </tag>
+            <tag> 数据结构 </tag>
             
         </tags>
       
@@ -223,7 +223,7 @@
     
     
     <entry>
-      <title>MySQL索引</title>
+      <title>索引</title>
       <link href="/posts/43a71ae4.html"/>
       <url>/posts/43a71ae4.html</url>
       
@@ -239,7 +239,7 @@
       
         <tags>
             
-            <tag> MySQL </tag>
+            <tag> 索引 </tag>
             
         </tags>
       
@@ -248,7 +248,7 @@
     
     
     <entry>
-      <title>SpringMVC</title>
+      <title>SpringMVC从入门到熟悉</title>
       <link href="/posts/ae0f95e0.html"/>
       <url>/posts/ae0f95e0.html</url>
       
@@ -257,7 +257,7 @@
       
       <categories>
           
-          <category> 后端 </category>
+          <category> 框架 </category>
           
       </categories>
       
@@ -307,7 +307,7 @@
       
       <categories>
           
-          <category> 算法60天打卡 </category>
+          <category> 算法 </category>
           
       </categories>
       
@@ -332,7 +332,7 @@
       
       <categories>
           
-          <category> 算法60天打卡 </category>
+          <category> 算法 </category>
           
       </categories>
       
@@ -357,7 +357,7 @@
       
       <categories>
           
-          <category> 算法60天打卡 </category>
+          <category> 算法 </category>
           
       </categories>
       
@@ -382,7 +382,7 @@
       
       <categories>
           
-          <category> 算法60天打卡 </category>
+          <category> 算法 </category>
           
       </categories>
       
@@ -407,7 +407,7 @@
       
       <categories>
           
-          <category> 算法60天打卡 </category>
+          <category> 算法 </category>
           
       </categories>
       
@@ -432,7 +432,7 @@
       
       <categories>
           
-          <category> 算法60天打卡 </category>
+          <category> 算法 </category>
           
       </categories>
       
@@ -457,7 +457,7 @@
       
       <categories>
           
-          <category> 算法60天打卡 </category>
+          <category> 算法 </category>
           
       </categories>
       
@@ -482,7 +482,7 @@
       
       <categories>
           
-          <category> 算法60天打卡 </category>
+          <category> 算法 </category>
           
       </categories>
       
@@ -507,14 +507,14 @@
       
       <categories>
           
-          <category> 每日八股 </category>
+          <category> 小知识 </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> 八股 </tag>
+            <tag> Session </tag>
             
         </tags>
       
@@ -532,7 +532,7 @@
       
       <categories>
           
-          <category> 算法60天打卡 </category>
+          <category> 算法 </category>
           
       </categories>
       
@@ -557,7 +557,7 @@
       
       <categories>
           
-          <category> 算法60天打卡 </category>
+          <category> 算法 </category>
           
       </categories>
       
@@ -582,7 +582,7 @@
       
       <categories>
           
-          <category> 算法60天打卡 </category>
+          <category> 算法 </category>
           
       </categories>
       
@@ -607,7 +607,7 @@
       
       <categories>
           
-          <category> 算法60天打卡 </category>
+          <category> 算法 </category>
           
       </categories>
       
@@ -626,7 +626,7 @@
       
       <categories>
           
-          <category> 算法60天打卡 </category>
+          <category> 算法 </category>
           
       </categories>
       
@@ -651,7 +651,7 @@
       
       <categories>
           
-          <category> 算法60天打卡 </category>
+          <category> 算法 </category>
           
       </categories>
       
@@ -676,14 +676,14 @@
       
       <categories>
           
-          <category> 算法60天打卡 </category>
+          <category> 算法 </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> 算法 </tag>
+            <tag> 数组 </tag>
             
         </tags>
       
@@ -701,7 +701,7 @@
       
       <categories>
           
-          <category> 算法60天打卡 </category>
+          <category> 算法 </category>
           
       </categories>
       
@@ -726,14 +726,14 @@
       
       <categories>
           
-          <category> Java </category>
+          <category> 框架 </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> 后端 </tag>
+            <tag> 拦截器 </tag>
             
         </tags>
       
@@ -751,14 +751,14 @@
       
       <categories>
           
-          <category> JAVA </category>
+          <category> Java </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> 后端 </tag>
+            <tag> 小知识 </tag>
             
         </tags>
       
@@ -776,7 +776,7 @@
       
       <categories>
           
-          <category> 报错解决 </category>
+          <category> MySQL </category>
           
       </categories>
       
@@ -808,7 +808,7 @@
       
         <tags>
             
-            <tag> Java </tag>
+            <tag> 动态代理 </tag>
             
         </tags>
       
@@ -901,14 +901,14 @@
       
       <categories>
           
-          <category> 报错解决 </category>
+          <category> 小知识 </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> mybatis </tag>
+            <tag> 配置 </tag>
             
         </tags>
       
@@ -1001,14 +1001,14 @@
       
       <categories>
           
-          <category> 后端 </category>
+          <category> 小知识 </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> SpringBoot </tag>
+            <tag> 配置 </tag>
             
         </tags>
       
@@ -1026,7 +1026,7 @@
       
       <categories>
           
-          <category> 报错解决 </category>
+          <category> 小知识 </category>
           
       </categories>
       
@@ -1142,7 +1142,7 @@
     
     
     <entry>
-      <title>二分(一)</title>
+      <title>二分</title>
       <link href="/posts/472eec12.html"/>
       <url>/posts/472eec12.html</url>
       
