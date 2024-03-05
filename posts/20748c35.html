@@ -1,195 +1,1155 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>泛型在项目中不怎么用？这次结合实战！ | Yj的Better之路</title><meta name="author" content="coderLyj"><meta name="copyright" content="coderLyj"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="泛型在项目中用的确实相对没有那么多，但是也可以提供一些便捷，本文先从基础介绍，然后在文章最后讲解项目实战中的一些使用，超级详细！🌟  [TOC] 泛型基础为什么引入泛型 适用于多种数据类型执行相同的代码（代码复用） 泛型中的类型在使用时指定，不需要强制类型转换（类型安全，编译器会检查类型） Java泛型也是一种语法糖，在编译阶段完成类型的转换的工作，避免在运行时强制类型转换而出现Class">
-<meta property="og:type" content="article">
-<meta property="og:title" content="泛型在项目中不怎么用？这次结合实战！">
-<meta property="og:url" content="https://axdmdyj.github.io/posts/20748c35.html">
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>泛型在项目中不怎么用？这次结合实战！ | Yj的Better之路</title>
+  <meta name="keywords" content=" Java ">
+  <meta name="description" content="泛型在项目中不怎么用？这次结合实战！ | Yj的Better之路">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="总之岁月漫长,然而值得等待">
+<meta property="og:type" content="website">
+<meta property="og:title" content="categories">
+<meta property="og:url" content="https://axdmdyj.github.io/categories/index.html">
 <meta property="og:site_name" content="Yj的Better之路">
-<meta property="og:description" content="泛型在项目中用的确实相对没有那么多，但是也可以提供一些便捷，本文先从基础介绍，然后在文章最后讲解项目实战中的一些使用，超级详细！🌟  [TOC] 泛型基础为什么引入泛型 适用于多种数据类型执行相同的代码（代码复用） 泛型中的类型在使用时指定，不需要强制类型转换（类型安全，编译器会检查类型） Java泛型也是一种语法糖，在编译阶段完成类型的转换的工作，避免在运行时强制类型转换而出现Class">
+<meta property="og:description" content="总之岁月漫长,然而值得等待">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://i.pinimg.com/736x/b6/29/2b/b6292b62b7758d2b8c41831125af576b.jpg">
-<meta property="article:published_time" content="2024-02-14T14:33:44.000Z">
-<meta property="article:modified_time" content="2024-02-14T15:13:37.209Z">
+<meta property="article:published_time" content="2023-07-29T02:58:18.000Z">
+<meta property="article:modified_time" content="2023-07-29T03:02:40.000Z">
 <meta property="article:author" content="coderLyj">
-<meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.pinimg.com/736x/b6/29/2b/b6292b62b7758d2b8c41831125af576b.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://axdmdyj.github.io/posts/20748c35.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
-  root: '/',
-  algolia: undefined,
-  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
-  translate: undefined,
-  noticeOutdate: undefined,
-  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
-  copy: {
-    success: '复制成功',
-    error: '复制错误',
-    noSupport: '浏览器不支持'
-  },
-  relativeDate: {
-    homepage: false,
-    post: false
-  },
-  runtime: '',
-  dateSuffix: {
-    just: '刚刚',
-    min: '分钟前',
-    hour: '小时前',
-    day: '天前',
-    month: '个月前'
-  },
-  copyright: undefined,
-  lightbox: 'fancybox',
-  Snackbar: undefined,
-  source: {
-    justifiedGallery: {
-      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
-      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
-    }
-  },
-  isPhotoFigcaption: false,
-  islazyload: false,
-  isAnchor: false,
-  percent: {
-    toc: true,
-    rightside: false,
-  },
-  autoDarkmode: false
-}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
-  title: '泛型在项目中不怎么用？这次结合实战！',
-  isPost: true,
-  isHome: false,
-  isHighlightShrink: false,
-  isToc: true,
-  postUpdate: '2024-02-14 23:13:37'
-}</script><noscript><style type="text/css">
-  #nav {
-    opacity: 1
-  }
-  .justified-gallery img {
-    opacity: 1
-  }
 
-  #recent-posts time,
-  #post-meta time {
-    display: inline !important
-  }
-</style></noscript><script>(win=>{
-    win.saveToLocal = {
-      set: function setWithExpiry(key, value, ttl) {
-        if (ttl === 0) return
-        const now = new Date()
-        const expiryDay = ttl * 86400000
-        const item = {
-          value: value,
-          expiry: now.getTime() + expiryDay,
-        }
-        localStorage.setItem(key, JSON.stringify(item))
-      },
 
-      get: function getWithExpiry(key) {
-        const itemStr = localStorage.getItem(key)
+<link rel="icon" href="/img/avatar.jpg">
 
-        if (!itemStr) {
-          return undefined
-        }
-        const item = JSON.parse(itemStr)
-        const now = new Date()
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
 
-        if (now.getTime() > item.expiry) {
-          localStorage.removeItem(key)
-          return undefined
-        }
-        return item.value
-      }
-    }
-  
-    win.getScript = url => new Promise((resolve, reject) => {
-      const script = document.createElement('script')
-      script.src = url
-      script.async = true
-      script.onerror = reject
-      script.onload = script.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        script.onload = script.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(script)
-    })
-  
-    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
-      const link = document.createElement('link')
-      link.rel = 'stylesheet'
-      link.href = url
-      if (id) link.id = id
-      link.onerror = reject
-      link.onload = link.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        link.onload = link.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(link)
-    })
-  
-      win.activateDarkMode = function () {
-        document.documentElement.setAttribute('data-theme', 'dark')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-        }
-      }
-      win.activateLightMode = function () {
-        document.documentElement.setAttribute('data-theme', 'light')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
-        }
-      }
-      const t = saveToLocal.get('theme')
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Yj的Better之路" type="application/atom+xml">
+</head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.jpg"/>
+</a>
+<div class="author">
+    <span>coderLyj</span>
+</div>
+
+<div class="icon">
     
-          if (t === 'dark') activateDarkMode()
-          else if (t === 'light') activateLightMode()
         
-      const asideStatus = saveToLocal.get('aside-status')
-      if (asideStatus !== undefined) {
-        if (asideStatus === 'hide') {
-          document.documentElement.classList.add('hide-aside')
-        } else {
-          document.documentElement.classList.remove('hide-aside')
-        }
-      }
+            <a title="rss"
+               href="/atom.xml"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-rss"></use>
+                    </svg>
+                
+            </a>
+        
     
-    const detectApple = () => {
-      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
-        document.documentElement.classList.add('apple')
-      }
-    }
-    detectApple()
-    })(window)</script><link rel="stylesheet" href="/css/menu_center.css"><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Yj的Better之路" type="application/atom+xml">
-</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
-  const $loadingBox = document.getElementById('loading-box')
-  const $body = document.body
-  const preloader = {
-    endLoading: () => {
-      $body.style.overflow = ''
-      $loadingBox.classList.add('loaded')
-    },
-    initLoading: () => {
-      $body.style.overflow = 'hidden'
-      $loadingBox.classList.remove('loaded')
-    }
-  }
+        
+            <a title="github"
+               href="https://github.com/yelog"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-github"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="facebook"
+               href="https://www.facebook.com/faker.tops"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-facebook"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+    
+        
+    
+        
+            <a title="instagram"
+               href="https://www.facebook.com/faker.tops"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-instagram"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="reddit"
+               href="https://www.reddit.com/user/yelog/"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-reddit"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="weibo"
+               href="http://weibo.com/u/2307534817"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-weibo"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="jianshu"
+               href="https://www.jianshu.com/u/ff56736de7cf"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-jianshu"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="zhihu"
+               href="https://www.zhihu.com/people/jaytp/activities"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-zhihu"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+    
+        
+            <a title="oschina"
+               href="https://my.oschina.net/yelog"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-oschina"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+    
+        
+            <a title="email"
+               href="mailto:jaytp@qq.com"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-email"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="qq"
+               href="http://wpa.qq.com/msgrd?v=3&uin=872336115&site=qq&menu=yes"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-qq"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="kugou"
+               href="https://www.kugou.com/"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-kugou"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="neteasemusic"
+               href="https://music.163.com/#/user/home?id=88151013"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-neteasemusic"></use>
+                    </svg>
+                
+            </a>
+        
+    
+</div>
 
-  preloader.initLoading()
-  window.addEventListener('load',() => { preloader.endLoading() })
 
-  if (false) {
-    document.addEventListener('pjax:send', () => { preloader.initLoading() })
-    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
-  }
-})()</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/head.jpg" onerror="onerror=null;src='https://unpkg.com/plasx@1.0.3/img/bj.webp'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">48</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">28</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.pinimg.com/736x/b6/29/2b/b6292b62b7758d2b8c41831125af576b.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Yj的Better之路"><span class="site-name">Yj的Better之路</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">泛型在项目中不怎么用？这次结合实战！</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-02-14T14:33:44.000Z" title="发表于 2024-02-14 22:33:44">2024-02-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-02-14T15:13:37.209Z" title="更新于 2024-02-14 23:13:37">2024-02-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Java/">Java</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>15分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="泛型在项目中不怎么用？这次结合实战！"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><meta name="referrer" content="no-referrer" />
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="全部文章">全部文章
+            
+                <small>(48)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                
+    <li>
+        <div data-rel="后端">
+            
+            后端
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="报错解决">
+            
+            报错解决
+            <small>(3)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="每日八股">
+            
+            每日八股
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="面试题">
+            
+            面试题
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="前端">
+            
+            前端
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="算法">
+            
+            算法
+            <small>(9)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="算法60天打卡">
+            
+            算法60天打卡
+            <small>(16)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="Java">
+            
+            Java
+            <small>(3)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="JAVA">
+            
+            JAVA
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="JUC并发编程">
+            
+            JUC并发编程
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="JVM">
+            
+            JVM
+            <small>(3)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="MySQL">
+            
+            MySQL
+            <small>(3)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="Redis">
+            
+            Redis
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+            <a class="about  hasFriend  site_url"
+               
+               href="/about">关于</a>
+        
+        <a style="width: 50%"
+                
+                                           class="friends">友链</a>
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="48">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">全部文章</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>八股</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>动态规划</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>二叉树</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>二分</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>哈希表</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>后端</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>回溯算法</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>链表</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>面试题</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>数组</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>双指针</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>算法</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>循环不变量</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>栈和队列</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>主键</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>字符串</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Java</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>JDBC</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>JUC</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>JVM</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>maven</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>mybatis</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>MySQL</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Redis</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>SpringBoot</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>SpringMVC</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>TypeScript</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Vue3</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        
+        <a  class="全部文章 MySQL "
+           href="/posts/5fdd80a8.html"
+           data-tag="MySQL"
+           data-author="" >
+            <span class="post-title" title="还迷糊事务的并发问题以及隔离级别？">还迷糊事务的并发问题以及隔离级别？</span>
+            <span class="post-date" title="2024-02-20 10:50:20">2024/02/20</span>
+        </a>
+        
+        
+        <a  class="全部文章 JVM "
+           href="/posts/c31889ef.html"
+           data-tag="JVM"
+           data-author="" >
+            <span class="post-title" title="JVM常见问题">JVM常见问题</span>
+            <span class="post-date" title="2024-02-17 16:50:45">2024/02/17</span>
+        </a>
+        
+        
+        <a  class="全部文章 Java "
+           href="/posts/20748c35.html"
+           data-tag="Java"
+           data-author="" >
+            <span class="post-title" title="泛型在项目中不怎么用？这次结合实战！">泛型在项目中不怎么用？这次结合实战！</span>
+            <span class="post-date" title="2024-02-14 22:33:44">2024/02/14</span>
+        </a>
+        
+        
+        <a  class="全部文章 JVM "
+           href="/posts/63f114ae.html"
+           data-tag="JVM"
+           data-author="" >
+            <span class="post-title" title="JVM垃圾回收入门（爱上JVM！！）">JVM垃圾回收入门（爱上JVM！！）</span>
+            <span class="post-date" title="2024-01-30 10:48:52">2024/01/30</span>
+        </a>
+        
+        
+        <a  class="全部文章 JVM "
+           href="/posts/e614237b.html"
+           data-tag="JVM"
+           data-author="" >
+            <span class="post-title" title="JVM内存结构">JVM内存结构</span>
+            <span class="post-date" title="2024-01-26 23:55:52">2024/01/26</span>
+        </a>
+        
+        
+        <a  class="全部文章 JUC并发编程 "
+           href="/posts/13a1a5fd.html"
+           data-tag="JUC"
+           data-author="" >
+            <span class="post-title" title="JUC并发编程-JMM">JUC并发编程-JMM</span>
+            <span class="post-date" title="2024-01-15 08:35:54">2024/01/15</span>
+        </a>
+        
+        
+        <a  class="全部文章 "
+           href="/posts/cc7ca809.html"
+           data-tag="动态规划"
+           data-author="" >
+            <span class="post-title" title="动态规划（1）">动态规划（1）</span>
+            <span class="post-date" title="2023-12-23 00:54:02">2023/12/23</span>
+        </a>
+        
+        
+        <a  class="全部文章 Redis "
+           href="/posts/6bd5204f.html"
+           data-tag="Redis"
+           data-author="" >
+            <span class="post-title" title="redis实战篇">redis实战篇</span>
+            <span class="post-date" title="2023-11-20 19:17:34">2023/11/20</span>
+        </a>
+        
+        
+        <a  class="全部文章 面试题 "
+           href="/posts/e7c3359a.html"
+           data-tag="面试题"
+           data-author="" >
+            <span class="post-title" title="数据结构常见面试题（1）">数据结构常见面试题（1）</span>
+            <span class="post-date" title="2023-11-11 22:47:19">2023/11/11</span>
+        </a>
+        
+        
+        <a  class="全部文章 MySQL "
+           href="/posts/43a71ae4.html"
+           data-tag="MySQL"
+           data-author="" >
+            <span class="post-title" title="MySQL索引">MySQL索引</span>
+            <span class="post-date" title="2023-10-22 16:08:27">2023/10/22</span>
+        </a>
+        
+        
+        <a  class="全部文章 后端 "
+           href="/posts/ae0f95e0.html"
+           data-tag="SpringMVC"
+           data-author="" >
+            <span class="post-title" title="SpringMVC">SpringMVC</span>
+            <span class="post-date" title="2023-10-15 01:09:13">2023/10/15</span>
+        </a>
+        
+        
+        <a  class="全部文章 前端 "
+           href="/posts/d044eab7.html"
+           data-tag="TypeScript"
+           data-author="" >
+            <span class="post-title" title="TypeScript">TypeScript</span>
+            <span class="post-date" title="2023-10-14 23:13:01">2023/10/14</span>
+        </a>
+        
+        
+        <a  class="全部文章 算法60天打卡 "
+           href="/posts/9b8ac020.html"
+           data-tag="回溯算法"
+           data-author="" >
+            <span class="post-title" title="算法60天训练–10-10-day35">算法60天训练–10-10-day35</span>
+            <span class="post-date" title="2023-10-10 00:49:59">2023/10/10</span>
+        </a>
+        
+        
+        <a  class="全部文章 算法60天打卡 "
+           href="/posts/ce36b93.html"
+           data-tag="回溯算法"
+           data-author="" >
+            <span class="post-title" title="算法60天训练–10-07-day32">算法60天训练–10-07-day32</span>
+            <span class="post-date" title="2023-10-07 20:46:42">2023/10/07</span>
+        </a>
+        
+        
+        <a  class="全部文章 算法60天打卡 "
+           href="/posts/ba74d5ec.html"
+           data-tag="回溯算法"
+           data-author="" >
+            <span class="post-title" title="算法60天训练–10-04-day25">算法60天训练–10-04-day25</span>
+            <span class="post-date" title="2023-10-04 21:06:10">2023/10/04</span>
+        </a>
+        
+        
+        <a  class="全部文章 算法60天打卡 "
+           href="/posts/8d4dbf4.html"
+           data-tag="回溯算法"
+           data-author="" >
+            <span class="post-title" title="算法60天训练–10-03-day24">算法60天训练–10-03-day24</span>
+            <span class="post-date" title="2023-10-03 19:39:51">2023/10/03</span>
+        </a>
+        
+        
+        <a  class="全部文章 算法60天打卡 "
+           href="/posts/30c745e3.html"
+           data-tag="回溯算法"
+           data-author="" >
+            <span class="post-title" title="算法60天训练–10-02-day23">算法60天训练–10-02-day23</span>
+            <span class="post-date" title="2023-10-02 16:27:10">2023/10/02</span>
+        </a>
+        
+        
+        <a  class="全部文章 算法60天打卡 "
+           href="/posts/8d213e83.html"
+           data-tag="二叉树"
+           data-author="" >
+            <span class="post-title" title="算法60天训练–9-21-day16">算法60天训练–9-21-day16</span>
+            <span class="post-date" title="2023-09-24 18:41:31">2023/09/24</span>
+        </a>
+        
+        
+        <a  class="全部文章 算法60天打卡 "
+           href="/posts/de4f162b.html"
+           data-tag="二叉树"
+           data-author="" >
+            <span class="post-title" title="算法60天训练–9-19-day14">算法60天训练–9-19-day14</span>
+            <span class="post-date" title="2023-09-19 23:49:28">2023/09/19</span>
+        </a>
+        
+        
+        <a  class="全部文章 算法60天打卡 "
+           href="/posts/e65c883c.html"
+           data-tag="栈和队列"
+           data-author="" >
+            <span class="post-title" title="算法60天训练–9-18-day13">算法60天训练–9-18-day13</span>
+            <span class="post-date" title="2023-09-18 01:03:45">2023/09/18</span>
+        </a>
+        
+        
+        <a  class="全部文章 每日八股 "
+           href="/posts/6bead416.html"
+           data-tag="八股"
+           data-author="" >
+            <span class="post-title" title="Cookie和Session区别">Cookie和Session区别</span>
+            <span class="post-date" title="2023-09-17 00:13:08">2023/09/17</span>
+        </a>
+        
+        
+        <a  class="全部文章 算法60天打卡 "
+           href="/posts/1e82b846.html"
+           data-tag="栈和队列"
+           data-author="" >
+            <span class="post-title" title="算法60天训练–9-15-day10">算法60天训练–9-15-day10</span>
+            <span class="post-date" title="2023-09-15 18:20:28">2023/09/15</span>
+        </a>
+        
+        
+        <a  class="全部文章 算法60天打卡 "
+           href="/posts/23a5053d.html"
+           data-tag="字符串"
+           data-author="" >
+            <span class="post-title" title="算法60天训练–9-13-day8">算法60天训练–9-13-day8</span>
+            <span class="post-date" title="2023-09-14 01:12:40">2023/09/14</span>
+        </a>
+        
+        
+        <a  class="全部文章 算法60天打卡 "
+           href="/posts/89d58931.html"
+           data-tag="哈希表"
+           data-author="" >
+            <span class="post-title" title="算法60天训练–9-11-day6">算法60天训练–9-11-day6</span>
+            <span class="post-date" title="2023-09-11 21:17:52">2023/09/11</span>
+        </a>
+        
+        
+        <a  class="全部文章 算法60天打卡 "
+           href="/posts/c5f5785.html"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="hexo n 算法60天训练–9-10-day5">hexo n 算法60天训练–9-10-day5</span>
+            <span class="post-date" title="2023-09-10 00:37:47">2023/09/10</span>
+        </a>
+        
+        
+        <a  class="全部文章 算法60天打卡 "
+           href="/posts/7f126f49.html"
+           data-tag="链表"
+           data-author="" >
+            <span class="post-title" title="算法60天训练–9-8-day3">算法60天训练–9-8-day3</span>
+            <span class="post-date" title="2023-09-10 00:10:53">2023/09/10</span>
+        </a>
+        
+        
+        <a  class="全部文章 算法60天打卡 "
+           href="/posts/2a2a294f.html"
+           data-tag="链表"
+           data-author="" >
+            <span class="post-title" title="算法60天训练–9-9-day4">算法60天训练–9-9-day4</span>
+            <span class="post-date" title="2023-09-09 00:28:53">2023/09/09</span>
+        </a>
+        
+        
+        <a  class="全部文章 算法60天打卡 "
+           href="/posts/aede4b42.html"
+           data-tag="算法"
+           data-author="" >
+            <span class="post-title" title="算法60天训练–9.7(day2)">算法60天训练–9.7(day2)</span>
+            <span class="post-date" title="2023-09-07 22:27:52">2023/09/07</span>
+        </a>
+        
+        
+        <a  class="全部文章 算法60天打卡 "
+           href="/posts/ab166f15.html"
+           data-tag="数组"
+           data-author="" >
+            <span class="post-title" title="算法60天训练–9-6-day1">算法60天训练–9-6-day1</span>
+            <span class="post-date" title="2023-09-06 15:28:00">2023/09/06</span>
+        </a>
+        
+        
+        <a  class="全部文章 Java "
+           href="/posts/13c6d42e.html"
+           data-tag="后端"
+           data-author="" >
+            <span class="post-title" title="拦截器Interceptor">拦截器Interceptor</span>
+            <span class="post-date" title="2023-08-26 16:02:26">2023/08/26</span>
+        </a>
+        
+        
+        <a  class="全部文章 JAVA "
+           href="/posts/52c52e8d.html"
+           data-tag="后端"
+           data-author="" >
+            <span class="post-title" title="JWT令牌详解">JWT令牌详解</span>
+            <span class="post-date" title="2023-08-26 15:21:01">2023/08/26</span>
+        </a>
+        
+        
+        <a  class="全部文章 报错解决 "
+           href="/posts/6989f668.html"
+           data-tag="JDBC"
+           data-author="" >
+            <span class="post-title" title="JDBC连接数据库ERROR">JDBC连接数据库ERROR</span>
+            <span class="post-date" title="2023-08-14 10:52:05">2023/08/14</span>
+        </a>
+        
+        
+        <a  class="全部文章 Java "
+           href="/posts/dc7fb504.html"
+           data-tag="Java"
+           data-author="" >
+            <span class="post-title" title="动态代理">动态代理</span>
+            <span class="post-date" title="2023-08-09 19:48:19">2023/08/09</span>
+        </a>
+        
+        
+        <a  class="全部文章 算法 "
+           href="/posts/28e1f509.html"
+           data-tag="链表"
+           data-author="" >
+            <span class="post-title" title="删除倒数第n个结点">删除倒数第n个结点</span>
+            <span class="post-date" title="2023-08-08 23:40:39">2023/08/08</span>
+        </a>
+        
+        
+        <a  class="全部文章 算法 "
+           href="/posts/71a5c331.html"
+           data-tag="链表"
+           data-author="" >
+            <span class="post-title" title="两两交换链表中的节点">两两交换链表中的节点</span>
+            <span class="post-date" title="2023-08-07 23:56:12">2023/08/07</span>
+        </a>
+        
+        
+        <a  class="全部文章 算法 "
+           href="/posts/82b7a1a9.html"
+           data-tag="链表"
+           data-author="" >
+            <span class="post-title" title="反转链表">反转链表</span>
+            <span class="post-date" title="2023-08-06 21:00:55">2023/08/06</span>
+        </a>
+        
+        
+        <a  class="全部文章 报错解决 "
+           href="/posts/c2ad3d31.html"
+           data-tag="mybatis"
+           data-author="" >
+            <span class="post-title" title="使用mybatis实现查询报错解决">使用mybatis实现查询报错解决</span>
+            <span class="post-date" title="2023-08-05 19:38:51">2023/08/05</span>
+        </a>
+        
+        
+        <a  class="全部文章 MySQL "
+           href="/posts/54a358a7.html"
+           data-tag="主键"
+           data-author="" >
+            <span class="post-title" title="主键">主键</span>
+            <span class="post-date" title="2023-08-05 15:33:48">2023/08/05</span>
+        </a>
+        
+        
+        <a  class="全部文章 算法 "
+           href="/posts/c2ed89bf.html"
+           data-tag="链表"
+           data-author="" >
+            <span class="post-title" title="移除链表元素">移除链表元素</span>
+            <span class="post-date" title="2023-08-04 22:54:31">2023/08/04</span>
+        </a>
+        
+        
+        <a  class="全部文章 算法 "
+           href="/posts/7ff36c5c.html"
+           data-tag="循环不变量"
+           data-author="" >
+            <span class="post-title" title="螺旋矩阵||">螺旋矩阵||</span>
+            <span class="post-date" title="2023-08-04 00:03:13">2023/08/04</span>
+        </a>
+        
+        
+        <a  class="全部文章 后端 "
+           href="/posts/1bb4388d.html"
+           data-tag="SpringBoot"
+           data-author="" >
+            <span class="post-title" title="SpringBoot初学相关配置问题">SpringBoot初学相关配置问题</span>
+            <span class="post-date" title="2023-08-02 22:38:17">2023/08/02</span>
+        </a>
+        
+        
+        <a  class="全部文章 报错解决 "
+           href="/posts/cfbe3ed9.html"
+           data-tag="maven"
+           data-author="" >
+            <span class="post-title" title="maven配置相关问题">maven配置相关问题</span>
+            <span class="post-date" title="2023-08-01 21:15:36">2023/08/01</span>
+        </a>
+        
+        
+        <a  class="全部文章 算法 "
+           href="/posts/50cab45.html"
+           data-tag="双指针"
+           data-author="" >
+            <span class="post-title" title="滑动窗口">滑动窗口</span>
+            <span class="post-date" title="2023-08-01 08:58:06">2023/08/01</span>
+        </a>
+        
+        
+        <a  class="全部文章 前端 "
+           href="/posts/3a42db2d.html"
+           data-tag="Vue3"
+           data-author="" >
+            <span class="post-title" title="Vue3">Vue3</span>
+            <span class="post-date" title="2023-07-30 23:10:20">2023/07/30</span>
+        </a>
+        
+        
+        <a  class="全部文章 算法 "
+           href="/posts/838a73b0.html"
+           data-tag="双指针"
+           data-author="" >
+            <span class="post-title" title="有序数组的平方">有序数组的平方</span>
+            <span class="post-date" title="2023-07-30 23:04:11">2023/07/30</span>
+        </a>
+        
+        
+        <a  class="全部文章 算法 "
+           href="/posts/c6873e6d.html"
+           data-tag="双指针"
+           data-author="" >
+            <span class="post-title" title="移除元素">移除元素</span>
+            <span class="post-date" title="2023-07-29 22:22:09">2023/07/29</span>
+        </a>
+        
+        
+        <a  class="全部文章 算法 "
+           href="/posts/472eec12.html"
+           data-tag="二分"
+           data-author="" >
+            <span class="post-title" title="二分(一)">二分(一)</span>
+            <span class="post-date" title="2023-07-28 21:58:26">2023/07/28</span>
+        </a>
+        
+        
+        <a  class="全部文章 "
+           href="/posts/654572fa.html"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="My first blog">My first blog</span>
+            <span class="post-date" title="2023-07-28 11:02:28">2023/07/28</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-泛型在项目中不怎么用?这次结合实战!" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">泛型在项目中不怎么用？这次结合实战！</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="Java">Java</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color5">Java</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            发布时间 : <time class="date" title='最后更新: 2024-02-14 23:13:37'>2024-02-14 22:33</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B%E5%9F%BA%E7%A1%80"><span class="toc-text">泛型基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BC%95%E5%85%A5%E6%B3%9B%E5%9E%8B"><span class="toc-text">为什么引入泛型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B"><span class="toc-text">实例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-text">泛型的基本使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B%E7%B1%BB"><span class="toc-text">泛型类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B%E6%8E%A5%E5%8F%A3"><span class="toc-text">泛型接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B%E6%96%B9%E6%B3%95"><span class="toc-text">泛型方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B%E4%B8%8A%E4%B8%8B%E9%99%90"><span class="toc-text">泛型上下限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B%E6%95%B0%E7%BB%84"><span class="toc-text">泛型数组</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E6%B3%9B%E5%9E%8B"><span class="toc-text">深入理解泛型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E6%93%A6%E9%99%A4"><span class="toc-text">类型擦除</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E6%93%A6%E9%99%A4%E4%BF%9D%E7%95%99%E7%9A%84%E5%8E%9F%E5%A7%8B%E7%B1%BB%E5%9E%8B"><span class="toc-text">类型擦除保留的原始类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B%E5%9C%A8%E7%BC%96%E8%AF%91%E5%99%A8%E7%9A%84%E6%A3%80%E6%9F%A5"><span class="toc-text">泛型在编译器的检查</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E6%B3%9B%E5%9E%8B%E5%AE%9E%E6%88%98"><span class="toc-text">项目中的泛型实战</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <meta name="referrer" content="no-referrer" />
 
 <blockquote>
 <p>泛型在项目中用的确实相对没有那么多，但是也可以提供一些便捷，本文先从基础介绍，然后在文章最后讲解项目实战中的一些使用，超级详细！🌟</p>
 </blockquote>
-<p>[TOC]</p>
+<p><div class='inner-toc'><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B%E5%9F%BA%E7%A1%80"><span class="toc-text">泛型基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BC%95%E5%85%A5%E6%B3%9B%E5%9E%8B"><span class="toc-text">为什么引入泛型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B"><span class="toc-text">实例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-text">泛型的基本使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B%E7%B1%BB"><span class="toc-text">泛型类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B%E6%8E%A5%E5%8F%A3"><span class="toc-text">泛型接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B%E6%96%B9%E6%B3%95"><span class="toc-text">泛型方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B%E4%B8%8A%E4%B8%8B%E9%99%90"><span class="toc-text">泛型上下限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B%E6%95%B0%E7%BB%84"><span class="toc-text">泛型数组</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E6%B3%9B%E5%9E%8B"><span class="toc-text">深入理解泛型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E6%93%A6%E9%99%A4"><span class="toc-text">类型擦除</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E6%93%A6%E9%99%A4%E4%BF%9D%E7%95%99%E7%9A%84%E5%8E%9F%E5%A7%8B%E7%B1%BB%E5%9E%8B"><span class="toc-text">类型擦除保留的原始类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B%E5%9C%A8%E7%BC%96%E8%AF%91%E5%99%A8%E7%9A%84%E6%A3%80%E6%9F%A5"><span class="toc-text">泛型在编译器的检查</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E6%B3%9B%E5%9E%8B%E5%AE%9E%E6%88%98"><span class="toc-text">项目中的泛型实战</span></a></li></ol></div></p>
 <h1 id="泛型基础"><a href="#泛型基础" class="headerlink" title="泛型基础"></a>泛型基础</h1><h2 id="为什么引入泛型"><a href="#为什么引入泛型" class="headerlink" title="为什么引入泛型"></a>为什么引入泛型</h2><ul>
 <li><strong>适用于多种数据类型执行相同的代码</strong>（代码复用）</li>
 <li>泛型中的类型在使用时指定，不需要强制类型转换（<strong>类型安全</strong>，编译器会<strong>检查类型</strong>）</li>
@@ -268,29 +1228,195 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 缓存工具封装</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CacheClient</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line">    <span class="comment">//缓存击穿使用的线程池</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">ExecutorService</span> <span class="variable">CACHE_REBUILD_EXECUTOR</span> <span class="operator">=</span> Executors.newFixedThreadPool(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 将任意java对象序列化为json字符串并存储在string类型的key中，并设置TTL</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> key   string类型的key</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> value 任意java对象</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> time  时间</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> unit  单位</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">set</span><span class="params">(String key, Object value, Long time, TimeUnit unit)</span> &#123;</span><br><span class="line">        stringRedisTemplate.opsForValue().set(key, JSONUtil.toJsonStr(value), time, unit);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 将任意java对象序列化为json字符串并存储在string类型的key中，并设置逻辑过期时间，用于处理缓存击穿</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> key   string类型的key</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> value 任意java对象</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> time  逻辑时间</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> unit  单位</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setWithLogicalExpire</span><span class="params">(String key, Object value, Long time, TimeUnit unit)</span> &#123;</span><br><span class="line">        <span class="comment">// RedisData对象，设置逻辑过期</span></span><br><span class="line">        <span class="type">RedisData</span> <span class="variable">redisData</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RedisData</span>();</span><br><span class="line">        redisData.setData(value);</span><br><span class="line">        redisData.setExpireTime(LocalDateTime.now().plusSeconds(unit.toSeconds(time)));</span><br><span class="line">        <span class="comment">// 写入Redis</span></span><br><span class="line">        stringRedisTemplate.opsForValue().set(key, JSONUtil.toJsonStr(redisData));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 解决缓存穿透</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> keyPrefix  key前缀</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> id         id不知道什么类型，所以需要声名泛型ID，名字随意起</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> type       是什么类型</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> dbFallback 如果redis查询的不是&quot;&quot;，那就需要查询数据库，函数式接口指定逻辑</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> time       重建缓存后的有效时间</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> unit       时间单位</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;R&gt;        返回值类型，例如Shop类型</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;ID&gt;       id不知道什么类型，所以需要声名泛型ID，名字随意起</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> &lt;R, ID&gt; R <span class="title function_">queryWithPassThrough</span><span class="params">(</span></span><br><span class="line"><span class="params">            String keyPrefix, ID id, Class&lt;R&gt; type, Function&lt;ID, R&gt; dbFallback, Long time, TimeUnit unit)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">key</span> <span class="operator">=</span> keyPrefix + id;</span><br><span class="line">        <span class="comment">// 1.从redis查询缓存</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">json</span> <span class="operator">=</span> stringRedisTemplate.opsForValue().get(key);</span><br><span class="line">        <span class="comment">// 2.判断是否存在 。isNotBlank只有在 字符串 才返回true。 换行 ，null, &quot;&quot;等都是false</span></span><br><span class="line">        <span class="keyword">if</span> (StrUtil.isNotBlank(json)) &#123;</span><br><span class="line">        <span class="comment">// 3.存在，直接返回</span></span><br><span class="line">            <span class="keyword">return</span> JSONUtil.toBean(json, type);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//      3.2  如果不存在，则有  null，&quot;&quot;,换行  等可能性。如果是&quot;&quot;， 则是为了解决缓存穿透而约定的规则</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="string">&quot;&quot;</span>.equals(json)) &#123;</span><br><span class="line">            <span class="comment">// 解决缓存穿透，不会再去查数据库</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 4.如果不存在，且不是&quot;&quot; ；那么原因可能是缓存中为null，需要根据id去查询数据库</span></span><br><span class="line">        <span class="type">R</span> <span class="variable">r</span> <span class="operator">=</span> dbFallback.apply(id);</span><br><span class="line">        <span class="comment">// 5.不存在，返回错误</span></span><br><span class="line">        <span class="keyword">if</span> (r == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="comment">// 将空值写入redis</span></span><br><span class="line">            stringRedisTemplate.opsForValue().set(key, <span class="string">&quot;&quot;</span>, CACHE_NULL_TTL, TimeUnit.MINUTES);</span><br><span class="line">            <span class="comment">// 返回错误信息</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 6.存在，写入redis，调用已经写好的方法,超时剔除</span></span><br><span class="line">        <span class="built_in">this</span>.set(key, r, time, unit);</span><br><span class="line">        <span class="keyword">return</span> r;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 逻辑过期 解决缓存击穿</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> &lt;R, ID&gt; R <span class="title function_">queryWithLogicalExpire</span><span class="params">(</span></span><br><span class="line"><span class="params">            String keyPrefix, ID id, Class&lt;R&gt; type,String lockKeyPrefix, Function&lt;ID, R&gt; dbFallback, Long time, TimeUnit unit)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">key</span> <span class="operator">=</span> keyPrefix + id;</span><br><span class="line">        <span class="comment">// 1.从redis查询缓存</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">json</span> <span class="operator">=</span> stringRedisTemplate.opsForValue().get(key);</span><br><span class="line">        <span class="comment">// 2.判断是否存在</span></span><br><span class="line">        <span class="keyword">if</span> (StrUtil.isBlank(json)) &#123;</span><br><span class="line">            <span class="comment">//  3.1 不存在直接返回null，不是热点key</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">            <span class="comment">//  3.2 存在，反序列化为RedisData对象</span></span><br><span class="line">        <span class="type">RedisData</span> <span class="variable">redisData</span> <span class="operator">=</span> JSONUtil.toBean(json, RedisData.class);</span><br><span class="line">        <span class="comment">//        得到R对象</span></span><br><span class="line">        <span class="type">R</span> <span class="variable">r</span> <span class="operator">=</span> JSONUtil.toBean((JSONObject) redisData.getData(), type);</span><br><span class="line">        <span class="type">LocalDateTime</span> <span class="variable">expireTime</span> <span class="operator">=</span> redisData.getExpireTime();</span><br><span class="line">        <span class="comment">// 4.判断是否过期</span></span><br><span class="line">        <span class="keyword">if</span> (expireTime.isAfter(LocalDateTime.now())) &#123;</span><br><span class="line">            <span class="comment">// 4.1.未过期，直接返回</span></span><br><span class="line">            <span class="keyword">return</span> r;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 5. 已过期，需要缓存重建</span></span><br><span class="line">        <span class="comment">// 6.缓存重建</span></span><br><span class="line">        <span class="comment">// 6.1.获取互斥锁</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">lockKey</span> <span class="operator">=</span> lockKeyPrefix + id;</span><br><span class="line">        <span class="type">boolean</span> <span class="variable">isLock</span> <span class="operator">=</span> tryLock(lockKey);</span><br><span class="line">        <span class="comment">// 6.2.判断是否获取锁成功</span></span><br><span class="line">        <span class="keyword">if</span> (isLock) &#123;</span><br><span class="line">            <span class="comment">// 6.3.成功，开启独立线程，实现缓存重建</span></span><br><span class="line"><span class="comment">//            在这之前需要DoubleCheck，再次查看redis缓存是否过期</span></span><br><span class="line">            json = stringRedisTemplate.opsForValue().get(key);</span><br><span class="line"><span class="comment">//            判断是否存在</span></span><br><span class="line">            <span class="keyword">if</span> (StrUtil.isNotBlank(json)) &#123;</span><br><span class="line">                <span class="comment">//            5.2.2.1 存在则判断是否过期，未过期就直接返回，不需要缓存构建</span></span><br><span class="line">                redisData = JSONUtil.toBean(json, RedisData.class);</span><br><span class="line">                r = JSONUtil.toBean((JSONObject) redisData.getData(), type);</span><br><span class="line">                expireTime = redisData.getExpireTime();</span><br><span class="line">                <span class="keyword">if</span> (expireTime.isAfter(LocalDateTime.now())) &#123;</span><br><span class="line">                    <span class="comment">//   未过期，直接返回</span></span><br><span class="line">                    <span class="keyword">return</span> r;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//   6.4 已过期 || 不存在  则重新构建，开启线程池（如果自己new 线程，性能不好）</span></span><br><span class="line"></span><br><span class="line">            CACHE_REBUILD_EXECUTOR.submit(() -&gt; &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="comment">// 查询数据库</span></span><br><span class="line">                    <span class="type">R</span> <span class="variable">newR</span> <span class="operator">=</span> dbFallback.apply(id);</span><br><span class="line">                    <span class="comment">// 重建缓存--热点key</span></span><br><span class="line">                    <span class="built_in">this</span>.setWithLogicalExpire(key, newR, time, unit);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                    <span class="comment">// 释放锁</span></span><br><span class="line">                    unlock(lockKey);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 6.4.返回过期的信息</span></span><br><span class="line">        <span class="keyword">return</span> r;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 互斥锁 解决缓存击穿</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> &lt;R, ID&gt; R <span class="title function_">queryWithMutex</span><span class="params">(</span></span><br><span class="line"><span class="params">            String keyPrefix, ID id, Class&lt;R&gt; type,String lockKeyPrefix, <span class="type">long</span> sleepTime,Function&lt;ID, R&gt; dbFallback, Long time, TimeUnit unit)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">key</span> <span class="operator">=</span> keyPrefix + id;</span><br><span class="line">        <span class="comment">// 1.从redis查询缓存</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">json</span> <span class="operator">=</span> stringRedisTemplate.opsForValue().get(key);</span><br><span class="line"><span class="comment">//        2.判断是否存在 。isNotBlank只有在 字符串 才返回true。 换行 ，null, &quot;&quot;等都是false</span></span><br><span class="line">        <span class="keyword">if</span> (StrUtil.isNotBlank(json)) &#123;</span><br><span class="line">            <span class="comment">// 3.存在，直接返回</span></span><br><span class="line">            <span class="keyword">return</span> JSONUtil.toBean(json, type);</span><br><span class="line">        &#125;</span><br><span class="line"><span class="comment">//      3.2  如果不存在，则有  null，&quot;&quot;,换行  等可能性。如果是&quot;&quot;， 则是为了解决缓存穿透而约定的规则</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="string">&quot;&quot;</span>.equals(json)) &#123;</span><br><span class="line"><span class="comment">//            解决缓存穿透，不会再去查数据库</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//        4.如果不存在，且不是&quot;&quot; ；那么原因可能是缓存中为null，需要根据id去查询数据库</span></span><br><span class="line"><span class="comment">//        ==========解决缓存击穿==========</span></span><br><span class="line"><span class="comment">//        4.1 获取互斥锁</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">lockKey</span> <span class="operator">=</span> lockKeyPrefix + id;</span><br><span class="line">        <span class="type">R</span> <span class="variable">r</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="type">boolean</span> <span class="variable">isLock</span> <span class="operator">=</span> tryLock(lockKey);</span><br><span class="line">            <span class="comment">// 4.2.判断是否获取成功</span></span><br><span class="line">            <span class="keyword">if</span> (!isLock) &#123;</span><br><span class="line">                <span class="comment">// 4.3.获取锁失败，休眠并重试</span></span><br><span class="line">                Thread.sleep(sleepTime);</span><br><span class="line">                <span class="keyword">return</span> queryWithMutex(keyPrefix, id ,type,lockKeyPrefix,sleepTime, dbFallback, time, unit);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 4.4 成功，做双重检查锁，查看redis缓存是否存在，存在则无需重建缓存</span></span><br><span class="line">            json = stringRedisTemplate.opsForValue().get(key);</span><br><span class="line">            <span class="comment">// 判断是否存在 。isNotBlank只有在 字符串 才返回true。 换行 ，null, &quot;&quot;等都是false</span></span><br><span class="line">            <span class="keyword">if</span> (StrUtil.isNotBlank(json)) &#123;</span><br><span class="line">                <span class="comment">//   存在直接返回</span></span><br><span class="line">                r = JSONUtil.toBean(json, type);</span><br><span class="line">                <span class="keyword">return</span> r;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//   如果不存在，则有  null，&quot;&quot;,换行  等可能性。如果是&quot;&quot;， 则是为了解决缓存穿透而约定的规则</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="string">&quot;&quot;</span>.equals(json)) &#123;</span><br><span class="line">                <span class="comment">//           解决缓存穿透，不会再去查数据库</span></span><br><span class="line">                <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//  5. 到这里说明通过双重检查锁，代表是第一个线程，则根据id查询数据库</span></span><br><span class="line">            r = dbFallback.apply(id);</span><br><span class="line">            <span class="comment">// 不存在，返回错误</span></span><br><span class="line">            <span class="keyword">if</span> (r == <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="comment">// 将空值写入redis</span></span><br><span class="line">                stringRedisTemplate.opsForValue().set(key, <span class="string">&quot;&quot;</span>, CACHE_NULL_TTL, TimeUnit.MINUTES);</span><br><span class="line">                <span class="comment">// 返回错误信息</span></span><br><span class="line">                <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 6.存在，写入redis</span></span><br><span class="line">            <span class="built_in">this</span>.set(key, r, time, unit);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="comment">// 7.释放锁</span></span><br><span class="line">            unlock(lockKey);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 8.返回</span></span><br><span class="line">        <span class="keyword">return</span> r;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">tryLock</span><span class="params">(String key)</span> &#123;</span><br><span class="line">        <span class="type">Boolean</span> <span class="variable">flag</span> <span class="operator">=</span> stringRedisTemplate.opsForValue().setIfAbsent(key, <span class="string">&quot;1&quot;</span>, <span class="number">10</span>, TimeUnit.SECONDS);</span><br><span class="line"><span class="comment">//        不要直接返回，因为会自动拆箱，如果为null，会报空指针异常。</span></span><br><span class="line"><span class="comment">//        使用工具类</span></span><br><span class="line">        <span class="keyword">return</span> BooleanUtil.isTrue(flag);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">unlock</span><span class="params">(String key)</span> &#123;</span><br><span class="line">        stringRedisTemplate.delete(key);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>参考文章：<br><a target="_blank" rel="noopener" href="https://pdai.tech/md/java/basic/java-basic-x-generic.html#%E6%B3%9B%E5%9E%8B%E7%B1%BB">https://pdai.tech/md/java/basic/java-basic-x-generic.html#泛型类</a><br>    <a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903925666021389?searchId=202402142156151370FABE70EBA2501841#heading-8">https://juejin.cn/post/6844903925666021389?searchId=202402142156151370FABE70EBA2501841#heading-8</a></p>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://axdmdyj.github.io">coderLyj</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://axdmdyj.github.io/posts/20748c35.html">https://axdmdyj.github.io/posts/20748c35.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://axdmdyj.github.io" target="_blank">Yj的Better之路</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Java/">Java</a></div><div class="post_share"><div class="social-share" data-image="https://i.pinimg.com/736x/b6/29/2b/b6292b62b7758d2b8c41831125af576b.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/dashang.jpg" target="_blank"><img class="post-qr-code-img" src="/img/dashang.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/zhifubao.jpg" target="_blank"><img class="post-qr-code-img" src="/img/zhifubao.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/c31889ef.html" title="JVM常见问题"><img class="cover" src="https://pica.zhimg.com/v2-077a594b1a64d55e95de392755a8aa76_r.jpg" onerror="onerror=null;src='https://unpkg.com/plasx@1.0.3/img/404.webp'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">JVM常见问题</div></div></a></div><div class="next-post pull-right"><a href="/posts/63f114ae.html" title="JVM垃圾回收入门（爱上JVM！！）"><img class="cover" src="https://pic1.zhimg.com/80/v2-f62fcb4665575b40c558e185ef906ab8_1440w.webp" onerror="onerror=null;src='https://unpkg.com/plasx@1.0.3/img/404.webp'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">JVM垃圾回收入门（爱上JVM！！）</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/dc7fb504.html" title="动态代理"><img class="cover" src="https://pic2.zhimg.com/80/v2-2a6bb9b3a75656ff434088c068dabd7d_1440w.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-09</div><div class="title">动态代理</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/head.jpg" onerror="this.onerror=null;this.src='https://unpkg.com/plasx@1.0.3/img/bj.webp'" alt="avatar"/></div><div class="author-info__name">coderLyj</div><div class="author-info__description">总之岁月漫长,然而值得等待</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">48</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">28</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/axdmdYJ"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的个人博客，在这里你会看到小卡拉米的成长之路，分享个人学习笔记，以及知识点总结...</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B%E5%9F%BA%E7%A1%80"><span class="toc-number">1.</span> <span class="toc-text">泛型基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BC%95%E5%85%A5%E6%B3%9B%E5%9E%8B"><span class="toc-number">1.1.</span> <span class="toc-text">为什么引入泛型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B"><span class="toc-number">1.1.1.</span> <span class="toc-text">实例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">1.2.</span> <span class="toc-text">泛型的基本使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B%E7%B1%BB"><span class="toc-number">1.2.1.</span> <span class="toc-text">泛型类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.2.2.</span> <span class="toc-text">泛型接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B%E6%96%B9%E6%B3%95"><span class="toc-number">1.2.3.</span> <span class="toc-text">泛型方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B%E4%B8%8A%E4%B8%8B%E9%99%90"><span class="toc-number">1.2.4.</span> <span class="toc-text">泛型上下限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B%E6%95%B0%E7%BB%84"><span class="toc-number">1.2.5.</span> <span class="toc-text">泛型数组</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E6%B3%9B%E5%9E%8B"><span class="toc-number">2.</span> <span class="toc-text">深入理解泛型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E6%93%A6%E9%99%A4"><span class="toc-number">2.1.</span> <span class="toc-text">类型擦除</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E6%93%A6%E9%99%A4%E4%BF%9D%E7%95%99%E7%9A%84%E5%8E%9F%E5%A7%8B%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.2.</span> <span class="toc-text">类型擦除保留的原始类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B%E5%9C%A8%E7%BC%96%E8%AF%91%E5%99%A8%E7%9A%84%E6%A3%80%E6%9F%A5"><span class="toc-number">2.3.</span> <span class="toc-text">泛型在编译器的检查</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E6%B3%9B%E5%9E%8B%E5%AE%9E%E6%88%98"><span class="toc-number">3.</span> <span class="toc-text">项目中的泛型实战</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/5fdd80a8.html" title="还迷糊事务的并发问题以及隔离级别？"><img src="https://pic.3gbizhi.com/uploadmark/20240205/1e2b570db66f196368226ab7f63e98df.jpg" onerror="this.onerror=null;this.src='https://unpkg.com/plasx@1.0.3/img/404.webp'" alt="还迷糊事务的并发问题以及隔离级别？"/></a><div class="content"><a class="title" href="/posts/5fdd80a8.html" title="还迷糊事务的并发问题以及隔离级别？">还迷糊事务的并发问题以及隔离级别？</a><time datetime="2024-02-20T02:50:20.000Z" title="发表于 2024-02-20 10:50:20">2024-02-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/c31889ef.html" title="JVM常见问题"><img src="https://pica.zhimg.com/v2-077a594b1a64d55e95de392755a8aa76_r.jpg" onerror="this.onerror=null;this.src='https://unpkg.com/plasx@1.0.3/img/404.webp'" alt="JVM常见问题"/></a><div class="content"><a class="title" href="/posts/c31889ef.html" title="JVM常见问题">JVM常见问题</a><time datetime="2024-02-17T08:50:45.000Z" title="发表于 2024-02-17 16:50:45">2024-02-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/20748c35.html" title="泛型在项目中不怎么用？这次结合实战！"><img src="https://i.pinimg.com/736x/b6/29/2b/b6292b62b7758d2b8c41831125af576b.jpg" onerror="this.onerror=null;this.src='https://unpkg.com/plasx@1.0.3/img/404.webp'" alt="泛型在项目中不怎么用？这次结合实战！"/></a><div class="content"><a class="title" href="/posts/20748c35.html" title="泛型在项目中不怎么用？这次结合实战！">泛型在项目中不怎么用？这次结合实战！</a><time datetime="2024-02-14T14:33:44.000Z" title="发表于 2024-02-14 22:33:44">2024-02-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/63f114ae.html" title="JVM垃圾回收入门（爱上JVM！！）"><img src="https://pic1.zhimg.com/80/v2-f62fcb4665575b40c558e185ef906ab8_1440w.webp" onerror="this.onerror=null;this.src='https://unpkg.com/plasx@1.0.3/img/404.webp'" alt="JVM垃圾回收入门（爱上JVM！！）"/></a><div class="content"><a class="title" href="/posts/63f114ae.html" title="JVM垃圾回收入门（爱上JVM！！）">JVM垃圾回收入门（爱上JVM！！）</a><time datetime="2024-01-30T02:48:52.000Z" title="发表于 2024-01-30 10:48:52">2024-01-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/e614237b.html" title="JVM内存结构"><img src="https://pic4.zhimg.com/80/v2-019f8c95e4b7a80b10102dbeab4ef793_1440w.webp" onerror="this.onerror=null;this.src='https://unpkg.com/plasx@1.0.3/img/404.webp'" alt="JVM内存结构"/></a><div class="content"><a class="title" href="/posts/e614237b.html" title="JVM内存结构">JVM内存结构</a><time datetime="2024-01-26T15:55:52.000Z" title="发表于 2024-01-26 23:55:52">2024-01-26</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://i.pinimg.com/736x/b6/29/2b/b6292b62b7758d2b8c41831125af576b.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By coderLyj</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>function loadValine () {
-  function initValine () {
-    const valine = new Valine(Object.assign({
-      el: '#vcomment',
-      appId: 'aX6NXi9vT0pNPR8RUR37YZmC-gzGzoHsz',
-      appKey: '39u7DWzRXJqme25hLiHeHKho',
-      avatar: 'monsterid',
-      serverURLs: '',
-      emojiMaps: {"tv_doge":"6ea59c827c414b4a2955fe79e0f6fd3dcd515e24.png","tv_亲亲":"a8111ad55953ef5e3be3327ef94eb4a39d535d06.png","tv_偷笑":"bb690d4107620f1c15cff29509db529a73aee261.png","tv_再见":"180129b8ea851044ce71caf55cc8ce44bd4a4fc8.png"," tv_冷漠":"b9cbc755c2b3ee43be07ca13de84e5b699a3f101.png","tv_发怒":"34ba3cd204d5b05fec70ce08fa9fa0dd612409ff.png","tv_发财":"34db290afd2963723c6eb3c4560667db7253a21a.png","tv_可爱":"9e55fd9b500ac4b96613539f1ce2f9499e314ed9.png","tv_吐血":"09dd16a7aa59b77baa1155d47484409624470c77.png","tv_呆":"fe1179ebaa191569b0d31cecafe7a2cd1c951c9d.png","tv_呕吐":"9f996894a39e282ccf5e66856af49483f81870f3.png","tv_困":"241ee304e44c0af029adceb294399391e4737ef2.png","tv_坏笑":"1f0b87f731a671079842116e0991c91c2c88645a.png","tv_大佬":"093c1e2c490161aca397afc45573c877cdead616.png","tv_大哭":"23269aeb35f99daee28dda129676f6e9ea87934f.png ","tv_委屈":"d04dba7b5465779e9755d2ab6f0a897b9b33bb77.png","tv_害羞":"a37683fb5642fa3ddfc7f4e5525fd13e42a2bdb1.png","tv_尴尬":"7cfa62dafc59798a3d3fb262d421eeeff166cfa4.png","tv_微笑":"70dc5c7b56f93eb61bddba11e28fb1d18fddcd4c.png","tv_思考":"90cf159733e558137ed20aa04d09964436f618a1.png","tv_惊吓":"0d15c7e2ee58e935adc6a7193ee042388adc22af.png"},
-      path: window.location.pathname,
-      visitor: true
-    }, null))
-  }
 
-  if (typeof Valine === 'function') initValine() 
-  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
-}
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
+    </div>
+</article>
 
-if ('Valine' === 'Valine' || !true) {
-  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
-  else setTimeout(loadValine, 0)
-} else {
-  function loadOtherComment () {
-    loadValine()
-  }
-}</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
+
+<p>
+    <a  class="dashang" onclick="dashangToggle()">赏</a>
+</p>
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2016-2020 Yelog
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+<div class="hide_box" onclick="dashangToggle()"></div>
+<div class="shang_box">
+    <a class="shang_close"  onclick="dashangToggle()">×</a>
+    <div class="shang_tit">
+        <p>喜欢就点赞,疼爱就打赏</p>
+    </div>
+    <div class="shang_payimg">
+        <div class="pay_img">
+            <img src="/img/alipay.jpg" class="alipay" title="扫码支持">
+            <img src="/img/weixin.jpg" class="weixin" title="扫码支持">
+        </div>
+    </div>
+    <div class="shang_payselect">
+        <span><label><input type="radio" name="pay" checked value="alipay">支付宝</label></span><span><label><input type="radio" name="pay" value="weixin">微信</label></span>
+    </div>
+</div>
+
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+        $("input[name=pay]").on("click", function () {
+            if($("input[name=pay]:checked").val()=="weixin"){
+                $(".shang_box .shang_payimg .pay_img").addClass("weixin_img");
+            } else {
+                $(".shang_box .shang_payimg .pay_img").removeClass("weixin_img");
+            }
+        })
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+    function dashangToggle() {
+        $(".shang_box").fadeToggle();
+        $(".hide_box").fadeToggle();
+    }
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>
