@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>动态规划理论 | Lorain&#39;s Blog</title>
-  <meta name="keywords" content=" 动态规划 ">
-  <meta name="description" content="动态规划理论 | Lorain&#39;s Blog">
+  <title>手写mini-HashMap | Lorain&#39;s Blog</title>
+  <meta name="keywords" content=" HashMap ">
+  <meta name="description" content="手写mini-HashMap | Lorain&#39;s Blog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="总之岁月漫长,然而值得等待">
 <meta property="og:type" content="website">
@@ -935,26 +935,34 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-动态规划（1）" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-手写mini-HashMap" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">动态规划理论</h1>
+        <h1 class="article-title">手写mini-HashMap</h1>
     
     <div class="article-meta">
         
         
         
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="Java">Java</a>
+            
+        </span>
+        
         
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color5">动态规划</a>
+            <a class="color3">HashMap</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2024-03-05 11:20:09'>2023-12-23 00:54</time>
+            发布时间 : <time class="date" title='最后更新: 2024-03-06 10:04:06'>2024-03-06 09:49</time>
         
     </div>
     <div class="article-meta">
@@ -987,7 +995,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80"><span class="toc-text">理论基础</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97"><span class="toc-text">斐波那契数列</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E4%BA%94%E9%83%A8%E6%9B%B2"><span class="toc-text">动态规划五部曲</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%88%AC%E6%A5%BC%E6%A2%AF"><span class="toc-text">爬楼梯</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF"><span class="toc-text">思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DP%E4%BA%94%E9%83%A8%E6%9B%B2"><span class="toc-text">DP五部曲</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97"><span class="toc-text">最长公共子序列</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E8%A8%80"><span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MyHashMap%E7%9A%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">MyHashMap的基础知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BAHashMap%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="toc-text">创建HashMap的基本结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%8A%82%E7%82%B9%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-text">哈希节点的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#put%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="toc-text">put方法实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#putForNullKey%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="toc-text">putForNullKey方法实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#get%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="toc-text">get方法实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%86%99toString%E6%96%B9%E6%B3%95"><span class="toc-text">重写toString方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -1005,119 +1013,145 @@
       
         <meta name="referrer" content="no-referrer" />
 
-<h1 id="理论基础"><a href="#理论基础" class="headerlink" title="理论基础"></a>理论基础</h1><p><strong>常见题型:</strong></p>
-<ul>
-<li>背包问题</li>
-<li>打家劫舍</li>
-<li>股票问题</li>
-<li>子序列问题</li>
-</ul>
-<p>态规划中每一个状态一定是由上一个状态推导出来的，<strong>这一点就区分于贪心</strong>，贪心没有状态推导，而是从局部直接选最优的，<br>动态规划中dp[j]是由<code>dp[j-weight[i]]</code>推导出来的，然后取<code>max(dp[j], dp[j - weight[i]] + value[i])</code>。<br>但如果是贪心呢，每次拿物品选一个最大的或者最小的就完事了，和上一个状态没有关系。<br><strong>解题步骤</strong></p>
-<ol>
-<li>确定dp数组（dp table）以及下标的含义</li>
-<li>确定递推公式</li>
-<li>dp数组如何初始化</li>
-<li>确定遍历顺序</li>
-<li>举例推导dp数组</li>
-</ol>
-<p><strong>如何debug</strong><br>找问题的最好方式就是把dp数组打印出来，看看究竟是不是按照自己思路推导的！<br>做动规的题目，写代码之前一定要把状态转移在dp数组的上具体情况模拟一遍，心中有数，确定最后推出的是想要的结果。</p>
-<ul>
-<li>这道题目我举例推导状态转移公式了么？</li>
-<li>我打印dp数组的日志了么？</li>
-<li>打印出来了dp数组和我想的一样么？</li>
-</ul>
-<h1 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a>斐波那契数列</h1><p>题目链接: <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/fibonacci-number/">https://leetcode.cn/problems/fibonacci-number/</a></p>
-<h2 id="动态规划五部曲"><a href="#动态规划五部曲" class="headerlink" title="动态规划五部曲"></a>动态规划五部曲</h2><ol>
-<li>确定dp数组以及下标的含义</li>
-</ol>
-<p>dp[i]的定义为：第i个数的斐波那契数值是dp[i]</p>
-<ol start="2">
-<li>确定递推公式</li>
-</ol>
-<p>入门题原因:  递推公式已经给了:** **dp[i] &#x3D; dp[i - 1] + dp[i - 2];</p>
-<ol start="3">
-<li>dp数组初始化</li>
-</ol>
-<p>题目给了: dp[0] &#x3D; 0; dp[1] &#x3D; 1;</p>
-<ol start="4">
-<li>确定遍历顺序</li>
-</ol>
-<p>从递归公式dp[i] &#x3D; dp[i - 1] + dp[i - 2];中可以看出，dp[i]是依赖 dp[i - 1] 和 dp[i - 2]，那么遍历的顺序一定是从前到后遍历的</p>
-<ol start="5">
-<li>举例推导dp数组</li>
-</ol>
-<p>按照这个递推公式dp[i] &#x3D; dp[i - 1] + dp[i - 2]，推导一下，当N为10的时候，dp数组应该是如下的数列：<br>0 1 1 2 3 5 8 13 21 34 55</p>
-<pre><code class="cpp">class Solution &#123;
-    public :
-        int fib(int n) &#123;
-
-        vector&lt;int&gt; dp(n+1);
-        if( n &lt;= 1)&#123;
-            return n;
-        &#125;
-        dp[0] = 0;
-        dp[1] = 1;
-        for(int i = 2; i &lt;= n; i++)&#123;
-            dp[i] = dp[i-1] + dp[i-2];
-        &#125;
-        return dp[n];
-    &#125;
-&#125;;
+<p><div class='inner-toc'><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E8%A8%80"><span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MyHashMap%E7%9A%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">MyHashMap的基础知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BAHashMap%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="toc-text">创建HashMap的基本结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%8A%82%E7%82%B9%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-text">哈希节点的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#put%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="toc-text">put方法实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#putForNullKey%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="toc-text">putForNullKey方法实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#get%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="toc-text">get方法实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%86%99toString%E6%96%B9%E6%B3%95"><span class="toc-text">重写toString方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></div></p>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>先来放一张图, 表示HashMap的内部的一些原理<br><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1709686597764-a49cd6bf-1f00-4f81-a76c-3fc7282a752d.png#averageHue=%23afe18e&clientId=u7cf2bead-790a-4&from=ui&id=u4cd5a5ed&originHeight=1994&originWidth=2389&originalType=binary&ratio=2&rotation=0&showTitle=false&size=963091&status=done&style=none&taskId=ua5e5049a-0fda-4f0d-ade2-14d59e4682c&title=" alt="HashMap.png"></p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>在本节中，我们将深入研究手写的HashMap实现，名为<strong>MyHashMap</strong>。我们将逐步解释其结构和工作原理，并对关键方法进行讲解。<br><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1709688599661-99d68e2c-c718-4022-9424-8832ebaff227.png#averageHue=%23e6e6e6&clientId=uad531aa4-9975-4&from=paste&height=820&id=uf675b92e&originHeight=1640&originWidth=2122&originalType=binary&ratio=2&rotation=0&showTitle=false&size=280363&status=done&style=none&taskId=u14bbd1f5-e0d7-4994-9643-1afea7a9e6b&title=&width=1061" alt="image.png"><br>( 此图来自：<a target="_blank" rel="noopener" href="https://pdai.tech/md/java/collection/java-map-HashMap&HashSet.html">https://pdai.tech/md/java/collection/java-map-HashMap&HashSet.html</a>）</p>
+<h2 id="MyHashMap的基础知识"><a href="#MyHashMap的基础知识" class="headerlink" title="MyHashMap的基础知识"></a>MyHashMap的基础知识</h2><h2 id="创建HashMap的基本结构"><a href="#创建HashMap的基本结构" class="headerlink" title="创建HashMap的基本结构"></a>创建HashMap的基本结构</h2><p><strong>MyHashMap</strong>的核心结构是一个数组，数组中的每个元素是一个链表的头节点，用于存储哈希冲突的键值对。</p>
+<pre><code>javaCopy code
+private Node&lt;K, V&gt;[] table;
 </code></pre>
-<h1 id="爬楼梯"><a href="#爬楼梯" class="headerlink" title="爬楼梯"></a>爬楼梯</h1><p>题目链接:<br><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/climbing-stairs/description/">力扣（LeetCode）官网 - 全球极客挚爱的技术成长平台</a></p>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>第三层楼梯的状态可以由第二层楼梯 和 到第一层楼梯状态推导出来，那么就可以想到动态规划了。</p>
-<h2 id="DP五部曲"><a href="#DP五部曲" class="headerlink" title="DP五部曲"></a>DP五部曲</h2><ul>
-<li><ol>
-<li>确定dp数组以及下标定义</li>
-</ol>
-</li>
-</ul>
-<p>dp[i]： 爬到第i层楼梯，有dp[i]种方法</p>
-<ul>
-<li><ol start="2">
-<li>确定递推公式</li>
-</ol>
-</li>
-</ul>
-<p>首先是dp[i - 1]，上i-1层楼梯，有dp[i - 1]种方法，那么再一步跳一个台阶不就是dp[i]了么。<br>还有就是dp[i - 2]，上i-2层楼梯，有dp[i - 2]种方法，那么再一步跳两个台阶不就是dp[i]了么。<br>那么dp[i]就是 dp[i - 1]与dp[i - 2]之和！<br>所以**dp[i] &#x3D; dp[i - 1] + dp[i - 2] **。<br>在推导dp[i]的时候，一定要时刻想着dp[i]的定义，否则容易跑偏。<br>这体现出确定dp数组以及下标的含义的重要性！</p>
-<ul>
-<li><ol start="3">
-<li>dp数组如何初始化</li>
-</ol>
-</li>
-</ul>
-<p>题目说了, n是一个正整数<br>不考虑dp[0]如何初始化，只初始化dp[1] &#x3D; 1，dp[2] &#x3D; 2，然后从i &#x3D; 3开始递推，这样才符合dp[i]的定义。</p>
-<ul>
-<li><ol start="4">
-<li>确定遍历顺序</li>
-</ol>
-</li>
-</ul>
-<p>从递推公式dp[i] &#x3D; dp[i - 1] + dp[i - 2];中可以看出，遍历顺序一定是从前向后遍历的</p>
-<ul>
-<li><ol start="5">
-<li>推到dp数组</li>
-</ol>
-</li>
-</ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2023/png/38717174/1697472840603-278be474-e26a-42bf-9b0e-e7f7df782d25.png#averageHue=%23f2f2f2&clientId=u35be678d-fe85-4&from=paste&height=384&id=u4b3a3af1&originHeight=384&originWidth=814&originalType=binary&ratio=1&rotation=0&showTitle=false&size=26258&status=done&style=none&taskId=u507c4ece-7908-43fb-b8b9-d0cffdc4b53&title=&width=814" alt="image.png"><br>这不就是斐波那契嘛</p>
-<pre><code class="java">class Solution &#123;
-    public int climbStairs(int n) &#123;
-        
-        if(n &lt;= 1) return n;
+<h2 id="哈希节点的定义"><a href="#哈希节点的定义" class="headerlink" title="哈希节点的定义"></a>哈希节点的定义</h2><p><strong>Node</strong>类用于表示链表节点，存储键、值、哈希码，以及指向下一个节点的引用。</p>
+<pre><code class="java">static class Node&lt;K, V&gt; &#123;
+    int hash;
+    K key;
+    V value;
+    Node next;
 
-        int[] dp = new int[n+1];
-        dp[1] = 1;
-        dp[2] = 2;
-        for(int i = 3; i &lt;= n; i++)&#123;
-            dp[i] = dp[i-2] + dp[i-1];
-        &#125;
-
-        return dp[n];
-    &#125;
+    // 构造方法和toString方法
 &#125;
 </code></pre>
-<h1 id="最长公共子序列"><a href="#最长公共子序列" class="headerlink" title="最长公共子序列"></a>最长公共子序列</h1><p>看不懂就先看动态视频的演示，注意max的含义。<br>【【算法演示】动态规划求解最长公共子序列】<br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1PA411w7CW?vd_source=fcae3ca58a4c2446a58b5aaacbaa4bbe">【算法演示】动态规划求解最长公共子序列_哔哩哔哩_bilibili</a></p>
+<h2 id="put方法实现"><a href="#put方法实现" class="headerlink" title="put方法实现"></a>put方法实现</h2><p><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1709688633920-8178b4b6-7c01-4a41-8d7e-239522515220.png#averageHue=%23e4e4e4&clientId=uad531aa4-9975-4&from=paste&height=811&id=ub3cc6357&originHeight=1622&originWidth=1956&originalType=binary&ratio=2&rotation=0&showTitle=false&size=319547&status=done&style=none&taskId=u561e928f-5fbe-4078-b54e-f4961c03e73&title=&width=978" alt="image.png"><br>( 此图来自：<a target="_blank" rel="noopener" href="https://pdai.tech/md/java/collection/java-map-HashMap&HashSet.html">https://pdai.tech/md/java/collection/java-map-HashMap&HashSet.html</a>）<br><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1709688047439-55e596e9-371e-4c17-9b9f-0bd0fb4161ed.png#averageHue=%23dfdddd&clientId=uad531aa4-9975-4&from=paste&height=538&id=uc5e0f5c3&originHeight=1076&originWidth=2006&originalType=binary&ratio=2&rotation=0&showTitle=false&size=211924&status=done&style=none&taskId=ufd2ca90b-ece2-4dbc-a616-b9448432ffe&title=&width=1003" alt="image.png"></p>
+<pre><code class="java">public V put(K key, V value) &#123;
+    // 处理key为null的情况
+    if (key == null) &#123;
+        return putForNullKey(value);
+    &#125;
+
+    // 计算哈希值并获取索引位置
+    int index = Math.abs(key.hashCode()) % table.length;
+    Node&lt;K, V&gt; node = table[index];
+
+    // 如果对应位置上没有值
+    if (null == table[index]) &#123;
+        table[index] = new Node&lt;K, V&gt;(key.hashCode(), key, value, null);
+        size++;
+        return value;
+    &#125;
+
+    // 如果有链表
+    Node&lt;K, V&gt; pre = node;
+    while (node != null) &#123;
+        if (key.equals(node.key)) &#123;
+            // 如果键已存在，更新值并返回旧值
+            V oldValue = node.value;
+            node.value = value;
+            return oldValue;
+        &#125;
+        pre = node;
+        node = node.next;
+    &#125;
+
+    // 如果键不存在，将新节点添加到链表末尾
+    pre.next = new Node&lt;&gt;(key.hashCode(), key, value, null);
+    size++;
+    return value;
+&#125;
+</code></pre>
+<p>在<strong>put</strong>方法中，我们首先处理了键为null的特殊情况，然后计算了键的哈希值，并根据取余操作找到对应的索引位置。接着，我们检查该位置是否已经有节点，如果没有，则直接创建新节点。如果已经有链表，我们遍历链表，查找是否存在相同的键，如果找到则更新其值，否则将新节点追加到链表末尾。</p>
+<h2 id="putForNullKey方法实现"><a href="#putForNullKey方法实现" class="headerlink" title="putForNullKey方法实现"></a>putForNullKey方法实现</h2><pre><code class="java">private V putForNullKey(V value) &#123;
+Node&lt;K, V&gt; node = table[0];
+if (node == null) &#123;
+    // 如果对应位置上没有值，创建新节点
+    table[0] = new Node&lt;&gt;(0, null, value, null);
+    size++;
+    return value; // 返回新值
+&#125;
+
+// 说明有单向链表
+Node&lt;K, V&gt; pre = node;
+while (node != null) &#123;
+    if (node.key == null) &#123;
+        // 如果键已存在，更新值并返回旧值
+        V oldValue = node.value;
+        node.value = value;
+        return oldValue;
+    &#125;
+    pre = node;
+    node = node.next;
+&#125;
+
+// 如果键不存在，将新节点添加到链表末尾
+pre.next = new Node&lt;K, V&gt;(0, null, value, null);
+return value;  // 返回新值
+&#125;
+</code></pre>
+<p><strong>putForNullKey</strong>方法用于处理键为null的情况。与<strong>put</strong>方法类似，我们首先判断是否已经有节点，如果没有，则创建新节点。如果有链表，我们遍历链表，查找是否存在null键，如果找到则更新其值，否则将新节点追加到链表末尾。</p>
+<h2 id="get方法实现"><a href="#get方法实现" class="headerlink" title="get方法实现"></a>get方法实现</h2><p><img src="https://cdn.nlark.com/yuque/0/2024/png/38717174/1709688417542-04cf80ba-0e65-4bae-8ae0-a0b2908f4c6f.png#averageHue=%23d8d7d6&clientId=uad531aa4-9975-4&from=paste&height=395&id=u146c0c82&originHeight=790&originWidth=1916&originalType=binary&ratio=2&rotation=0&showTitle=false&size=118849&status=done&style=none&taskId=ubbc1650c-d8e8-4255-8fcb-72ebec32a15&title=&width=958" alt="image.png"></p>
+<pre><code class="java">public V get(K key) &#123;
+// key为null
+if (null == key) &#123;
+    Node&lt;K, V&gt; node = table[0];
+    if (node == null) &#123;
+        return null;
+    &#125;
+
+    // 存在链表
+    while (node != null) &#123;
+        if (null == node.key) &#123;
+            // 如果找到null键，返回对应的值
+            return node.value;
+        &#125;
+        node = node.next;
+    &#125;
+&#125;
+
+// key不是null
+int hash = key.hashCode();
+int index = Math.abs(hash % 16);
+Node&lt;K, V&gt; node = table[index];
+
+// 遍历链表查找键值对
+while (node != null) &#123;
+    if (node.key.equals(key)) &#123;
+        // 如果找到键，返回对应的值
+        return node.value;
+    &#125;
+    node = node.next;
+&#125;
+
+// 不存在key
+return null;
+&#125;
+</code></pre>
+<p>在<strong>get</strong>方法中，我们首先处理键为null的情况，遍历存储在索引0处的链表。如果键不为null，我们计算哈希值并获取索引位置，然后遍历对应的链表查找键值对。如果找到了相应的键，返回其对应的值，否则返回null。</p>
+<h2 id="重写toString方法"><a href="#重写toString方法" class="headerlink" title="重写toString方法"></a>重写toString方法</h2><pre><code class="java">@Override
+public String toString() &#123;
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i &lt; table.length; i++) &#123;
+        Node&lt;K, V&gt; node = table[i];
+        while (node != null) &#123;
+            sb.append(node);
+            node = node.next;
+        &#125;
+    &#125;
+    return sb.toString();
+&#125;
+</code></pre>
+<p><strong>toString</strong>方法用于输出<strong>MyHashMap</strong>的字符串表示形式。我们遍历数组中的每个链表，将节点的字符串表示逐个添加到<strong>StringBuilder</strong>中。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在本节中，我们深入了解了<strong>MyHashMap</strong>的实现。我们介绍了其基本结构、<strong>put</strong>和<strong>get</strong>方法的实现，以及特殊情况下的处理。</p>
+<blockquote>
+<p>Java8 对 HashMap 进行了一些修改，最大的不同就是利用了红黑树，其由 数组+链表+红黑树组成，我们目前只实现了数组+链表的结构。</p>
+</blockquote>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 waigo168@163.com </span>
